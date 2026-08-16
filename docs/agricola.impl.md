@@ -37,9 +37,9 @@ graph TD
   - [x] **1.2 TypeScript & Linter Configuration**
     - [x] 1.2.1 Configure `tsconfig.json` (`target: ES2022`, `module: ESNext`/`NodeNext`, `strict: true`).
     - [x] 1.2.2 Configure ESLint and Prettier configurations.
-  - [ ] **1.3 Bundler Pipeline**
-    - [ ] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
-    - [ ] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
+  - [x] **1.3 Bundler Pipeline**
+    - [x] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
+    - [x] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
   - [ ] **1.4 Test Runner Infrastructure**
     - [ ] 1.4.1 Configure `playwright.config.ts` for unified component unit tests, interaction flows, and visual golden screenshot tests across Chromium, Firefox, and WebKit.
 
