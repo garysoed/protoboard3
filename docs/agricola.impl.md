@@ -26,6 +26,7 @@ graph TD
 ## 2. Phased Implementation Plan
 
 ### Phase 1: Project Setup & Build Infrastructure
+
 **Goal**: Establish the repository foundation, build tooling, TypeScript environment, and unit/visual test runners.
 **Dependencies**: None.
 
@@ -33,9 +34,9 @@ graph TD
   - [x] **1.1 Package & Dependencies Setup**
     - [x] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `grapevine`).
     - [x] 1.1.2 Configure dev dependencies (`typescript`, `rollup`, `@rollup/plugin-node-resolve`, `@rollup/plugin-typescript`, `@rollup/plugin-terser`, `@playwright/test`, `eslint`, `prettier`).
-  - [ ] **1.2 TypeScript & Linter Configuration**
-    - [ ] 1.2.1 Configure `tsconfig.json` (`target: ES2022`, `module: ESNext`/`NodeNext`, `strict: true`).
-    - [ ] 1.2.2 Configure ESLint and Prettier configurations.
+  - [x] **1.2 TypeScript & Linter Configuration**
+    - [x] 1.2.1 Configure `tsconfig.json` (`target: ES2022`, `module: ESNext`/`NodeNext`, `strict: true`).
+    - [x] 1.2.2 Configure ESLint and Prettier configurations.
   - [ ] **1.3 Bundler Pipeline**
     - [ ] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
     - [ ] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
@@ -45,6 +46,7 @@ graph TD
 ---
 
 ### Phase 2: First Component — `pb-d1` & Foundation Infrastructure
+
 **Goal**: Build the first complete piece component (`pb-d1`) along with all core foundation systems required for it: Grapevine DI registration sources, `HeldStackManager`, cursor floating overlay, input routing, packaging, interactive demo, and visual golden tests.
 **Dependencies**: Phase 1.
 
@@ -74,6 +76,7 @@ graph TD
 ---
 
 ### Phase 3: Multi-Sided Pieces (`pb-d2`, `pb-d4`, `pb-d6`, `pb-d8`, `pb-d12`, `pb-d20`, `pb-dn`)
+
 **Goal**: Implement the remaining piece components, face switching, dice rolling, opposite face arithmetic on flippable pieces, and visual golden tests.
 **Dependencies**: Phase 2.
 
@@ -100,6 +103,7 @@ graph TD
 ---
 
 ### Phase 4: Action Discovery & Help Popup System (`?` Action)
+
 **Goal**: Implement the interactive action discovery popup triggered by `?` using a bubbling DOM event (`QueryActionsEvent`), custom name resolution, and the dedicated `<pb-action-popup>` custom element.
 **Dependencies**: Phase 2, Phase 3.
 
@@ -124,6 +128,7 @@ graph TD
 ---
 
 ### Phase 5: Tabletop Spatial Region — `<pb-slot>` & Drop Mechanics
+
 **Goal**: Implement the spatial placement region (`pb-slot`), drop mechanics, relative coordinate positioning, and action bubbling from pieces to regions.
 **Dependencies**: Phase 4.
 
@@ -147,6 +152,7 @@ graph TD
 ---
 
 ### Phase 6: Stacked Deck Region — `<pb-deck>`
+
 **Goal**: Implement the stacked pile region (`pb-deck`), top-card-only rendering, shuffling, flipping, and visual golden tests.
 **Dependencies**: Phase 5.
 
@@ -166,6 +172,7 @@ graph TD
 ---
 
 ### Phase 7: Blind Draw Bag Region — `<pb-bag>`
+
 **Goal**: Implement the blind draw container (`pb-bag`), complete child element hiding, random drawing, and visual golden tests.
 **Dependencies**: Phase 5.
 
@@ -184,6 +191,7 @@ graph TD
 ---
 
 ### Phase 8: Probabilistic Drop Sink Region — `<pb-chute>` & `<pb-chute-layer>`
+
 **Goal**: Implement the probabilistic dice tower / drop sink (`pb-chute` & `pb-chute-layer`), target region linking, layer simulation, and visual golden tests.
 **Dependencies**: Phase 5.
 
@@ -204,6 +212,7 @@ graph TD
 ---
 
 ### Phase 9: Example Projects, User Documentation & Documentation Skill
+
 **Goal**: Build a complete Chess game example and Tabletop sandbox showcase, generate user documentation, establish an agent doc-updater skill, and conduct cross-browser test verification.
 **Dependencies**: Phase 6, Phase 7, Phase 8.
 
