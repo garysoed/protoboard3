@@ -1,9 +1,18 @@
 # Protoboard Project Guidelines
 
+## Component Architecture & Styling
+
+- **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
+- **Clean Public Exports**: Keep `src/index.ts` focused strictly on consumer-facing functions (such as `initialize`) without exporting internal component classes or unnecessary intermediary dependency sources.
+
+## Global Types & DOM Integration
+
+- **Root Typedefs**: Maintain global type definitions in `typedef.d.ts` at the project root with `type Protoboard = typeof import('./src/index')` so the compiler automatically enforces `window.Protoboard` interface fidelity.
+
 ## Testing Conventions
 
 - **Unit Tests**:
-  - Located in `src/`, co-located in the same directory as the module or component being tested (e.g. `src/pieces/d1-piece.test.ts`).
+  - Located in `src/`, co-located in the same directory as the module or component being tested (e.g. `src/pieces/d1.test.ts`).
   - Target browser: **Chromium** only.
 - **End-to-End (E2E) Tests**:
   - Located in the top-level `e2e/` directory (e.g. `e2e/smoke.test.ts`).
@@ -11,6 +20,7 @@
 - **File Naming**: All test files must be named `<name>.test.ts`.
 - **Visual Golden Screenshots**:
   - Visual snapshot baselines must be stored in a subfolder named `goldens/` in the same directory as the test file (e.g. `src/**/goldens/` for unit tests and `e2e/goldens/` for E2E tests).
+- **Browser Object Evaluation**: When verifying constructor functions or non-JSON serializable DOM objects in Playwright tests (e.g. `customElements.get(...)`), use `page.evaluateHandle(...)` to prevent JSON serialization errors.
 - **Test Commands**:
   - `npm test`: Runs both unit and E2E test suites.
   - `npm run test:unit`: Runs only unit tests on Chromium.

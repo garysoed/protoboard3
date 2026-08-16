@@ -19,3 +19,4 @@ For technical design specifications and architectural guidelines, see the [`docs
 - [`README.md`](./README.md): Project overview and directory documentation for the repository root.
 - [`rollup.config.mjs`](./rollup.config.mjs): Rollup bundler configuration generating the standalone minified IIFE bundle and ESM module.
 - [`tsconfig.json`](./tsconfig.json): TypeScript compiler configuration tailored for modern web component development.
+- [`typedef.d.ts`](./typedef.d.ts): Global TypeScript definitions extending `Window` with `Protoboard`.

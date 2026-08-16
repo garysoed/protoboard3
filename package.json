@@ -15,10 +15,10 @@
     "build": "rollup -c",
     "format": "prettier --write \"**/*.{ts,js,mjs,json,md,html}\"",
     "lint": "eslint . --ext .ts",
-    "test": "playwright test",
-    "test:debug": "playwright test --ui",
-    "test:e2e": "playwright test --project=e2e-chromium --project=e2e-firefox --project=e2e-webkit",
-    "test:unit": "playwright test --project=unit"
+    "test": "npm run build && playwright test",
+    "test:debug": "npm run build && playwright test --ui",
+    "test:e2e": "npm run build && playwright test --project=e2e-chromium --project=e2e-firefox --project=e2e-webkit",
+    "test:unit": "npm run build && playwright test --project=unit"
   },
   "keywords": [
     "boardgame",
@@ -30,7 +30,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "grapevine": "^0.2.0",
+    "grapevine": "*",
+    "gs-tools": "*",
     "lit": "^3.1.2"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "devbase": "*",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-perfectionist": "^4.2.0",

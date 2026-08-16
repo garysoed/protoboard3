@@ -14,13 +14,40 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
-    "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "grapevine": ["node_modules/grapevine/export/index.ts"],
+      "gs-tools/export/*": ["node_modules/gs-tools/export/*"]
+    }
   },
-  "include": ["src/**/*.ts", "e2e/**/*.ts", "examples/**/*.ts", "*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "e2e/**/*.ts",
+    "examples/**/*.ts",
+    "*.ts",
+    "*.d.ts",
+    "../grapevine/export/**/*.ts",
+    "../grapevine/src/**/*.ts",
+    "../tools/export/**/*.ts",
+    "../tools/src/**/*.ts",
+    "node_modules/grapevine/src/**/*.ts",
+    "node_modules/grapevine/export/**/*.ts",
+    "node_modules/gs-tools/src/**/*.ts",
+    "node_modules/gs-tools/export/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/gs-tools/**/*.test.ts",
+    "node_modules/grapevine/**/*.test.ts",
+    "../grapevine/**/*.test.ts",
+    "../tools/**/*.test.ts",
+    "node_modules/gs-tools/src/gapi/**/*",
+    "../tools/src/gapi/**/*",
+    "node_modules/gs-tools/src/color-old/**/*",
+    "../tools/src/color-old/**/*",
+    "dist"
+  ]
 }
