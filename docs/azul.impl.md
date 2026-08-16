@@ -1,6 +1,6 @@
 # Protoboard Implementation Roadmap & Specifications
 
-Based on the architectural specifications defined in [`docs/agricola.md`](./agricola.md), this document details the phased, component-by-component implementation roadmap for **Protoboard**. Each phase is ordered strictly by its architectural and runtime dependencies, and all tasks are numbered hierarchically for reference.
+Based on the architectural specifications defined in [`docs/azul.md`](./azul.md), this document details the phased, component-by-component implementation roadmap for **Protoboard**. Each phase is ordered strictly by its architectural and runtime dependencies, and all tasks are numbered hierarchically for reference.
 
 ---
 
@@ -223,7 +223,7 @@ graph TD
     - [ ] 9.1.3 Implement captured piece holding areas using side `<pb-slot>` containers.
     - [ ] 9.1.4 Playwright visual golden tests for initial chess board layout and piece move interactions.
   - [ ] **9.2 Tabletop Sandbox Showcase (`examples/tabletop/index.html`)**
-    - [ ] 9.2.1 Assemble full tabletop board matching Section 6 of `docs/agricola.md` (Tabletop slot, Draw deck with cards, Dice tower chute, Token bag, and D6 dice).
+    - [ ] 9.2.1 Assemble full tabletop board matching Section 6 of `docs/azul.md` (Tabletop slot, Draw deck with cards, Dice tower chute, Token bag, and D6 dice).
     - [ ] 9.2.2 Playwright visual golden tests for complete multi-region interaction flows.
   - [ ] **9.3 User-Facing Documentation (`docs/usage.md`, `docs/api.md`)**
     - [ ] 9.3.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
