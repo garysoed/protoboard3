@@ -2,6 +2,8 @@ import {Vine} from 'grapevine';
 
 import {D1} from '../pieces/d1';
 
+import {HandOverlay} from './hand-overlay';
+
 export interface InitOptions {
   readonly ignoreExisting?: boolean;
   readonly prefix?: string;
@@ -10,6 +12,7 @@ export interface InitOptions {
 
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
   d1: D1,
+  'hand-overlay': HandOverlay,
 };
 
 export function initialize(options: InitOptions = {}): Vine {

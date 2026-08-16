@@ -57,6 +57,6 @@ test.describe('Playwright test runner smoke test', () => {
     `);
 
     const box = page.locator('#box');
-    await expect(box).toHaveScreenshot('sample-box.png');
+    await expect(box).toHaveScreenshot('smoke_sample-box.png');
   });
 });

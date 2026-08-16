@@ -20,12 +20,12 @@ test.describe('D1 Component', () => {
         </body>
       </html>
     `);
-    await page.addScriptTag({path: 'dist/protoboard.min.js'});
+    await page.addScriptTag({path: 'dist/testing.min.js'});
     await page.evaluate(() => {
       window.Protoboard.initialize();
     });
 
     const piece = page.locator('#piece');
-    await expect(piece).toHaveScreenshot('d1-face0.png');
+    await expect(piece).toHaveScreenshot('d1_face0.png');
   });
 });

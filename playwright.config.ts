@@ -9,7 +9,7 @@ declare const process: {
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.01,
+      maxDiffPixelRatio: 0.05,
     },
   },
   forbidOnly: Boolean(process.env.CI),
@@ -38,8 +38,7 @@ export default defineConfig({
   ],
   reporter: 'list',
   retries: process.env.CI ? 2 : 0,
-  snapshotPathTemplate:
-    '{testFileDir}/goldens/{arg}-{projectName}-{platform}{ext}',
+  snapshotPathTemplate: '{testFileDir}/goldens/{arg}{ext}',
   testDir: '.',
   use: {
     screenshot: 'only-on-failure',

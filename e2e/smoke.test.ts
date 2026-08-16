@@ -55,6 +55,6 @@ test.describe('End-to-End smoke test', () => {
     `);
 
     const card = page.locator('#card');
-    await expect(card).toHaveScreenshot('sample-card.png');
+    await expect(card).toHaveScreenshot('smoke_sample-card.png');
   });
 });

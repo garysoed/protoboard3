@@ -54,10 +54,10 @@ graph TD
   - [x] **2.1 Grapevine DI & Registration Foundation (`src/core/`)**
     - [x] 2.1.1 Model registration configuration and custom element registry as Grapevine `source`s (`$registerOptions`, `$customElementsRegistry`), allowing test fixtures to override options like `ignoreExisting: true`.
     - [x] 2.1.2 Implement dynamic registration function `registerProtoboard(options?: RegisterOptions)` registering `pb-d1`.
-  - [ ] **2.2 Held Stack & Cursor Floating Overlay (`src/core/held-stack-manager.ts`)**
-    - [ ] 2.2.1 Implement `HeldStackManager` LIFO stack operations (`push`, `pop`, `popAll`, `peek`, `isEmpty`, `clear`).
-    - [ ] 2.2.2 Implement floating overlay manager (`position: fixed; pointer-events: none; transform: translate(...)`) that tracks mouse movements and reparents picked pieces.
-    - [ ] 2.2.3 Declare Grapevine source `$heldStack: Source<HeldStackManager> = source(() => new HeldStackManager())`.
+  - [x] **2.2 Held Stack & Cursor Floating Overlay (`src/core/held-stack-manager.ts`)**
+    - [x] 2.2.1 Implement `HeldStackManager` LIFO stack operations (`push`, `pop`, `popAll`, `peek`, `isEmpty`, `clear`).
+    - [x] 2.2.2 Implement floating overlay manager (`position: fixed; pointer-events: none; transform: translate(...)`) that tracks mouse movements and reparents picked pieces.
+    - [x] 2.2.3 Declare Grapevine source `$heldStack: Source<HeldStackManager> = source(() => new HeldStackManager())`.
   - [ ] **2.3 Input & Action Dispatcher (`src/core/input-dispatcher.ts`, `src/core/base-element.ts`)**
     - [ ] 2.3.1 Implement `BaseProtoboardElement` extending `LitElement` with `Vine` context access, lifecycle management, and custom `name` attribute support (`getAttribute('name') || tagName.toLowerCase()`).
     - [ ] 2.3.2 Implement hover (`mouseenter`/`mouseleave`) and focus (`focus`/`blur`) target tracking.

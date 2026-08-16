@@ -25,37 +25,72 @@ const localPkgsResolver = {
   },
 };
 
-export default {
-  input: 'src/index.ts',
-  output: [
-    {
-      file: 'dist/index.mjs',
-      format: 'es',
-      sourcemap: true,
-    },
-    {
-      file: 'dist/protoboard.min.js',
-      format: 'iife',
-      name: 'Protoboard',
-      plugins: [terser()],
-      sourcemap: true,
-    },
-  ],
-  plugins: [
-    localPkgsResolver,
-    nodeResolve({
-      extensions: ['.js', '.ts', '.mjs'],
-    }),
-    typescript({
-      declaration: true,
-      declarationDir: './dist/types',
-      exclude: ['**/*.test.ts'],
-      include: [
-        'src/**/*.ts',
-        'node_modules/grapevine/**/*.ts',
-        'node_modules/gs-tools/**/*.ts',
-      ],
-      tsconfig: './tsconfig.json',
-    }),
-  ],
-};
+export default [
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'dist/index.mjs',
+        format: 'es',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/protoboard.min.js',
+        format: 'iife',
+        name: 'Protoboard',
+        plugins: [terser()],
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      localPkgsResolver,
+      nodeResolve({
+        extensions: ['.js', '.ts', '.mjs'],
+      }),
+      typescript({
+        declaration: true,
+        declarationDir: './dist/types',
+        exclude: ['**/*.test.ts'],
+        include: [
+          'src/**/*.ts',
+          'node_modules/grapevine/**/*.ts',
+          'node_modules/gs-tools/**/*.ts',
+        ],
+        tsconfig: './tsconfig.json',
+      }),
+    ],
+  },
+  {
+    input: 'src/testing/index.ts',
+    output: [
+      {
+        file: 'dist/testing.mjs',
+        format: 'es',
+        sourcemap: true,
+      },
+      {
+        file: 'dist/testing.min.js',
+        format: 'iife',
+        name: 'Protoboard',
+        plugins: [terser()],
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      localPkgsResolver,
+      nodeResolve({
+        extensions: ['.js', '.ts', '.mjs'],
+      }),
+      typescript({
+        declaration: false,
+        exclude: ['**/*.test.ts'],
+        include: [
+          'src/**/*.ts',
+          'node_modules/grapevine/**/*.ts',
+          'node_modules/gs-tools/**/*.ts',
+        ],
+        tsconfig: './tsconfig.json',
+      }),
+    ],
+  },
+];
