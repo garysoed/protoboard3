@@ -30,7 +30,7 @@ graph TD
 **Goal**: Establish the repository foundation, build tooling, TypeScript environment, and unit/visual test runners.
 **Dependencies**: None.
 
-- [ ] **1. Phase 1: Project Setup & Build Infrastructure**
+- [x] **1. Phase 1: Project Setup & Build Infrastructure**
   - [x] **1.1 Package & Dependencies Setup**
     - [x] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `grapevine`).
     - [x] 1.1.2 Configure dev dependencies (`typescript`, `rollup`, `@rollup/plugin-node-resolve`, `@rollup/plugin-typescript`, `@rollup/plugin-terser`, `@playwright/test`, `eslint`, `prettier`).
@@ -40,8 +40,8 @@ graph TD
   - [x] **1.3 Bundler Pipeline**
     - [x] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
     - [x] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
-  - [ ] **1.4 Test Runner Infrastructure**
-    - [ ] 1.4.1 Configure `playwright.config.ts` for unified component unit tests, interaction flows, and visual golden screenshot tests across Chromium, Firefox, and WebKit.
+  - [x] **1.4 Test Runner Infrastructure**
+    - [x] 1.4.1 Configure `playwright.config.ts` for unified component unit tests, interaction flows, and visual golden screenshot tests across Chromium, Firefox, and WebKit.
 
 ---
 

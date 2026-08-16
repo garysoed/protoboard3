@@ -13,10 +13,12 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "format": "prettier --write \"**/*.{ts,js,mjs,json,md,html}\"",
+    "lint": "eslint . --ext .ts",
     "test": "playwright test",
     "test:debug": "playwright test --ui",
-    "lint": "eslint . --ext .ts",
-    "format": "prettier --write \"**/*.{ts,js,mjs,json,md,html}\""
+    "test:e2e": "playwright test --project=e2e-chromium --project=e2e-firefox --project=e2e-webkit",
+    "test:unit": "playwright test --project=unit"
   },
   "keywords": [
     "boardgame",
