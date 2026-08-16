@@ -403,37 +403,36 @@ Regions are containers that hold pieces as child DOM elements.
    });
    ```
 
-### Test Frameworks & Roles
+### Test Framework & Architecture
 
-Testing relies on **Web Test Runner** for fast component unit tests and **Playwright** for end-to-end integration and golden screenshot regression testing. Dedicated test runners like Jest or Jasmine are excluded to ensure 100% native ES module and Shadow DOM fidelity.
+All testing is unified under **Playwright Test** (`@playwright/test`) across Chromium, Firefox, and WebKit. This provides a single consistent runner and assertion model for component unit testing, interaction flows, and visual golden regression testing:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                       Protoboard Tests                      │
+│                    Playwright Test Suite                    │
 ├──────────────────────────────┬──────────────────────────────┤
-│    Web Test Runner (WTR)     │          Playwright          │
+│   Component & Unit Tests     │  Interaction & Golden Tests  │
 ├──────────────────────────────┼──────────────────────────────┤
-│ • Fast Component Unit Tests  │ • Golden Screenshot Testing  │
-│ • State & Method Invariants  │ • True Mouse / Drag Gestures │
-│ • Native ES Modules & Mocha  │ • Cross-Browser Regression   │
+│ • Component State Invariants │ • Golden Screenshot Testing  │
+│ • Opposite Face Arithmetic   │ • True Mouse / Drag Gestures │
+│ • Slot & Shadow DOM Proj.    │ • Cross-Browser Regression   │
+│ • Region & Stack Logic       │ • End-to-End Game Sandboxes  │
 └──────────────────────────────┴──────────────────────────────┘
 ```
 
-#### 1. Web Test Runner (`@web/test-runner`)
-* **Role**: Fast, lightweight component unit testing during development using Mocha and Chai.
-* **Coverage**:
-  * **Piece State Transitions**: Verifies `roll`, `next-face`, `prev-face`, and `flip` calculate exact active face indices across `d1`..`dn`.
-  * **Opposite Face Arithmetic**: Verifies exact mathematical opposite faces for `d2`, `d6`, `d8`, `d12`, `d20`.
-  * **Slot Visibility**: Asserts only the active face slot is rendered in Shadow DOM.
-  * **Region DOM Mechanics**:
-    * `<pb-deck>`: Asserts child DOM node reordering on `shuffle`, child inversion and piece flipping on `flipAll`, and non-top child suppression.
-    * `<pb-bag>`: Asserts child hiding and random child selection.
-    * `<pb-chute>`: Asserts probability evaluation across layers, trapped piece retention, and `flush` evacuation.
-  * **Held Stack (LIFO)**: Asserts `HeldStackManager` push/pop/popAll sequence and order preservation using fresh `Vine` instances.
+#### Coverage Areas
 
-#### 2. Playwright
-* **Role**: End-to-end interaction fidelity and visual regression screenshot goldens via `@playwright/test`.
-* **Coverage**:
-  * **Visual Golden Screenshots**: Comparing rendered board layouts, card flipping visuals, and multi-node slotted faces.
-  * **Full Interaction Flows**: Simulating real mouse moves, hover activations, keyboard shortcuts (`c` to pick, `Space` to drop), picking up pieces into the floating cursor layer, and dropping into target regions.
-  * **Cross-Browser Parity**: Ensuring identical behavior on Chromium, Firefox, and WebKit.
+1. **Component & Unit Invariants**:
+   * **Piece State Transitions**: Verifies `roll`, `nextFace`, `prevFace`, and `flip` calculate exact active face indices across `d1`..`dn`.
+   * **Opposite Face Arithmetic**: Verifies exact mathematical opposite faces for `d2`, `d4`, `d6`, `d8`, `d12`, `d20`.
+   * **Slot Visibility**: Asserts only the active face slot is rendered in Shadow DOM.
+   * **Region DOM Mechanics**:
+     * `<pb-deck>`: Asserts child DOM node reordering on `shuffle`, child inversion and piece flipping on `flipAll`, and non-top child suppression.
+     * `<pb-bag>`: Asserts child hiding and random child selection.
+     * `<pb-chute>`: Asserts probability evaluation across layers, trapped piece retention, and `flush` evacuation.
+   * **Held Stack (LIFO)**: Asserts `HeldStackManager` push/pop/popAll sequence and order preservation using fresh `Vine` instances.
+
+2. **Interactions & Visual Goldens**:
+   * **Visual Golden Screenshots**: Comparing rendered board layouts, card flipping visuals, and multi-node slotted faces.
+   * **Full Interaction Flows**: Simulating real mouse moves, hover activations, keyboard shortcuts (`c` to pick, `Space` to drop), picking up pieces into the floating cursor layer, and dropping into target regions.
+   * **Cross-Browser Parity**: Ensuring identical behavior on Chromium, Firefox, and WebKit.

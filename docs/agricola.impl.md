@@ -30,18 +30,17 @@ graph TD
 **Dependencies**: None.
 
 - [ ] **1. Phase 1: Project Setup & Build Infrastructure**
-  - [ ] **1.1 Package & Dependencies Setup**
-    - [ ] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `grapevine`).
-    - [ ] 1.1.2 Configure dev dependencies (`typescript`, `rollup`, `@rollup/plugin-node-resolve`, `@rollup/plugin-typescript`, `@rollup/plugin-terser`, `@web/test-runner`, `@web/test-runner-playwright`, `@open-wc/testing`, `@playwright/test`, `eslint`, `prettier`).
+  - [x] **1.1 Package & Dependencies Setup**
+    - [x] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `grapevine`).
+    - [x] 1.1.2 Configure dev dependencies (`typescript`, `rollup`, `@rollup/plugin-node-resolve`, `@rollup/plugin-typescript`, `@rollup/plugin-terser`, `@playwright/test`, `eslint`, `prettier`).
   - [ ] **1.2 TypeScript & Linter Configuration**
     - [ ] 1.2.1 Configure `tsconfig.json` (`target: ES2022`, `module: ESNext`/`NodeNext`, `strict: true`).
     - [ ] 1.2.2 Configure ESLint and Prettier configurations.
   - [ ] **1.3 Bundler Pipeline**
     - [ ] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
     - [ ] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
-  - [ ] **1.4 Test Runners Infrastructure**
-    - [ ] 1.4.1 Configure `web-test-runner.config.mjs` for fast component unit tests with native ES modules and Shadow DOM support.
-    - [ ] 1.4.2 Configure `playwright.config.ts` for browser integration and visual golden screenshot tests across Chromium, Firefox, and WebKit.
+  - [ ] **1.4 Test Runner Infrastructure**
+    - [ ] 1.4.1 Configure `playwright.config.ts` for unified component unit tests, interaction flows, and visual golden screenshot tests across Chromium, Firefox, and WebKit.
 
 ---
 
@@ -69,7 +68,7 @@ graph TD
   - [ ] **2.5 Packaging, Demo Harness & Testing**
     - [ ] 2.5.1 Set up and verify build scripts (`dist/protoboard.min.js`, `dist/index.mjs`).
     - [ ] 2.5.2 Create `examples/index.html` demo showing `pb-d1` pieces with hover, pick, and floating cursor overlay.
-    - [ ] 2.5.3 Web Test Runner unit tests for `pb-d1`, `HeldStackManager`, and input dispatcher.
+    - [ ] 2.5.3 Playwright unit & component tests for `pb-d1`, `HeldStackManager`, and input dispatcher.
     - [ ] 2.5.4 Playwright visual golden screenshot tests for `pb-d1` face projection and floating cursor overlay.
 
 ---
@@ -95,7 +94,7 @@ graph TD
     - [ ] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
     - [ ] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).
   - [ ] **3.4 Unit & Visual Golden Testing**
-    - [ ] 3.4.1 Web Test Runner unit tests for face cycling, opposite math verification, and roll distributions.
+    - [ ] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, and roll distributions.
     - [ ] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces and flipping state transitions.
 
 ---
@@ -119,7 +118,7 @@ graph TD
     - [ ] 4.3.4 Implement dismissal handlers (`Escape`, pressing `?` again, clicking outside, or executing an action).
     - [ ] 4.3.5 Register `pb-action-popup` in `registerProtoboard`.
   - [ ] **4.4 Testing & Visual Goldens**
-    - [ ] 4.4.1 Web Test Runner unit tests for `QueryActionsEvent` bubbling, action descriptor aggregation, and custom name display.
+    - [ ] 4.4.1 Playwright unit & component tests for `QueryActionsEvent` bubbling, action descriptor aggregation, and custom name display.
     - [ ] 4.4.2 Playwright visual golden screenshot tests for `<pb-action-popup>` anchored to pieces with keyboard and click flows.
 
 ---
@@ -141,7 +140,7 @@ graph TD
   - [ ] **5.4 Registration, Demo & Visual Golden Testing**
     - [ ] 5.4.1 Register `pb-slot` in `registerProtoboard`.
     - [ ] 5.4.2 Update `examples/index.html` with interactive tabletop slot allowing picking pieces and dropping at exact cursor coordinates.
-    - [ ] 5.4.3 Web Test Runner unit tests for coordinate math, reparenting, and drop lifecycle.
+    - [ ] 5.4.3 Playwright unit & component tests for coordinate math, reparenting, and drop lifecycle.
     - [ ] 5.4.4 Playwright visual golden screenshot tests for tabletop slot layout with dropped pieces.
     - [ ] 5.4.5 Playwright visual golden screenshot tests for action popup (`?`) showing aggregated slot + piece actions.
 
@@ -161,7 +160,7 @@ graph TD
   - [ ] **6.2 Registration, Demo & Visual Golden Testing**
     - [ ] 6.2.1 Register `pb-deck` in `registerProtoboard`.
     - [ ] 6.2.2 Update `examples/index.html` with card deck (`pb-d2` cards) demonstrating drawing (hovering exposed top card + `c`), shuffling (`s`), and flipping (`f`).
-    - [ ] 6.2.3 Web Test Runner unit tests for DOM reordering on shuffle, flip-all reversal, child suppression, and drawing.
+    - [ ] 6.2.3 Playwright unit & component tests for DOM reordering on shuffle, flip-all reversal, child suppression, and drawing.
     - [ ] 6.2.4 Playwright visual golden screenshot tests for stacked deck, top card display, card draw flow, and deck action popup.
 
 ---
@@ -179,7 +178,7 @@ graph TD
   - [ ] **7.2 Registration, Demo & Visual Golden Testing**
     - [ ] 7.2.1 Register `pb-bag` in `registerProtoboard`.
     - [ ] 7.2.2 Update `examples/index.html` with token bag demonstration.
-    - [ ] 7.2.3 Web Test Runner unit tests for random child selection, complete child hiding, and bag emptying.
+    - [ ] 7.2.3 Playwright unit & component tests for random child selection, complete child hiding, and bag emptying.
     - [ ] 7.2.4 Playwright visual golden screenshot tests for bag element, token blind draw, and bag action popup.
 
 ---
@@ -199,7 +198,7 @@ graph TD
   - [ ] **8.3 Registration, Demo & Visual Golden Testing**
     - [ ] 8.3.1 Register `pb-chute` and `pb-chute-layer` in `registerProtoboard`.
     - [ ] 8.3.2 Update `examples/index.html` with dice tower feeding into the tabletop slot.
-    - [ ] 8.3.3 Web Test Runner unit tests for multi-layer probability progression, trapped piece retention, and flush evacuation.
+    - [ ] 8.3.3 Playwright unit & component tests for multi-layer probability progression, trapped piece retention, and flush evacuation.
     - [ ] 8.3.4 Playwright visual golden screenshot tests for chute and dice tower interactions.
 
 ---
