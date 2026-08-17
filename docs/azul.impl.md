@@ -58,11 +58,11 @@ graph TD
     - [x] 2.2.1 Implement `HeldStackManager` LIFO stack operations (`push`, `pop`, `popAll`, `peek`, `isEmpty`, `clear`).
     - [x] 2.2.2 Implement floating overlay manager (`position: fixed; pointer-events: none; transform: translate(...)`) that tracks mouse movements and reparents picked pieces.
     - [x] 2.2.3 Declare Lit context `heldStackContext: Context<HeldStackManager> = createContext('pb-held-stack')`.
-  - [ ] **2.3 Input & Action Dispatcher (`src/core/input-dispatcher.ts`, `src/core/base-element.ts`)**
-    - [ ] 2.3.1 Implement `BaseProtoboardElement` extending `LitElement` with `@lit/context` access, lifecycle management, and custom `name` attribute support (`getAttribute('name') || tagName.toLowerCase()`).
-    - [ ] 2.3.2 Implement hover (`mouseenter`/`mouseleave`) and focus (`focus`/`blur`) target tracking.
-    - [ ] 2.3.3 Implement declarative action attribute parsing (`action-[actionName]-shortcut`, `action-[actionName]-enable`).
-    - [ ] 2.3.4 Implement keypress listener and direct piece action dispatching (`c` -> `piece.pick()`).
+  - [x] **2.3 Action Event & Base Element (`src/core/action-event.ts`, `src/core/base-element.ts`)**
+    - [x] 2.3.1 Implement `BaseElement` extending `LitElement` with `@lit/context` access and lifecycle management.
+    - [x] 2.3.2 Implement hover (`mouseenter`/`mouseleave`) target tracking on elements.
+    - [x] 2.3.3 Implement declarative action attribute parsing (`action-[actionName]="[key]"` and `action-[actionName]=""`).
+    - [x] 2.3.4 Implement keypress listener and bubbling `ActionEvent` dispatching and handling (`c` -> `piece.pick()`).
   - [ ] **2.4 `D1Piece` Component (`<pb-d1>`, `src/pieces/d1-piece.ts`)**
     - [ ] 2.4.1 Single face (`slot="face0"`).
     - [ ] 2.4.2 Shadow DOM render logic projecting `<slot name="face0"></slot>`.

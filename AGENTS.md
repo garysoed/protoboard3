@@ -11,6 +11,7 @@
 ## Dependency Injection & Context (`@lit/context`)
 
 - **Context-Driven Services**: Use `@lit/context` (`createContext`, `ContextProvider`, `@consume`) for all shared service injection.
+- **Optional Consumer Typing**: When consuming a non-nullable context (`createContext<T>`) into a component property typed as `T | undefined`, supply the generic parameter to `@consume<T | undefined>({ context, subscribe })`. Never widen `createContext<T>` to `T | undefined` when the context provider provides a non-nullable service.
 - **No Fallback Singletons**: Never instantiate or export module-level default singletons as fallbacks inside base element classes.
 - **Initialization Standards**: The public `initialize()` function must return `void`. Do not expose internal service instances for overriding in `InitOptions`.
 - **No Redundant Type Guards**: Avoid adding runtime type guards (e.g. `if (root instanceof HTMLElement)`) when variables are already statically typed to `HTMLElement`.
@@ -28,6 +29,7 @@
 - **Unit Tests**:
   - Located in `src/`, co-located in the same directory as the module or component being tested (e.g. `src/pieces/d1.test.ts`).
   - Target browser: **Chromium** only.
+- **Method-Focused Organization**: Group unit tests by the function or method under test using `test.describe('<methodName>')`. Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
 - **End-to-End (E2E) Tests**:
   - Located in the top-level `e2e/` directory (e.g. `e2e/smoke.test.ts`).
   - Target browsers: **Chromium**, **Firefox**, and **WebKit**.

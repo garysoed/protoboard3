@@ -188,14 +188,13 @@ Components trigger actions on other components via direct programmatic APIs:
 
 All actions on pieces and regions can be customized or disabled directly via HTML attributes:
 
-- `action-[actionName]-shortcut="[key]"`: Assigns a single-key shortcut for an action.
-- `action-[actionName]-enable="true|false"`: Enables or disables an action.
+- `action-[actionName]="[key]"`: Assigns a single-key shortcut for an action.
+- `action-[actionName]=""`: Disables the action shortcut from keyboard triggering.
 
 #### Example
 
 ```html
-<pb-d6 name="Damage Die" action-roll-shortcut="o" action-flip-enable="false">
-</pb-d6>
+<pb-d6 name="Damage Die" action-roll="o" action-flip=""> </pb-d6>
 ```
 
 ---

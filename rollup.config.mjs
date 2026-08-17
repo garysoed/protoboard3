@@ -48,7 +48,12 @@ export default [
         declaration: true,
         declarationDir: './dist/types',
         exclude: ['**/*.test.ts'],
-        include: ['src/**/*.ts', 'node_modules/gs-tools/**/*.ts'],
+        include: [
+          'src/**/*.ts',
+          'node_modules/gs-tools/src/data/**/*.ts',
+          'node_modules/gs-tools/src/core/**/*.ts',
+          'node_modules/gs-tools/export/data.ts',
+        ],
         tsconfig: './tsconfig.json',
       }),
     ],
@@ -77,7 +82,12 @@ export default [
       typescript({
         declaration: false,
         exclude: ['**/*.test.ts'],
-        include: ['src/**/*.ts', 'node_modules/gs-tools/**/*.ts'],
+        include: [
+          'src/**/*.ts',
+          'node_modules/gs-tools/src/data/**/*.ts',
+          'node_modules/gs-tools/src/core/**/*.ts',
+          'node_modules/gs-tools/export/data.ts',
+        ],
         tsconfig: './tsconfig.json',
       }),
     ],

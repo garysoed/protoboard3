@@ -18,6 +18,7 @@ const DEFINITIONS: Record<string, CustomElementConstructor> = {
 
 export function initialize(options: InitOptions = {}): void {
   const handService = new HandService();
+
   const root = options.root ?? document.body ?? document.documentElement;
   new ContextProvider(root, {
     context: handServiceContext,

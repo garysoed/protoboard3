@@ -29,18 +29,9 @@
     "examples/**/*.ts",
     "*.ts",
     "*.d.ts",
-    "../tools/export/**/*.ts",
-    "../tools/src/**/*.ts",
-    "node_modules/gs-tools/src/**/*.ts",
-    "node_modules/gs-tools/export/**/*.ts"
+    "node_modules/gs-tools/src/data/**/*.ts",
+    "node_modules/gs-tools/src/core/**/*.ts",
+    "node_modules/gs-tools/export/data.ts"
   ],
-  "exclude": [
-    "node_modules/gs-tools/**/*.test.ts",
-    "../tools/**/*.test.ts",
-    "node_modules/gs-tools/src/gapi/**/*",
-    "../tools/src/gapi/**/*",
-    "node_modules/gs-tools/src/color-old/**/*",
-    "../tools/src/color-old/**/*",
-    "dist"
-  ]
+  "exclude": ["node_modules/gs-tools/**/*.test.ts", "dist"]
 }
