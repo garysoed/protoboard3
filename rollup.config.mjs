@@ -10,9 +10,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const localPkgsResolver = {
   name: 'resolve-local-pkgs',
   resolveId(source) {
-    if (source === 'grapevine') {
-      return path.resolve(__dirname, 'node_modules/grapevine/export/index.ts');
-    }
     if (source.startsWith('gs-tools/export/')) {
       const subpath = source.replace('gs-tools/export/', '');
       return path.resolve(
@@ -51,11 +48,7 @@ export default [
         declaration: true,
         declarationDir: './dist/types',
         exclude: ['**/*.test.ts'],
-        include: [
-          'src/**/*.ts',
-          'node_modules/grapevine/**/*.ts',
-          'node_modules/gs-tools/**/*.ts',
-        ],
+        include: ['src/**/*.ts', 'node_modules/gs-tools/**/*.ts'],
         tsconfig: './tsconfig.json',
       }),
     ],
@@ -84,11 +77,7 @@ export default [
       typescript({
         declaration: false,
         exclude: ['**/*.test.ts'],
-        include: [
-          'src/**/*.ts',
-          'node_modules/grapevine/**/*.ts',
-          'node_modules/gs-tools/**/*.ts',
-        ],
+        include: ['src/**/*.ts', 'node_modules/gs-tools/**/*.ts'],
         tsconfig: './tsconfig.json',
       }),
     ],

@@ -1,13 +1,14 @@
-import {Vine} from 'grapevine';
+import {ContextProvider} from '@lit/context';
 
 import {D1} from '../pieces/d1';
 
 import {HandOverlay} from './hand-overlay';
+import {HandService, handServiceContext} from './hand-service';
 
 export interface InitOptions {
   readonly ignoreExisting?: boolean;
   readonly prefix?: string;
-  readonly vine?: Vine;
+  readonly root?: HTMLElement;
 }
 
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
@@ -15,8 +16,13 @@ const DEFINITIONS: Record<string, CustomElementConstructor> = {
   'hand-overlay': HandOverlay,
 };
 
-export function initialize(options: InitOptions = {}): Vine {
-  const vine = options.vine ?? new Vine();
+export function initialize(options: InitOptions = {}): void {
+  const handService = new HandService();
+  const root = options.root ?? document.body ?? document.documentElement;
+  new ContextProvider(root, {
+    context: handServiceContext,
+    initialValue: handService,
+  });
 
   const prefix = options.prefix ?? 'pb';
   const ignoreExisting = options.ignoreExisting ?? false;
@@ -28,6 +34,4 @@ export function initialize(options: InitOptions = {}): Vine {
     }
     customElements.define(tagName, elementClass);
   }
-
-  return vine;
 }

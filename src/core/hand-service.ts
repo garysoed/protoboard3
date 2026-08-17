@@ -1,4 +1,4 @@
-import {Source, source} from 'grapevine';
+import {createContext} from '@lit/context';
 import {cached} from 'gs-tools/export/data';
 
 export class HandService {
@@ -22,6 +22,4 @@ export class HandService {
   }
 }
 
-export const $handService: Source<HandService> = source(
-  () => new HandService(),
-);
+export const handServiceContext = createContext<HandService>('pb-hand-service');

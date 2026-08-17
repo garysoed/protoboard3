@@ -32,13 +32,13 @@ graph TD
 
 - [x] **1. Phase 1: Project Setup & Build Infrastructure**
   - [x] **1.1 Package & Dependencies Setup**
-    - [x] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `grapevine`).
+    - [x] 1.1.1 Initialize `package.json` with runtime dependencies (`lit`, `@lit/context`).
     - [x] 1.1.2 Configure dev dependencies (`typescript`, `rollup`, `@rollup/plugin-node-resolve`, `@rollup/plugin-typescript`, `@rollup/plugin-terser`, `@playwright/test`, `eslint`, `prettier`).
   - [x] **1.2 TypeScript & Linter Configuration**
     - [x] 1.2.1 Configure `tsconfig.json` (`target: ES2022`, `module: ESNext`/`NodeNext`, `strict: true`).
     - [x] 1.2.2 Configure ESLint and Prettier configurations.
   - [x] **1.3 Bundler Pipeline**
-    - [x] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & Grapevine embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
+    - [x] 1.3.1 Configure `rollup.config.mjs` to output standalone bundle `dist/protoboard.min.js` (IIFE format with Lit & @lit/context embedded for drop-in `<script>` consumption) and ESM module `dist/index.mjs`.
     - [x] 1.3.2 Configure TypeScript declaration generation in `dist/types/`.
   - [x] **1.4 Test Runner Infrastructure**
     - [x] 1.4.1 Configure `playwright.config.ts` for unified component unit tests, interaction flows, and visual golden screenshot tests across Chromium, Firefox, and WebKit.
@@ -47,19 +47,19 @@ graph TD
 
 ### Phase 2: First Component — `pb-d1` & Foundation Infrastructure
 
-**Goal**: Build the first complete piece component (`pb-d1`) along with all core foundation systems required for it: Grapevine DI registration sources, `HeldStackManager`, cursor floating overlay, input routing, packaging, interactive demo, and visual golden tests.
+**Goal**: Build the first complete piece component (`pb-d1`) along with all core foundation systems required for it: `@lit/context` registration and providers, `HeldStackManager`, cursor floating overlay, input routing, packaging, interactive demo, and visual golden tests.
 **Dependencies**: Phase 1.
 
 - [ ] **2. Phase 2: First Component — `pb-d1` & Foundation Infrastructure**
-  - [x] **2.1 Grapevine DI & Registration Foundation (`src/core/`)**
-    - [x] 2.1.1 Model registration configuration and custom element registry as Grapevine `source`s (`$registerOptions`, `$customElementsRegistry`), allowing test fixtures to override options like `ignoreExisting: true`.
+  - [x] **2.1 `@lit/context` & Registration Foundation (`src/core/`)**
+    - [x] 2.1.1 Model registration configuration and context providers, allowing test fixtures to override options like `ignoreExisting: true`.
     - [x] 2.1.2 Implement dynamic registration function `registerProtoboard(options?: RegisterOptions)` registering `pb-d1`.
   - [x] **2.2 Held Stack & Cursor Floating Overlay (`src/core/held-stack-manager.ts`)**
     - [x] 2.2.1 Implement `HeldStackManager` LIFO stack operations (`push`, `pop`, `popAll`, `peek`, `isEmpty`, `clear`).
     - [x] 2.2.2 Implement floating overlay manager (`position: fixed; pointer-events: none; transform: translate(...)`) that tracks mouse movements and reparents picked pieces.
-    - [x] 2.2.3 Declare Grapevine source `$heldStack: Source<HeldStackManager> = source(() => new HeldStackManager())`.
+    - [x] 2.2.3 Declare Lit context `heldStackContext: Context<HeldStackManager> = createContext('pb-held-stack')`.
   - [ ] **2.3 Input & Action Dispatcher (`src/core/input-dispatcher.ts`, `src/core/base-element.ts`)**
-    - [ ] 2.3.1 Implement `BaseProtoboardElement` extending `LitElement` with `Vine` context access, lifecycle management, and custom `name` attribute support (`getAttribute('name') || tagName.toLowerCase()`).
+    - [ ] 2.3.1 Implement `BaseProtoboardElement` extending `LitElement` with `@lit/context` access, lifecycle management, and custom `name` attribute support (`getAttribute('name') || tagName.toLowerCase()`).
     - [ ] 2.3.2 Implement hover (`mouseenter`/`mouseleave`) and focus (`focus`/`blur`) target tracking.
     - [ ] 2.3.3 Implement declarative action attribute parsing (`action-[actionName]-shortcut`, `action-[actionName]-enable`).
     - [ ] 2.3.4 Implement keypress listener and direct piece action dispatching (`c` -> `piece.pick()`).

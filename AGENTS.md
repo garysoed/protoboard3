@@ -4,13 +4,24 @@
 
 - **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
 - **Clean Public Exports**: Keep `src/index.ts` focused strictly on consumer-facing functions (such as `initialize`) without exporting internal component classes or unnecessary intermediary dependency sources.
-- **Dedicated Testing Entrypoint**: Internal services and test fixture components (e.g. `TestFace`, `HandService`, `$handService`) must be exported through `src/testing/index.ts` and bundled as `dist/testing.min.js`. All tests, and only tests, should load `dist/testing.min.js`.
+- **Dedicated Testing Entrypoint**: Internal services and test fixture components (e.g. `TestFace`, `HandService`, `handServiceContext`) must be exported through `src/testing/index.ts` and bundled as `dist/testing.min.js`. All tests, and only tests, should load `dist/testing.min.js`.
 - **Type Narrowing without Typecasts**: Never use `as` type assertions in production code. Use `instanceof` checks (e.g. `if (piece instanceof Element)`) to safely narrow DOM elements and objects.
 - **Lit Decorators Syntax**: In TypeScript with standard TC39 decorators, properties decorated with `@state()` or `@property()` must use the `accessor` keyword (e.g. `@state() private accessor cursorX = 0;`).
+
+## Dependency Injection & Context (`@lit/context`)
+
+- **Context-Driven Services**: Use `@lit/context` (`createContext`, `ContextProvider`, `@consume`) for all shared service injection.
+- **No Fallback Singletons**: Never instantiate or export module-level default singletons as fallbacks inside base element classes.
+- **Initialization Standards**: The public `initialize()` function must return `void`. Do not expose internal service instances for overriding in `InitOptions`.
+- **No Redundant Type Guards**: Avoid adding runtime type guards (e.g. `if (root instanceof HTMLElement)`) when variables are already statically typed to `HTMLElement`.
 
 ## Global Types & DOM Integration
 
 - **Root Typedefs**: Maintain global type definitions in `typedef.d.ts` at the project root with `type Protoboard = typeof import('./src/testing/index')` so the compiler automatically enforces `window.Protoboard` interface fidelity across test suites without polluting `src/index.ts`.
+
+## Jujutsu (jj) Workflow
+
+- **In-Place Conflict Resolution**: When changes to an ancestor commit trigger rebase conflicts in descendant commits, never abandon (`jj abandon`) the descendant commits to recreate them. Always switch to the conflicted revision (`jj edit <rev>`) and resolve the conflicts in place.
 
 ## Testing Conventions
 

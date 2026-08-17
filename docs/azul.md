@@ -19,7 +19,7 @@
 
 - **Language**: TypeScript
 - **Web Component Framework**: [Lit](https://lit.dev/) (`LitElement`)
-- **Dependency Injection**: [`grapevine`](https://github.com/garysoed/grapevine) (`Vine`, `Source`, `source`)
+- **Dependency Injection**: [`@lit/context`](https://lit.dev/docs/data/context/) (`createContext`, `ContextProvider`, `consume`, `provide`)
 - **Encapsulation**: Shadow DOM with `<slot>` projections, styled via CSS Shadow Parts (`::part()`) and CSS Custom Properties (`--pb-*`).
 - **Distribution**: Standalone script bundle (IIFE/UMD and ESM) consumable via a single `<script>` tag.
 - **Prefixing**: Default tag prefix is `pb-` (e.g., `pb-d6`, `pb-slot`).
@@ -27,7 +27,7 @@
 
 ### Registration API & Dependency Injection
 
-To avoid side-effect imports and state leaks across tests, components are registered explicitly via a registration function that accepts a Grapevine `Vine` context:
+To avoid side-effect imports and state leaks across tests, components are registered explicitly via a registration function that configures the element registry and context providers:
 
 ```html
 <script src="protoboard.min.js"></script>
@@ -43,8 +43,6 @@ To avoid side-effect imports and state leaks across tests, components are regist
 Component classes extend `LitElement` without the `@customElement` decorator, keeping them tag-name agnostic and free of module-level side-effects. Duplicate registration check is configurable via the `ignoreExisting` flag (defaulting to strict `false` in production, and enabled as `true` in test fixtures):
 
 ```ts
-import {Vine} from 'grapevine';
-
 export class D6Piece extends LitElement {
   /* ... */
 }
@@ -54,7 +52,7 @@ export class SlotRegion extends LitElement {
 
 export interface RegisterOptions {
   prefix?: string;
-  vine?: Vine;
+  root?: HTMLElement;
   /**
    * When true, skips defining tags that already exist in customElements.
    * Useful for test suites where registration may run repeatedly. Defaults to false.
@@ -109,12 +107,12 @@ When a keyboard shortcut is pressed:
 2. **Bubbling to Parent Region**: If the piece has no action bound to that key, the event bubbles up to the parent container region (`pb-slot`, `pb-deck`, `pb-bag`, `pb-chute`). For example, pressing `s` while hovering a card inside a deck triggers the deck's `shuffle` action.
 3. **Direct Region Targeting**: If the user hovers or focuses on an empty area of a region directly, keys trigger the region's actions immediately.
 
-### Dependency Injection with Grapevine (`HeldStackManager`)
+#### Dependency Injection with `@lit/context` (`HeldStackManager`)
 
-Protoboard avoids global singletons to ensure clean unit testing without state leaks. Shared runtime services, such as the `HeldStackManager`, are declared as Grapevine `Source` dependencies:
+Protoboard avoids global singletons to ensure clean unit testing without state leaks. Shared runtime services, such as the `HeldStackManager`, are declared as Lit contexts:
 
 ```ts
-import {source, Source, Vine} from 'grapevine';
+import {createContext} from '@lit/context';
 
 export class HeldStackManager {
   private stack: HTMLElement[] = [];
@@ -128,16 +126,17 @@ export class HeldStackManager {
   clear(): void;
 }
 
-export const $heldStack: Source<HeldStackManager> = source(
-  () => new HeldStackManager(),
-);
+export const heldStackContext =
+  createContext<HeldStackManager>('pb-held-stack');
 ```
 
-When an element needs to access or mutate the held stack, it resolves the dependency from its associated `Vine` instance:
+When an element needs to access or mutate the held stack, it consumes the dependency via Lit's `@consume` decorator:
 
 ```ts
-const heldStack = $heldStack.get(this.vine);
-heldStack.push(this);
+@consume({context: heldStackContext, subscribe: true})
+accessor heldStack?: HeldStackManager;
+
+this.heldStack?.push(this);
 ```
 
 #### Pick & Drop Lifecycle (LIFO)
@@ -471,19 +470,15 @@ Regions are containers that hold pieces as child DOM elements.
 ### Test Isolation & Registration Strategy
 
 1. **Configurable Registration in Tests**: In production, `registerProtoboard()` defaults to `ignoreExisting: false` and strictly calls `customElements.define`. In test setups (e.g. `before` or `beforeEach`), passing `{ ignoreExisting: true }` skips already-registered elements, allowing safe re-execution across test files.
-2. **Fresh `Vine` Per Test**: Custom element classes are stateless; all dynamic state (`HeldStackManager`, etc.) is injected via Grapevine. Each test fixture initializes a fresh `new Vine()`:
+2. **Isolated Context Providers Per Test**: Custom element classes are stateless; all dynamic state (`HeldStackManager`, `HandService`, etc.) is provided via `@lit/context`. Each test fixture can mount under an isolated container or inject its own `ContextProvider`:
    ```ts
    describe('D6Piece', () => {
-     let vine: Vine;
-
      beforeEach(async () => {
        registerProtoboard({ignoreExisting: true});
-       vine = new Vine();
      });
 
      it('rolls random face', async () => {
        const el = await fixture<D6Piece>(html`<pb-d6></pb-d6>`);
-       el.vine = vine;
        el.roll();
        expect(el.activeFace).to.be.within(0, 5);
      });

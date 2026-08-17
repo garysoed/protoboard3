@@ -30,7 +30,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "grapevine": "*",
+    "@lit/context": "^1.1.6",
     "gs-tools": "*",
     "lit": "^3.1.2"
   },
