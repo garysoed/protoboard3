@@ -63,10 +63,10 @@ graph TD
     - [x] 2.3.2 Implement hover (`mouseenter`/`mouseleave`) target tracking on elements.
     - [x] 2.3.3 Implement declarative action attribute parsing (`action-[actionName]="[key]"` and `action-[actionName]=""`).
     - [x] 2.3.4 Implement keypress listener and bubbling `ActionEvent` dispatching and handling (`c` -> `piece.pick()`).
-  - [ ] **2.4 `D1Piece` Component (`<pb-d1>`, `src/pieces/d1-piece.ts`)**
-    - [ ] 2.4.1 Single face (`slot="face0"`).
-    - [ ] 2.4.2 Shadow DOM render logic projecting `<slot name="face0"></slot>`.
-    - [ ] 2.4.3 `pick()` action integration with `HeldStackManager`.
+  - [x] **2.4 `D1Piece` Component (`<pb-d1>`, `src/pieces/d1-piece.ts`)**
+    - [x] 2.4.1 Single face (`slot="face0"`).
+    - [x] 2.4.2 Shadow DOM render logic projecting `<slot name="face0"></slot>`.
+    - [x] 2.4.3 `pick()` action integration with `HeldStackManager`.
   - [ ] **2.5 Packaging, Demo Harness & Testing**
     - [ ] 2.5.1 Set up and verify build scripts (`dist/protoboard.min.js`, `dist/index.mjs`).
     - [ ] 2.5.2 Create `examples/index.html` demo showing `pb-d1` pieces with hover, pick, and floating cursor overlay.

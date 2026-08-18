@@ -36,6 +36,8 @@
 - **File Naming**: All test files must be named `<name>.test.ts`.
 - **Visual Golden Screenshots**:
   - Visual snapshot baselines must be stored in `<directory_of_test>/goldens/<test_name>_<label>.png` (e.g. `src/**/goldens/` for unit tests and `e2e/goldens/` for E2E tests).
+  - In test code, always specify screenshot names with underscores: `toHaveScreenshot('<name>_<label>.png')` (e.g. `'d1_face0.png'`).
+- **No Redundant DOM Assertions**: Avoid adding redundant manual DOM traversal or slot inspection tests when a visual screenshot golden test already verifies the component rendering and slot projection.
 - **Browser Object Evaluation**: When verifying constructor functions or non-JSON serializable DOM objects in Playwright tests (e.g. `customElements.get(...)`), use `page.evaluateHandle(...)` to prevent JSON serialization errors.
 - **Test Commands**:
   - `npm test`: Runs both unit and E2E test suites.
