@@ -180,7 +180,7 @@ When hovering or focusing any piece or region, pressing `?` (or `Shift+/`) trigg
 
 Components trigger actions on other components via direct programmatic APIs:
 
-- Pieces expose public methods: `piece.roll()`, `piece.nextFace()`, `piece.prevFace()`, `piece.pick()`, and `piece.flip()` (for flippable pieces).
+- Pieces expose public methods: `piece.roll()`, `piece.nextFace()`, `piece.prevFace()`, `piece.rotate()`, `piece.pick()`, and `piece.flip()` (for flippable pieces).
 - Regions expose public methods: `region.shuffle()`, `region.flipAll()`, `region.pickAll()`, `region.drop()`, `region.dropAll()`, `region.flush()`.
 - Example: `<pb-deck>`'s `flipAll()` iterates over its child pieces and calls `childPiece.flip()`.
 
@@ -195,6 +195,7 @@ All actions on pieces and regions can be customized or disabled directly via HTM
 
 ```html
 <pb-d6 name="Damage Die" action-roll="o" action-flip=""> </pb-d6>
+<pb-d1 name="Arrow Token" rotations="0, 90, 180, 270" action-rotate="t"></pb-d1>
 ```
 
 ---
@@ -208,6 +209,7 @@ All actions on pieces and regions can be customized or disabled directly via HTM
 |                                                             | `roll`                  | `r`           | Randomizes active face (`0` to `N-1`).                                               |
 |                                                             | `next-face`             | `]`           | Cycles to next face `(current + 1) % N`.                                             |
 |                                                             | `prev-face`             | `[`           | Cycles to previous face `(current - 1 + N) % N`.                                     |
+|                                                             | `rotate`                | `t`           | Cycles piece rotation through configured `rotations` in degrees.                     |
 | **Flippable Pieces (`d2`, `d4`, `d6`, `d8`, `d12`, `d20`)** | `flip`                  | `f`           | Shows opposite face: `(N - 1) - current`.                                            |
 | **All Regions**                                             | `drop`                  | `Space`       | Pops last picked piece from held stack and reparents into this region.               |
 |                                                             | `drop-all`              | `Shift+Space` | Pops all held pieces and reparents them all into this region.                        |
@@ -248,6 +250,14 @@ Pieces represent physical multi-sided objects (coins, cards, meeples, tokens, po
 - **`<pb-d12>`**: 12 faces (`face0`..`face11`). Standard dodecahedron die.
 - **`<pb-d20>`**: 20 faces (`face0`..`face19`). Standard icosahedron die.
 - **`<pb-dn>`**: N faces (`face0`..`faceN-1`). Declared via `sides="N"` attribute.
+
+#### Rotation Mechanics (`rotate`)
+
+All pieces support rotation via the `rotate` action (default shortcut `t`) or `piece.rotate()` method:
+
+- **`rotations` Attribute**: A comma-separated list of rotation angles in degrees (e.g. `rotations="0, 90, 180, 270"` or `rotations="0, 180, 270"`). Defaults to `0, 90, 180, 270`.
+- **Cyclic Progression**: Triggering `rotate` cycles through the configured rotation list in order: `(currentRotationIndex + 1) % rotations.length`. For example, with `rotations="0, 180, 270"`, successive triggers rotate the piece to `0°` &rarr; `180°` &rarr; `270°` &rarr; `0°`.
+- **Visual Presentation**: Rotation is applied directly to the piece container via CSS transform (`transform: rotate(${deg}deg)`).
 
 #### Opposing Face Logic (`flip`)
 

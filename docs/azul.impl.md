@@ -84,7 +84,8 @@ graph TD
   - [ ] **3.1 Base Piece Abstraction (`src/pieces/base-piece.ts`)**
     - [ ] 3.1.1 Reactive `activeFace` property (0-indexed).
     - [ ] 3.1.2 Shadow DOM projection rendering `<slot name="face${this.activeFace}"></slot>`.
-    - [ ] 3.1.3 Base piece actions: `roll()` (shortcut `r`), `nextFace()` (shortcut `]`), `prevFace()` (shortcut `[`).
+    - [ ] 3.1.3 Base piece actions: `roll()` (shortcut `r`), `nextFace()` (shortcut `]`), `prevFace()` (shortcut `[`), `rotate()` (shortcut `t`).
+    - [ ] 3.1.4 `rotations` attribute parsing (comma-separated degrees, e.g. `0, 180, 270`, cyclic progression `(currentIndex + 1) % rotations.length`) and CSS transform rendering.
   - [ ] **3.2 Flippable Pieces & Polyhedral Components (`src/pieces/`)**
     - [ ] 3.2.1 `D2Piece` (`<pb-d2>`): 2 faces (coins, double-sided cards), implements `flip()` (shortcut `f`: `face0 <-> face1`).
     - [ ] 3.2.2 `D4Piece` (`<pb-d4>`): 4 faces (tetrahedral die), implements `flip()` (shortcut `f`: `face0 <-> face3`, `face1 <-> face2`).
@@ -97,8 +98,8 @@ graph TD
     - [ ] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
     - [ ] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).
   - [ ] **3.4 Unit & Visual Golden Testing**
-    - [ ] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, and roll distributions.
-    - [ ] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces and flipping state transitions.
+    - [ ] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, roll distributions, and rotation cycling.
+    - [ ] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces, flipping state transitions, and piece rotation angles.
 
 ---
 
@@ -227,7 +228,7 @@ graph TD
     - [ ] 9.2.2 Playwright visual golden tests for complete multi-region interaction flows.
   - [ ] **9.3 User-Facing Documentation (`docs/usage.md`, `docs/api.md`)**
     - [ ] 9.3.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
-    - [ ] 9.3.2 Document action attribute configurations (`action-*`), keybindings, action popup (`?`), and registration options.
+    - [ ] 9.3.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
   - [ ] **9.4 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
     - [ ] 9.4.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
   - [ ] **9.5 Production Packaging Verification**
