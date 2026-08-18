@@ -4,9 +4,11 @@
 
 - **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
 - **Clean Public Exports**: Keep `src/index.ts` focused strictly on consumer-facing functions (such as `initialize`) without exporting internal component classes or unnecessary intermediary dependency sources.
-- **Dedicated Testing Entrypoint**: Internal services and test fixture components (e.g. `TestFace`, `HandService`, `handServiceContext`) must be exported through `src/testing/index.ts` and bundled as `dist/testing.min.js`. All tests, and only tests, should load `dist/testing.min.js`.
+- **Dedicated Testing Entrypoint**: Shared internal services and cross-test fixture components (e.g. `TestFace`, `HandService`, `handServiceContext`) must be exported through `src/testing/index.ts` and bundled as `dist/testing.min.js`. All tests, and only tests, should load `dist/testing.min.js`. Single-use test fixture classes should be defined and registered directly within their respective test file.
 - **Type Narrowing without Typecasts**: Never use `as` type assertions in production code. Use `instanceof` checks (e.g. `if (piece instanceof Element)`) to safely narrow DOM elements and objects.
 - **Lit Decorators Syntax**: In TypeScript with standard TC39 decorators, properties decorated with `@state()` or `@property()` must use the `accessor` keyword (e.g. `@state() private accessor cursorX = 0;`).
+- **Action Registration**: Base classes must not conditionally register actions based on property values. Specialized or multi-variant actions (e.g. `roll`, `next-face`, `flip`) must be registered directly by the subclasses that support them.
+- **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
 
 ## Dependency Injection & Context (`@lit/context`)
 
@@ -40,6 +42,7 @@
   - Visual snapshot baselines must be stored in `<directory_of_test>/goldens/<test_name>_<label>.png` (e.g. `src/**/goldens/` for unit tests and `e2e/goldens/` for E2E tests).
   - In test code, always specify screenshot names with underscores: `toHaveScreenshot('<name>_<label>.png')` (e.g. `'d1_face0.png'`).
 - **No Redundant DOM Assertions**: Avoid adding redundant manual DOM traversal or slot inspection tests when a visual screenshot golden test already verifies the component rendering and slot projection.
+- **No Negative Feature Tests**: Do not write tests asserting the absence of unsupported actions or shortcuts (e.g. verifying pressing a key does nothing). Focus tests strictly on verifying supported behavior.
 - **Browser Object Evaluation**: When verifying constructor functions or non-JSON serializable DOM objects in Playwright tests (e.g. `customElements.get(...)`), use `page.evaluateHandle(...)` to prevent JSON serialization errors.
 - **Test Commands**:
   - `npm test`: Runs the test suite.

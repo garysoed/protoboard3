@@ -123,3 +123,30 @@ test.describe('pick', () => {
     await expect(overlay.locator('#piece')).toBeAttached();
   });
 });
+
+test.describe('rotate', () => {
+  test('rotates piece when pressing t key and matches visual snapshot', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <pb-d1 id="piece">
+            <pb-test-face slot="face0" text="Pawn"></pb-test-face>
+          </pb-d1>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      window.Protoboard.initialize();
+    });
+
+    const piece = page.locator('#piece');
+    await piece.hover();
+    await page.keyboard.press('t');
+
+    await expect(piece).toHaveScreenshot('d1_rotated_90.png');
+  });
+});

@@ -205,7 +205,9 @@ All actions on pieces and regions can be customized or disabled directly via HTM
 | Target                                                      | Action                  | Default Key   | Description                                                                          |
 | :---------------------------------------------------------- | :---------------------- | :------------ | :----------------------------------------------------------------------------------- |
 | **All Elements (Pieces & Regions)**                         | `show-actions` / `help` | `?`           | Dispatches `QueryActionsEvent` displaying `<pb-action-popup>`.                       |
-| **All Pieces (`pb-d1`..`pb-dn`)**                           | `pick`                  | `c`           | Adds piece to cursor's held stack (LIFO).                                            |
+| **Single-Faced Pieces (`<pb-d1>`)**                         | `pick`                  | `c`           | Adds piece to cursor's held stack (LIFO).                                            |
+|                                                             | `rotate`                | `t`           | Cycles piece rotation through configured `rotations` in degrees.                     |
+| **Multi-Sided Pieces (`<pb-d2>`..`<pb-dn>`)**               | `pick`                  | `c`           | Adds piece to cursor's held stack (LIFO).                                            |
 |                                                             | `roll`                  | `r`           | Randomizes active face (`0` to `N-1`).                                               |
 |                                                             | `next-face`             | `]`           | Cycles to next face `(current + 1) % N`.                                             |
 |                                                             | `prev-face`             | `[`           | Cycles to previous face `(current - 1 + N) % N`.                                     |
@@ -240,9 +242,22 @@ Pieces represent physical multi-sided objects (coins, cards, meeples, tokens, po
   }
   ```
 
+#### Pieces & Actions Matrix
+
+| Piece Tag      | Class Name | Faces / Range                          | Typical Use Case                             | Supported Actions                                                                                                    |
+| :------------- | :--------- | :------------------------------------- | :------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| **`<pb-d1>`**  | `D1`       | 1 (`face0`)                            | Meeples, static tokens, chess pieces         | `pick` (`c`), `rotate` (`t`), `show-actions` (`?`)                                                                   |
+| **`<pb-d2>`**  | `D2Piece`  | 2 (`face0`, `face1`)                   | Coins, double-sided cards, reversible tokens | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-d4>`**  | `D4Piece`  | 4 (`face0`..`face3`)                   | Standard tetrahedral die                     | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-d6>`**  | `D6Piece`  | 6 (`face0`..`face5`)                   | Standard cubic die                           | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-d8>`**  | `D8Piece`  | 8 (`face0`..`face7`)                   | Standard octahedron die                      | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-d12>`** | `D12Piece` | 12 (`face0`..`face11`)                 | Standard dodecahedron die                    | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-d20>`** | `D20Piece` | 20 (`face0`..`face19`)                 | Standard icosahedron die                     | `pick` (`c`), `roll` (`r`), `flip` (`f`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`) |
+| **`<pb-dn>`**  | `DNPiece`  | N (`face0`..`faceN-1`) via `sides="N"` | Custom N-sided dice, spinners, counters      | `pick` (`c`), `roll` (`r`), `next-face` (`]`), `prev-face` (`[`), `rotate` (`t`), `show-actions` (`?`)               |
+
 #### Piece Types
 
-- **`<pb-d1>`**: 1 face (`face0`). Used for meeples, static tokens, chess pieces.
+- **`<pb-d1>`**: 1 face (`face0`). Used for meeples, static tokens, chess pieces. Supports `pick` and `rotate` (`roll`, `next-face`, and `prev-face` are omitted since it has only one face).
 - **`<pb-d2>`**: 2 faces (`face0`, `face1`). Used for coins, double-sided cards, reversible tokens.
 - **`<pb-d4>`**: 4 faces (`face0`..`face3`). Standard tetrahedral die.
 - **`<pb-d6>`**: 6 faces (`face0`..`face5`). Standard cubic die.
