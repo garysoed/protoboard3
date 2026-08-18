@@ -50,7 +50,7 @@ graph TD
 **Goal**: Build the first complete piece component (`pb-d1`) along with all core foundation systems required for it: `@lit/context` registration and providers, `HeldStackManager`, cursor floating overlay, input routing, packaging, interactive demo, and visual golden tests.
 **Dependencies**: Phase 1.
 
-- [ ] **2. Phase 2: First Component — `pb-d1` & Foundation Infrastructure**
+- [x] **2. Phase 2: First Component — `pb-d1` & Foundation Infrastructure**
   - [x] **2.1 `@lit/context` & Registration Foundation (`src/core/`)**
     - [x] 2.1.1 Model registration configuration and context providers, allowing test fixtures to override options like `ignoreExisting: true`.
     - [x] 2.1.2 Implement dynamic registration function `registerProtoboard(options?: RegisterOptions)` registering `pb-d1`.
@@ -67,11 +67,11 @@ graph TD
     - [x] 2.4.1 Single face (`slot="face0"`).
     - [x] 2.4.2 Shadow DOM render logic projecting `<slot name="face0"></slot>`.
     - [x] 2.4.3 `pick()` action integration with `HeldStackManager`.
-  - [ ] **2.5 Packaging, Demo Harness & Testing**
-    - [ ] 2.5.1 Set up and verify build scripts (`dist/protoboard.min.js`, `dist/index.mjs`).
-    - [ ] 2.5.2 Create `examples/index.html` demo showing `pb-d1` pieces with hover, pick, and floating cursor overlay.
-    - [ ] 2.5.3 Playwright unit & component tests for `pb-d1`, `HeldStackManager`, and input dispatcher.
-    - [ ] 2.5.4 Playwright visual golden screenshot tests for `pb-d1` face projection and floating cursor overlay.
+  - [x] **2.5 Packaging, Demo Harness & Testing**
+    - [x] 2.5.1 Set up and verify build scripts (`dist/protoboard.min.js`, `dist/index.mjs`).
+    - [x] 2.5.2 Create `examples/index.html` demo showing `pb-d1` pieces with hover, pick, and floating cursor overlay.
+    - [x] 2.5.3 Playwright unit & component tests for `pb-d1`, `HeldStackManager`, and input dispatcher.
+    - [x] 2.5.4 Playwright visual golden screenshot tests for `pb-d1` face projection and floating cursor overlay.
 
 ---
 

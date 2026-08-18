@@ -81,6 +81,7 @@ export default [
       }),
       typescript({
         declaration: false,
+        declarationDir: undefined,
         exclude: ['**/*.test.ts'],
         include: [
           'src/**/*.ts',

@@ -26,7 +26,6 @@
   "include": [
     "src/**/*.ts",
     "e2e/**/*.ts",
-    "examples/**/*.ts",
     "*.ts",
     "*.d.ts",
     "node_modules/gs-tools/src/data/**/*.ts",

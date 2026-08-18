@@ -31,8 +31,10 @@
   - Target browser: **Chromium** only.
 - **Method-Focused Organization**: Group unit tests by the function or method under test using `test.describe('<methodName>')`. Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
 - **End-to-End (E2E) Tests**:
-  - Located in the top-level `e2e/` directory (e.g. `e2e/smoke.test.ts`).
+  - Located in the top-level `e2e/` directory, organized per component (e.g. `e2e/d1.test.ts`). Do not use generic smoke test files.
   - Target browsers: **Chromium**, **Firefox**, and **WebKit**.
+- **Viewport Standard**:
+  - All tests must use a default viewport size of **480 × 480** pixels (configured via `DEFAULT_VIEWPORT` in `playwright.config.ts`).
 - **File Naming**: All test files must be named `<name>.test.ts`.
 - **Visual Golden Screenshots**:
   - Visual snapshot baselines must be stored in `<directory_of_test>/goldens/<test_name>_<label>.png` (e.g. `src/**/goldens/` for unit tests and `e2e/goldens/` for E2E tests).
@@ -40,8 +42,8 @@
 - **No Redundant DOM Assertions**: Avoid adding redundant manual DOM traversal or slot inspection tests when a visual screenshot golden test already verifies the component rendering and slot projection.
 - **Browser Object Evaluation**: When verifying constructor functions or non-JSON serializable DOM objects in Playwright tests (e.g. `customElements.get(...)`), use `page.evaluateHandle(...)` to prevent JSON serialization errors.
 - **Test Commands**:
-  - `npm test`: Runs both unit and E2E test suites.
-  - `npm run test:unit`: Runs only unit tests on Chromium.
+  - `npm test`: Runs the test suite.
+  - `npm run test:unit`: Runs unit tests on Chromium.
   - `npm run test:e2e`: Runs E2E tests across Chromium, Firefox, and WebKit.
 - **Environment Notes**:
   - Running Playwright browsers on macOS requires `BypassSandbox: true` due to OS child process IPC sandbox restrictions.

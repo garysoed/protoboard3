@@ -9,10 +9,8 @@ test.describe('HandOverlay', () => {
           <style>
             body {
               background-color: #f8fafc;
-              height: 150px;
               margin: 0;
               padding: 0;
-              width: 150px;
             }
           </style>
         </head>

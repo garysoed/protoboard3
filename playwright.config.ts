@@ -6,6 +6,11 @@ declare const process: {
   };
 };
 
+const DEFAULT_VIEWPORT = {
+  height: 480,
+  width: 480,
+};
+
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
@@ -18,22 +23,34 @@ export default defineConfig({
     {
       name: 'unit',
       testMatch: 'src/**/*.test.ts',
-      use: {...devices['Desktop Chrome']},
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: DEFAULT_VIEWPORT,
+      },
     },
     {
       name: 'e2e-chromium',
       testMatch: 'e2e/**/*.test.ts',
-      use: {...devices['Desktop Chrome']},
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: DEFAULT_VIEWPORT,
+      },
     },
     {
       name: 'e2e-firefox',
       testMatch: 'e2e/**/*.test.ts',
-      use: {...devices['Desktop Firefox']},
+      use: {
+        ...devices['Desktop Firefox'],
+        viewport: DEFAULT_VIEWPORT,
+      },
     },
     {
       name: 'e2e-webkit',
       testMatch: 'e2e/**/*.test.ts',
-      use: {...devices['Desktop Safari']},
+      use: {
+        ...devices['Desktop Safari'],
+        viewport: DEFAULT_VIEWPORT,
+      },
     },
   ],
   reporter: 'list',
@@ -43,6 +60,7 @@ export default defineConfig({
   use: {
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
+    viewport: DEFAULT_VIEWPORT,
   },
   workers: process.env.CI ? 1 : undefined,
 });
