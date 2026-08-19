@@ -14,25 +14,50 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.addScriptTag({path: 'dist/testing.min.js'});
   await page.evaluate(() => {
     window.Protoboard.initialize();
+    class RollAction extends window.Protoboard.BaseAction {
+      readonly attrName = 'action-roll';
+
+      constructor() {
+        super(window.Protoboard.parseTriggerKey('r'));
+      }
+
+      protected override onTrigger(element: Element): void {
+        if (element instanceof TestPiece) {
+          element.roll();
+        }
+      }
+    }
+    class NextFaceAction extends window.Protoboard.BaseAction {
+      readonly attrName = 'action-next-face';
+
+      constructor() {
+        super(window.Protoboard.parseTriggerKey(']'));
+      }
+
+      protected override onTrigger(element: Element): void {
+        if (element instanceof TestPiece) {
+          element.nextFace();
+        }
+      }
+    }
+    class PrevFaceAction extends window.Protoboard.BaseAction {
+      readonly attrName = 'action-prev-face';
+
+      constructor() {
+        super(window.Protoboard.parseTriggerKey('['));
+      }
+
+      protected override onTrigger(element: Element): void {
+        if (element instanceof TestPiece) {
+          element.prevFace();
+        }
+      }
+    }
+
     class TestPiece extends window.Protoboard.BasePiece {
       constructor() {
-        super();
+        super([new RollAction(), new NextFaceAction(), new PrevFaceAction()]);
         this.sides = 3;
-        this.registerAction({
-          defaultShortcut: 'r',
-          handler: () => this.roll(),
-          id: 'roll',
-        });
-        this.registerAction({
-          defaultShortcut: ']',
-          handler: () => this.nextFace(),
-          id: 'next-face',
-        });
-        this.registerAction({
-          defaultShortcut: '[',
-          handler: () => this.prevFace(),
-          id: 'prev-face',
-        });
       }
     }
     if (!customElements.get('pb-test-piece')) {
@@ -351,180 +376,5 @@ test.describe('prevFace', () => {
     });
 
     expect(slotName).toBe('face2');
-  });
-});
-
-test.describe('rotate', () => {
-  test('cycles through default rotations 0, 90, 180, 270', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const piece = page.locator('#piece');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'matrix(0, 1, -1, 0, 0, 0)');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'matrix(-1, 0, 0, -1, 0, 0)');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'matrix(0, -1, 1, 0, 0, 0)');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'none');
-  });
-
-  test('matches visual snapshot for rotated piece', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="Face"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-
-    const piece = page.locator('#piece');
-    await expect(piece).toHaveScreenshot('base_piece_rotated_90.png');
-  });
-
-  test('parses custom rotations attribute and cycles accordingly', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece" rotations="0, 180">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const piece = page.locator('#piece');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'matrix(-1, 0, 0, -1, 0, 0)');
-
-    await page.evaluate(() => {
-      const el = document.querySelector<BasePiece>('#piece');
-      el?.rotate();
-    });
-    await expect(piece).toHaveCSS('transform', 'none');
-  });
-
-  test('triggers rotate on hover when pressing t key', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const piece = page.locator('#piece');
-
-    await piece.hover();
-    await page.keyboard.press('t');
-
-    await expect(piece).toHaveCSS('transform', 'matrix(0, 1, -1, 0, 0, 0)');
-  });
-
-  test('supports custom shortcut attribute for rotate action', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece" action-rotate="y">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const piece = page.locator('#piece');
-
-    await piece.hover();
-    await page.keyboard.press('y');
-
-    await expect(piece).toHaveCSS('transform', 'matrix(0, 1, -1, 0, 0, 0)');
-  });
-});
-
-test.describe('pick', () => {
-  test('pushes piece into hand service when pick is called programmatically', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <div id="board">
-        <pb-test-piece id="piece">
-          <pb-test-face slot="face0" text="0"></pb-test-face>
-        </pb-test-piece>
-      </div>
-    `,
-    );
-
-    const overlay = page.locator('pb-hand-overlay');
-    await expect(overlay).not.toBeAttached();
-
-    await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.pick();
-    });
-
-    await expect(overlay.locator('#piece')).toBeAttached();
-    await expect(page.locator('#board pb-test-piece')).not.toBeAttached();
-  });
-
-  test('picks piece into hand overlay when hovering and pressing c', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <div id="board">
-        <pb-test-piece id="piece">
-          <pb-test-face slot="face0" text="0"></pb-test-face>
-        </pb-test-piece>
-      </div>
-    `,
-    );
-
-    const overlay = page.locator('pb-hand-overlay');
-    await expect(overlay).not.toBeAttached();
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('c');
-
-    await expect(overlay.locator('#piece')).toBeAttached();
-    await expect(page.locator('#board pb-test-piece')).not.toBeAttached();
   });
 });

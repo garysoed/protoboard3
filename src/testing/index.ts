@@ -1,3 +1,6 @@
+import {BaseAction} from '../action/base-action';
+import {PickAction} from '../action/pick-action';
+import {RotateAction} from '../action/rotate-action';
 import {ActionEvent} from '../core/action-event';
 import {BaseElement} from '../core/base-element';
 import {HandService, handServiceContext} from '../core/hand-service';
@@ -19,6 +22,7 @@ export function initialize(options: InitOptions = {}): void {
 
 export {
   ActionEvent,
+  BaseAction,
   BaseElement,
   BasePiece,
   D1,
@@ -26,6 +30,8 @@ export {
   handServiceContext,
   matchesKey,
   parseTriggerKey,
+  PickAction,
+  RotateAction,
   TestFace,
 };
 export type {TriggerKey};

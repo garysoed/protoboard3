@@ -4,6 +4,7 @@ This directory contains the TypeScript source code for the Protoboard library.
 
 ## Subdirectories
 
+- [`action/`](./action/): Composable action infrastructure and concrete actions.
 - [`core/`](./core/): Core infrastructure and Lit Context dependency injection foundation.
 - [`pieces/`](./pieces/): Tabletop piece components.
 - [`testing/`](./testing/): Test-only entry point and exports for test suites.

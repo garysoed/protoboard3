@@ -1,6 +1,9 @@
-import {css, CSSResultGroup, html, PropertyValues, TemplateResult} from 'lit';
+import {css, CSSResultGroup, html, TemplateResult} from 'lit';
 import {property, state} from 'lit/decorators.js';
 
+import {BaseAction} from '../action/base-action';
+import {PickAction} from '../action/pick-action';
+import {RotateAction} from '../action/rotate-action';
 import {BaseElement} from '../core/base-element';
 
 export class BasePiece extends BaseElement {
@@ -10,36 +13,23 @@ export class BasePiece extends BaseElement {
     }
   `;
 
-  @property({type: String})
-  accessor rotations = '0, 90, 180, 270';
   @property({type: Number})
   accessor sides = 1;
 
   @state()
   private accessor activeFace = 0;
-  @state()
-  private accessor rotationIndex = 0;
 
-  constructor() {
-    super();
-    this.registerAction({
-      defaultShortcut: 'c',
-      handler: () => this.pick(),
-      id: 'pick',
-    });
-    this.registerAction({
-      defaultShortcut: 't',
-      handler: () => this.rotate(),
-      id: 'rotate',
-    });
+  constructor(actions: readonly BaseAction[] = []) {
+    super([
+      new PickAction(() => this.handService),
+      new RotateAction(),
+      ...actions,
+    ]);
   }
 
   nextFace(): void {
     const totalSides = Math.max(1, this.sides);
     this.activeFace = (this.activeFace + 1) % totalSides;
-  }
-  pick(): void {
-    this.handService?.push(this);
   }
   prevFace(): void {
     const totalSides = Math.max(1, this.sides);
@@ -51,35 +41,5 @@ export class BasePiece extends BaseElement {
   roll(): void {
     const totalSides = Math.max(1, this.sides);
     this.activeFace = Math.floor(Math.random() * totalSides);
-  }
-  rotate(): void {
-    const angles = this.parsedRotations;
-    this.rotationIndex = (this.rotationIndex + 1) % angles.length;
-  }
-  override updated(changedProperties: PropertyValues): void {
-    super.updated(changedProperties);
-    if (
-      changedProperties.has('rotations') ||
-      changedProperties.has('rotationIndex')
-    ) {
-      this.applyRotation();
-    }
-  }
-
-  get parsedRotations(): number[] {
-    if (!this.rotations) {
-      return [0, 90, 180, 270];
-    }
-    const angles = this.rotations
-      .split(',')
-      .map((s) => parseFloat(s.trim()))
-      .filter((n) => !isNaN(n));
-    return angles.length > 0 ? angles : [0, 90, 180, 270];
-  }
-
-  private applyRotation(): void {
-    const angles = this.parsedRotations;
-    const angle = angles[this.rotationIndex % angles.length] ?? 0;
-    this.style.transform = angle !== 0 ? `rotate(${angle}deg)` : '';
   }
 }

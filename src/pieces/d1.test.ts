@@ -1,7 +1,5 @@
 import {expect, test} from '@playwright/test';
 
-import {D1} from './d1';
-
 test.describe('render', () => {
   test('matches visual snapshot for rendered face0 slot', async ({page}) => {
     await page.setContent(`
@@ -33,38 +31,6 @@ test.describe('render', () => {
 });
 
 test.describe('pick', () => {
-  test('pushes piece into hand service when pick is called programmatically', async ({
-    page,
-  }) => {
-    await page.setContent(`
-      <!DOCTYPE html>
-      <html>
-        <body>
-          <div id="board">
-            <pb-d1 id="piece">
-              <div slot="face0" style="width: 50px; height: 50px;">Face 0</div>
-            </pb-d1>
-          </div>
-        </body>
-      </html>
-    `);
-    await page.addScriptTag({path: 'dist/testing.min.js'});
-    await page.evaluate(() => {
-      window.Protoboard.initialize();
-    });
-
-    const overlay = page.locator('pb-hand-overlay');
-    await expect(overlay).not.toBeAttached();
-
-    await page.evaluate(() => {
-      const piece = document.querySelector<D1>('#piece');
-      piece?.pick();
-    });
-
-    await expect(overlay.locator('#piece')).toBeAttached();
-    await expect(page.locator('#board pb-d1')).not.toBeAttached();
-  });
-
   test('picks piece into hand overlay when hovering and pressing c', async ({
     page,
   }) => {
