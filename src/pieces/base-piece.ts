@@ -15,7 +15,7 @@ export abstract class BasePiece extends BaseElement {
 
   abstract readonly sides: number;
 
-  private readonly activeFace = signal(0);
+  protected readonly activeFace = signal(0);
 
   constructor(actions: readonly BaseAction[] = []) {
     super([
@@ -35,9 +35,5 @@ export abstract class BasePiece extends BaseElement {
   }
   override render(): TemplateResult {
     return html`<slot name="face${this.activeFace.get()}"></slot>`;
-  }
-  roll(): void {
-    const totalSides = Math.max(1, this.sides);
-    this.activeFace.set(Math.floor(Math.random() * totalSides));
   }
 }

@@ -14,19 +14,6 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.addScriptTag({path: 'dist/testing.min.js'});
   await page.evaluate(() => {
     window.Protoboard.initialize();
-    class RollAction extends window.Protoboard.BaseAction {
-      readonly attrName = 'action-roll';
-
-      constructor() {
-        super(window.Protoboard.parseTriggerKey('r'));
-      }
-
-      protected override onTrigger(element: Element): void {
-        if (element instanceof TestPiece) {
-          element.roll();
-        }
-      }
-    }
     class NextFaceAction extends window.Protoboard.BaseAction {
       readonly attrName = 'action-next-face';
 
@@ -58,7 +45,7 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
       readonly sides = 3;
 
       constructor() {
-        super([new RollAction(), new NextFaceAction(), new PrevFaceAction()]);
+        super([new NextFaceAction(), new PrevFaceAction()]);
       }
     }
     if (!customElements.get('pb-test-piece')) {
@@ -107,78 +94,6 @@ test.describe('render', () => {
 
     const piece = page.locator('#piece');
     await expect(piece).toHaveScreenshot('base_piece_face1.png');
-  });
-});
-
-test.describe('roll', () => {
-  test('randomizes active face within bounds when roll is called programmatically', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const slotName = await page.evaluate(async () => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.roll();
-      await piece?.updateComplete;
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toMatch(/^face[0-2]$/);
-  });
-
-  test('triggers roll on hover when pressing r key', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('r');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toMatch(/^face[0-2]$/);
-  });
-
-  test('supports custom shortcut attribute for roll action', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece" action-roll="o">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('o');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toMatch(/^face[0-2]$/);
   });
 });
 

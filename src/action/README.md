@@ -6,4 +6,5 @@ This directory contains reusable, composable action classes for tabletop pieces 
 
 - [`base-action.ts`](./base-action.ts): Abstract base class for declarative keyboard and attribute-configured actions (`BaseAction`).
 - [`pick-action.ts`](./pick-action.ts): Action that pushes the target element into the hand stack (`PickAction`).
+- [`roll-action.ts`](./roll-action.ts): Action that triggers rolling behavior on the target piece (`RollAction`).
 - [`rotate-action.ts`](./rotate-action.ts): Action that rotates the target piece (`RotateAction`).

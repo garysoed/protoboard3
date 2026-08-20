@@ -2,6 +2,7 @@ import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 
 import {BaseAction} from '../action/base-action';
 import {PickAction} from '../action/pick-action';
+import {RollAction} from '../action/roll-action';
 import {RotateAction} from '../action/rotate-action';
 import {ActionEvent} from '../core/action-event';
 import {BaseElement} from '../core/base-element';
@@ -34,6 +35,7 @@ export {
   matchesKey,
   parseTriggerKey,
   PickAction,
+  RollAction,
   RotateAction,
   signal,
   SignalWatcher,

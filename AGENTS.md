@@ -48,6 +48,7 @@
   - Located in `src/`, co-located in the same directory as the module or component being tested (e.g. `src/pieces/d1.test.ts`).
   - Target browser: **Chromium** only.
 - **Method-Focused Organization**: Group unit tests by the function or method under test using `test.describe('<methodName>')`. Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
+- **Action Tests Focus on Effects**: Unit tests for action classes must strictly test the effects and state changes when triggered. Do not test custom shortcut attributes or different triggering mechanisms, as those are already covered by `BaseAction` and `BaseElement`.
 - **End-to-End (E2E) Tests**:
   - Located in the top-level `e2e/` directory, organized per component (e.g. `e2e/d1.test.ts`). Do not use generic smoke test files.
   - Target browsers: **Chromium**, **Firefox**, and **WebKit**.
