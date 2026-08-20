@@ -35,10 +35,10 @@ test.describe('PickAction', () => {
 
     await page.evaluate(() => {
       const piece = document.querySelector<BaseElement>('#piece');
-      const action = new window.Protoboard.PickAction(() => piece?.handService);
+      const action = new window.Protoboard.PickAction(piece!.handService);
       action.observe(piece!);
       const keyboardEvent = new KeyboardEvent('keydown', {key: 'c'});
-      piece?.dispatchEvent(
+      piece!.dispatchEvent(
         new window.Protoboard.ActionEvent('c', keyboardEvent),
       );
     });

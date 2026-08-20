@@ -59,7 +59,7 @@ export abstract class BaseAction {
 
   private maybeTrigger(event: KeyboardEvent, element: Element): void {
     if (matchesKey(this.triggerKey.get(), event)) {
-      void this.onTrigger(element);
+      this.onTrigger(element);
     }
   }
   private onAction(event: Event): void {
@@ -71,5 +71,5 @@ export abstract class BaseAction {
     }
   }
 
-  protected abstract onTrigger(element: Element): Promise<void> | void;
+  protected abstract onTrigger(element: Element): unknown;
 }

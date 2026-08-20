@@ -1,5 +1,6 @@
-import {consume} from '@lit/context';
+import {ContextConsumer} from '@lit/context';
 import {SignalWatcher, signal} from '@lit-labs/signals';
+import {cached} from 'gs-tools/export/data';
 import {LitElement} from 'lit';
 
 import {BaseAction} from '../action/base-action';
@@ -8,18 +9,21 @@ import {ActionEvent} from './action-event';
 import {HandService, handServiceContext} from './hand-service';
 
 export class BaseElement extends SignalWatcher(LitElement) {
-  @consume<HandService | undefined>({
-    context: handServiceContext,
-    subscribe: true,
-  })
-  accessor handService: HandService | undefined;
+  readonly handService = signal<HandService | undefined>(undefined);
 
   private readonly boundOnMouseEnter = this.onMouseEnter.bind(this);
   private readonly boundOnMouseLeave = this.onMouseLeave.bind(this);
   private readonly boundOnWindowKeyDown = this.onWindowKeyDown.bind(this);
+  private readonly handServiceConsumer = new ContextConsumer(this, {
+    callback: (service) => {
+      this.handService.set(service);
+    },
+    context: handServiceContext,
+    subscribe: true,
+  });
   private readonly isHovered = signal(false);
 
-  constructor(protected readonly actions: readonly BaseAction[] = []) {
+  constructor(private readonly actionsFactory: () => readonly BaseAction[]) {
     super();
   }
 
@@ -81,5 +85,10 @@ export class BaseElement extends SignalWatcher(LitElement) {
     }
 
     this.dispatchEvent(new ActionEvent(event.key, event));
+  }
+
+  @cached()
+  private get actions(): readonly BaseAction[] {
+    return this.actionsFactory();
   }
 }

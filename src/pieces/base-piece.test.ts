@@ -1,6 +1,12 @@
 import {expect, Page, test} from '@playwright/test';
 
-import {BasePiece} from './base-piece';
+import type {BasePiece} from './base-piece';
+
+interface TestPiece extends BasePiece {
+  readonly sides: number;
+
+  setFace(face: number): void;
+}
 
 async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.setContent(`
@@ -14,38 +20,15 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.addScriptTag({path: 'dist/testing.min.js'});
   await page.evaluate(() => {
     window.Protoboard.initialize();
-    class NextFaceAction extends window.Protoboard.BaseAction {
-      readonly attrName = 'action-next-face';
-
-      constructor() {
-        super(window.Protoboard.parseTriggerKey(']'));
-      }
-
-      protected override onTrigger(element: Element): void {
-        if (element instanceof TestPiece) {
-          element.nextFace();
-        }
-      }
-    }
-    class PrevFaceAction extends window.Protoboard.BaseAction {
-      readonly attrName = 'action-prev-face';
-
-      constructor() {
-        super(window.Protoboard.parseTriggerKey('['));
-      }
-
-      protected override onTrigger(element: Element): void {
-        if (element instanceof TestPiece) {
-          element.prevFace();
-        }
-      }
-    }
-
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = 3;
 
       constructor() {
-        super([new NextFaceAction(), new PrevFaceAction()]);
+        super(() => []);
+      }
+
+      setFace(face: number): void {
+        this.activeFace.set(face);
       }
     }
     if (!customElements.get('pb-test-piece')) {
@@ -73,9 +56,7 @@ test.describe('render', () => {
     await expect(piece).toHaveScreenshot('base_piece_face0.png');
   });
 
-  test('switches rendered slot when nextFace is called programmatically', async ({
-    page,
-  }) => {
+  test('switches rendered slot when activeFace changes', async ({page}) => {
     await setupPage(
       page,
       `
@@ -88,209 +69,11 @@ test.describe('render', () => {
     );
 
     await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.nextFace();
+      const piece = document.querySelector<TestPiece>('#piece');
+      piece?.setFace(1);
     });
 
     const piece = page.locator('#piece');
     await expect(piece).toHaveScreenshot('base_piece_face1.png');
-  });
-});
-
-test.describe('nextFace', () => {
-  test('advances active face to next index', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const slotName = await page.evaluate(async () => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.nextFace();
-      await piece?.updateComplete;
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face1');
-  });
-
-  test('wraps around to 0 when advancing past last face', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const slotName = await page.evaluate(async () => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.nextFace();
-      piece?.nextFace();
-      piece?.nextFace();
-      await piece?.updateComplete;
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face0');
-  });
-
-  test('triggers nextFace on hover when pressing bracket key', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press(']');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face1');
-  });
-
-  test('supports custom shortcut attribute for next-face action', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece" action-next-face="n">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('n');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face1');
-  });
-});
-
-test.describe('prevFace', () => {
-  test('steps back active face to previous index', async ({page}) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const slotName = await page.evaluate(async () => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.nextFace();
-      piece?.nextFace();
-      piece?.prevFace();
-      await piece?.updateComplete;
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face1');
-  });
-
-  test('wraps around to last face when stepping back from 0', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    const slotName = await page.evaluate(async () => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      piece?.prevFace();
-      await piece?.updateComplete;
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face2');
-  });
-
-  test('triggers prevFace on hover when pressing left bracket key', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('[');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face2');
-  });
-
-  test('supports custom shortcut attribute for prev-face action', async ({
-    page,
-  }) => {
-    await setupPage(
-      page,
-      `
-      <pb-test-piece id="piece" action-prev-face="p">
-        <pb-test-face slot="face0" text="0"></pb-test-face>
-        <pb-test-face slot="face1" text="1"></pb-test-face>
-        <pb-test-face slot="face2" text="2"></pb-test-face>
-      </pb-test-piece>
-    `,
-    );
-
-    await page.locator('#piece').hover();
-    await page.keyboard.press('p');
-
-    const slotName = await page.evaluate(() => {
-      const piece = document.querySelector<BasePiece>('#piece');
-      return piece?.shadowRoot?.querySelector('slot')?.name;
-    });
-
-    expect(slotName).toBe('face2');
   });
 });

@@ -1,7 +1,9 @@
 import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 
 import {BaseAction} from '../action/base-action';
+import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
+import {PrevFaceAction} from '../action/prev-face-action';
 import {RollAction} from '../action/roll-action';
 import {RotateAction} from '../action/rotate-action';
 import {ActionEvent} from '../core/action-event';
@@ -33,8 +35,10 @@ export {
   HandService,
   handServiceContext,
   matchesKey,
+  NextFaceAction,
   parseTriggerKey,
   PickAction,
+  PrevFaceAction,
   RollAction,
   RotateAction,
   signal,

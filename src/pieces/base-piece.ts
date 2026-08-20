@@ -17,22 +17,14 @@ export abstract class BasePiece extends BaseElement {
 
   protected readonly activeFace = signal(0);
 
-  constructor(actions: readonly BaseAction[] = []) {
-    super([
-      new PickAction(() => this.handService),
+  constructor(actionsFactory: () => readonly BaseAction[]) {
+    super(() => [
+      new PickAction(this.handService),
       new RotateAction(),
-      ...actions,
+      ...actionsFactory(),
     ]);
   }
 
-  nextFace(): void {
-    const totalSides = Math.max(1, this.sides);
-    this.activeFace.set((this.activeFace.get() + 1) % totalSides);
-  }
-  prevFace(): void {
-    const totalSides = Math.max(1, this.sides);
-    this.activeFace.set((this.activeFace.get() - 1 + totalSides) % totalSides);
-  }
   override render(): TemplateResult {
     return html`<slot name="face${this.activeFace.get()}"></slot>`;
   }
