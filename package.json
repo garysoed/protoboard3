@@ -30,6 +30,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@lit-labs/signals": "^0.3.0",
     "@lit/context": "^1.1.6",
     "gs-tools": "*",
     "lit": "^3.1.2"

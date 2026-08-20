@@ -10,6 +10,18 @@
 - **Action Registration**: Base classes must not conditionally register actions based on property values. Specialized or multi-variant actions (e.g. `roll`, `next-face`, `flip`) must be registered directly by the subclasses that support them.
 - **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
 
+## Reactive State & Signals (`@lit-labs/signals`)
+
+- **Signals for Reactive State**: Manage mutable reactive state using TC39 Signals (`signal()`) and derived reactive values using `computed()`. Custom elements consuming signals must inherit from `SignalWatcher(LitElement)`.
+- **No Signal Suffix**: Do not append a `Signal` suffix to signal property names (e.g. use `overlay`, `cursorX`, `stopIndex`, not `overlaySignal`).
+- **Getter Memoization**: Use `@cached()` from `gs-tools/export/data` for memoizing getter calculations and lazy singleton references. Do not convert lazy getters into signals.
+- **Constant vs Reactive Properties**: Do not create reactive signals or `computed()` wrappers for immutable class constants. Compute derived values directly in methods where properties are constant.
+
+## Piece Architecture & Element Contracts
+
+- **Abstract Piece Base Classes**: `BasePiece` and other piece base abstractions must be declared as `abstract class` and never registered as custom HTML elements. Only concrete piece components (e.g. `<pb-d1>`) are registered.
+- **Intrinsic Properties**: Invariant piece characteristics (such as `sides`) must be defined as typed class properties (`abstract readonly sides: number;`) rather than Lit `@property()` accessors or HTML attributes.
+
 ## Dependency Injection & Context (`@lit/context`)
 
 - **Context-Driven Services**: Use `@lit/context` (`createContext`, `ContextProvider`, `@consume`) for all shared service injection.
@@ -17,6 +29,10 @@
 - **No Fallback Singletons**: Never instantiate or export module-level default singletons as fallbacks inside base element classes.
 - **Initialization Standards**: The public `initialize()` function must return `void`. Do not expose internal service instances for overriding in `InitOptions`.
 - **No Redundant Type Guards**: Avoid adding runtime type guards (e.g. `if (root instanceof HTMLElement)`) when variables are already statically typed to `HTMLElement`.
+
+## Communication & Inquiries
+
+- **Direct Answers to "Why" Questions**: When the user asks why an architectural choice, implementation decision, or specific change was made, answer the question directly, thoroughly, and transparently before proceeding to planning or code execution.
 
 ## Global Types & DOM Integration
 

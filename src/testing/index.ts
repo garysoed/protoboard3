@@ -1,3 +1,5 @@
+import {computed, signal, SignalWatcher} from '@lit-labs/signals';
+
 import {BaseAction} from '../action/base-action';
 import {PickAction} from '../action/pick-action';
 import {RotateAction} from '../action/rotate-action';
@@ -25,6 +27,7 @@ export {
   BaseAction,
   BaseElement,
   BasePiece,
+  computed,
   D1,
   HandService,
   handServiceContext,
@@ -32,6 +35,8 @@ export {
   parseTriggerKey,
   PickAction,
   RotateAction,
+  signal,
+  SignalWatcher,
   TestFace,
 };
 export type {TriggerKey};

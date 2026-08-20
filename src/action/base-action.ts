@@ -1,10 +1,12 @@
+import {Signal, signal} from '@lit-labs/signals';
+
 import {ActionEvent} from '../core/action-event';
 import {matchesKey, parseTriggerKey, TriggerKey} from '../core/trigger-key';
 
 export abstract class BaseAction {
   abstract readonly attrName: string;
 
-  protected triggerKey: TriggerKey;
+  protected readonly triggerKey: Signal.State<TriggerKey>;
 
   private readonly boundOnAction = this.onAction.bind(this);
   private readonly observer = new MutationObserver((mutations) => {
@@ -27,7 +29,7 @@ export abstract class BaseAction {
   });
 
   constructor(readonly defaultTriggerKey: TriggerKey) {
-    this.triggerKey = defaultTriggerKey;
+    this.triggerKey = signal(defaultTriggerKey);
   }
 
   observe(element: Element): void {
@@ -49,14 +51,14 @@ export abstract class BaseAction {
   protected onTriggerKeyChanged(element: Element): void {
     const attr = element.getAttribute(this.attrName);
     if (attr !== null) {
-      this.triggerKey = parseTriggerKey(attr);
+      this.triggerKey.set(parseTriggerKey(attr));
     } else {
-      this.triggerKey = this.defaultTriggerKey;
+      this.triggerKey.set(this.defaultTriggerKey);
     }
   }
 
   private maybeTrigger(event: KeyboardEvent, element: Element): void {
-    if (matchesKey(this.triggerKey, event)) {
+    if (matchesKey(this.triggerKey.get(), event)) {
       void this.onTrigger(element);
     }
   }

@@ -55,9 +55,10 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     }
 
     class TestPiece extends window.Protoboard.BasePiece {
+      readonly sides = 3;
+
       constructor() {
         super([new RollAction(), new NextFaceAction(), new PrevFaceAction()]);
-        this.sides = 3;
       }
     }
     if (!customElements.get('pb-test-piece')) {

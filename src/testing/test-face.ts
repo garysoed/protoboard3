@@ -1,7 +1,8 @@
+import {SignalWatcher} from '@lit-labs/signals';
 import {css, CSSResultGroup, html, LitElement, TemplateResult} from 'lit';
 import {property} from 'lit/decorators.js';
 
-export class TestFace extends LitElement {
+export class TestFace extends SignalWatcher(LitElement) {
   static override styles: CSSResultGroup = css`
     :host {
       align-items: center;

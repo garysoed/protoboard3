@@ -1,13 +1,18 @@
+import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 import {html, LitElement, TemplateResult} from 'lit';
-import {state} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
-export class HandOverlay extends LitElement {
+export class HandOverlay extends SignalWatcher(LitElement) {
   private readonly boundOnMouseMoveHandler = this.onMouseMoveHandler.bind(this);
-  @state()
-  private accessor cursorX = 0;
-  @state()
-  private accessor cursorY = 0;
+  private readonly cursorX = signal(0);
+  private readonly cursorY = signal(0);
+  private readonly containerStyles = computed(() => ({
+    left: `${this.cursorX.get()}px`,
+    pointerEvents: 'none',
+    position: 'fixed',
+    top: `${this.cursorY.get()}px`,
+    zIndex: '9999',
+  }));
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -18,20 +23,16 @@ export class HandOverlay extends LitElement {
     window.removeEventListener('mousemove', this.boundOnMouseMoveHandler);
   }
   override render(): TemplateResult {
-    const styles = {
-      left: `${this.cursorX}px`,
-      pointerEvents: 'none',
-      position: 'fixed',
-      top: `${this.cursorY}px`,
-      zIndex: '9999',
-    };
-    return html`<div id="container" style=${styleMap(styles)}>
+    return html`<div
+      id="container"
+      style=${styleMap(this.containerStyles.get())}
+    >
       <slot></slot>
     </div>`;
   }
 
   private onMouseMoveHandler(event: MouseEvent): void {
-    this.cursorX = event.clientX;
-    this.cursorY = event.clientY;
+    this.cursorX.set(event.clientX);
+    this.cursorY.set(event.clientY);
   }
 }
