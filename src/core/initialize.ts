@@ -7,6 +7,7 @@ import {D20} from '../pieces/d20';
 import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
+import {DN} from '../pieces/dn';
 
 import {HandOverlay} from './hand-overlay';
 import {HandService, handServiceContext} from './hand-service';
@@ -25,6 +26,7 @@ const DEFINITIONS: Record<string, CustomElementConstructor> = {
   d4: D4,
   d6: D6,
   d8: D8,
+  dn: DN,
   'hand-overlay': HandOverlay,
 };
 

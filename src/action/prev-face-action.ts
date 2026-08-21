@@ -9,13 +9,13 @@ export class PrevFaceAction extends BaseAction {
 
   constructor(
     private readonly activeFace: Signal.State<number>,
-    private readonly totalSides: number,
+    private readonly totalSides: Signal.Computed<number> | Signal.State<number>,
   ) {
     super(parseTriggerKey('['));
   }
 
   protected override onTrigger(): void {
-    const totalSides = Math.max(1, this.totalSides);
+    const totalSides = Math.max(1, this.totalSides.get());
     this.activeFace.set((this.activeFace.get() - 1 + totalSides) % totalSides);
   }
 }

@@ -20,6 +20,7 @@ import {D20} from '../pieces/d20';
 import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
+import {DN} from '../pieces/dn';
 
 import {TestFace} from './test-face';
 
@@ -45,6 +46,7 @@ export {
   D4,
   D6,
   D8,
+  DN,
   FlipAction,
   HandService,
   handServiceContext,

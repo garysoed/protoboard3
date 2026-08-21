@@ -12,3 +12,4 @@ This directory contains tabletop piece components for Protoboard.
 - [`d4.ts`](./d4.ts): Four-faced piece component (`D4`) extending `BasePiece` with four faces (`face0`..`face3`) and flipping/rolling actions.
 - [`d6.ts`](./d6.ts): Six-faced piece component (`D6`) extending `BasePiece` with six faces (`face0`..`face5`) and flipping/rolling actions.
 - [`d8.ts`](./d8.ts): Eight-faced piece component (`D8`) extending `BasePiece` with eight faces (`face0`..`face7`) and flipping/rolling actions.
+- [`dn.ts`](./dn.ts): N-faced piece component (`DN`) extending `BasePiece` with configurable `sides` attribute and next/prev face and rolling actions.

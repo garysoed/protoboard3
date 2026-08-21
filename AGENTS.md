@@ -18,6 +18,7 @@
 - **No Signal Suffix**: Do not append a `Signal` suffix to signal property names (e.g. use `overlay`, `cursorX`, `stopIndex`, not `overlaySignal`).
 - **Getter Memoization**: Use `@cached()` from `gs-tools/export/data` for memoizing getter calculations and lazy singleton references. Do not convert lazy getters into signals.
 - **Constant vs Reactive Properties**: Do not create reactive signals or `computed()` wrappers for immutable class constants. Compute derived values directly in methods where properties are constant.
+- **Action Parameter Signal Typing**: Action parameters representing dynamic numeric counts or state (such as `totalSides`) must be typed using reactive Signal types (`Signal.Computed<number> | Signal.State<number>`) rather than scalar numbers or callback functions (`() => number`).
 
 ## Piece Architecture & Element Contracts
 
@@ -47,6 +48,7 @@
 
 - **In-Place Conflict Resolution**: When changes to an ancestor commit trigger rebase conflicts in descendant commits, never abandon (`jj abandon`) the descendant commits to recreate them. Always switch to the conflicted revision (`jj edit <rev>`) and resolve the conflicts in place.
 - **Task Revision Boundary**: When starting a new task or phase, if the current working copy (`@`) already has a description set or contains completed changes from a prior task, always create a new child revision (`jj new`) before making changes.
+- **No `jj new` on Commit**: The commit workflow strictly concludes after setting the commit description with `jj describe -m "<message>"`. Do not run `jj new` when committing or finalizing a task.
 - **Learning Documentation in Commit**: Documentation updates resulting from `/learn` or lessons learned during a task must be included directly within that task's committed changes rather than being placed in a separate child revision.
 
 ## Testing Conventions
@@ -57,6 +59,7 @@
 - **Method-Focused Organization**: Group unit tests strictly by the individual function, action, or method under test using `test.describe('<methodName>')` (e.g. `test.describe('nextFace')` and `test.describe('prevFace')` separately, never combined). Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
 - **Action Tests Focus on Effects**: Unit tests for action classes must strictly test the effects and state changes when triggered. Do not test custom shortcut attributes or different triggering mechanisms, as those are already covered by `BaseAction` and `BaseElement`.
 - **Targeted Piece Action Tests**: In piece component unit tests, action tests should verify only the primary state transition on the piece (e.g. `face0` flipping to its opposing face) without performing redundant multi-step state permutations or cycling chains already covered by the dedicated action unit test.
+- **Direct Boundary Assertions**: In component unit tests, test final target states and boundary transitions directly without adding redundant intermediate assertions for each step in a sequence.
 - **Tag Registration Assertions**: When verifying batch custom element definitions in tests, use `tags.every((tag) => !!customElements.get(tag))` and assert `expect(result).toBe(true)` rather than mapping elements with `Boolean(...)` and asserting against boolean arrays.
 - **End-to-End (E2E) Tests**:
   - Located in the top-level `e2e/` directory, organized per component (e.g. `e2e/d1.test.ts`). Do not use generic smoke test files.

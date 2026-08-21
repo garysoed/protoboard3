@@ -93,7 +93,7 @@ graph TD
     - [x] 3.2.4 `D8Piece` (`<pb-d8>`): 8 faces (octahedral die), implements `flip()` with opposite sum 9.
     - [x] 3.2.5 `D12Piece` (`<pb-d12>`): 12 faces (dodecahedral die), implements `flip()` with opposite sum 13.
     - [x] 3.2.6 `D20Piece` (`<pb-d20>`): 20 faces (icosahedral die), implements `flip()` with opposite sum 21.
-    - [ ] 3.2.7 `DNPiece` (`<pb-dn>`): N faces via `sides="N"` attribute.
+    - [x] 3.2.7 `DNPiece` (`<pb-dn>`): N faces via `sides="N"` attribute.
   - [ ] **3.3 Registration & Showcase Update**
     - [ ] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
     - [ ] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).

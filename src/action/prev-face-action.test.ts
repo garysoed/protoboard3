@@ -23,7 +23,12 @@ async function setupPage(
       readonly sides = 3;
 
       constructor() {
-        super(() => [new window.Protoboard.PrevFaceAction(this.activeFace, 3)]);
+        super(() => [
+          new window.Protoboard.PrevFaceAction(
+            this.activeFace,
+            window.Protoboard.signal(3),
+          ),
+        ]);
         this.activeFace.set(face);
       }
     }
@@ -80,6 +85,68 @@ test.describe('PrevFaceAction', () => {
       return el?.shadowRoot?.querySelector('slot')?.name;
     });
 
+    expect(slotName).toBe('face0');
+  });
+
+  test('reacts to dynamic totalSides signal updates', async ({page}) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <pb-dynamic-piece id="piece">
+            <div slot="face0" style="width: 50px; height: 50px;">0</div>
+            <div slot="face1" style="width: 50px; height: 50px;">1</div>
+            <div slot="face2" style="width: 50px; height: 50px;">2</div>
+            <div slot="face3" style="width: 50px; height: 50px;">3</div>
+          </pb-dynamic-piece>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      window.Protoboard.initialize();
+
+      class DynamicPiece extends window.Protoboard.BasePiece {
+        readonly sides = 4;
+        readonly totalSides = window.Protoboard.signal(4);
+
+        constructor() {
+          super(() => [
+            new window.Protoboard.PrevFaceAction(
+              this.activeFace,
+              this.totalSides,
+            ),
+          ]);
+        }
+      }
+
+      customElements.define('pb-dynamic-piece', DynamicPiece);
+    });
+
+    const piece = page.locator('#piece');
+    await piece.hover();
+    await page.keyboard.press('[');
+
+    let slotName = await page.evaluate(() => {
+      const el = document.querySelector<BasePiece>('#piece');
+      return el?.shadowRoot?.querySelector('slot')?.name;
+    });
+    expect(slotName).toBe('face3');
+
+    await page.evaluate(() => {
+      const el = document.querySelector<
+        HTMLElement & {totalSides: {set: (v: number) => void}}
+      >('#piece');
+      if (el) {
+        el.totalSides.set(2);
+      }
+    });
+
+    await page.keyboard.press('[');
+    slotName = await page.evaluate(() => {
+      const el = document.querySelector<BasePiece>('#piece');
+      return el?.shadowRoot?.querySelector('slot')?.name;
+    });
     expect(slotName).toBe('face0');
   });
 });
