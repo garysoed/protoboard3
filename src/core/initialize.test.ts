@@ -6,31 +6,43 @@ test.describe('Protoboard Registration Foundation', () => {
     await page.addScriptTag({path: 'dist/testing.min.js'});
   });
 
-  test('registers d1 and d2 elements using default prefix on custom registry', async ({
+  test('registers piece elements using default prefix on custom registry', async ({
     page,
   }) => {
-    const d1Element = await page.evaluateHandle(() => {
+    const allRegistered = await page.evaluate(() => {
       window.Protoboard.initialize();
-      return customElements.get('pb-d1');
-    });
-    const d2Element = await page.evaluateHandle(() => {
-      return customElements.get('pb-d2');
+      const tags = [
+        'pb-d1',
+        'pb-d2',
+        'pb-d4',
+        'pb-d6',
+        'pb-d8',
+        'pb-d12',
+        'pb-d20',
+        'pb-hand-overlay',
+      ];
+      return tags.every((tag) => !!customElements.get(tag));
     });
 
-    expect(d1Element).toBeDefined();
-    expect(d2Element).toBeDefined();
+    expect(allRegistered).toBe(true);
   });
 
-  test('registers d1 and d2 elements using custom prefix', async ({page}) => {
-    const d1Element = await page.evaluateHandle(() => {
+  test('registers piece elements using custom prefix', async ({page}) => {
+    const allRegistered = await page.evaluate(() => {
       window.Protoboard.initialize({prefix: 'tabletop'});
-      return customElements.get('tabletop-d1');
-    });
-    const d2Element = await page.evaluateHandle(() => {
-      return customElements.get('tabletop-d2');
+      const tags = [
+        'tabletop-d1',
+        'tabletop-d2',
+        'tabletop-d4',
+        'tabletop-d6',
+        'tabletop-d8',
+        'tabletop-d12',
+        'tabletop-d20',
+        'tabletop-hand-overlay',
+      ];
+      return tags.every((tag) => !!customElements.get(tag));
     });
 
-    expect(d1Element).toBeDefined();
-    expect(d2Element).toBeDefined();
+    expect(allRegistered).toBe(true);
   });
 });

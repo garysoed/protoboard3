@@ -3,7 +3,7 @@ name: commit
 description: >-
   Standard workflow for committing changes in Protoboard. Use when committing, creating a change,
   or preparing to finalize a task. Runs lint, executes all unit and E2E tests with visual goldens,
-  sets the Jujutsu commit description if missing (with suggestion in editor), and prompts /learn.
+  bundles /learn documentation updates, and sets the Jujutsu commit description.
 ---
 
 # Commit Workflow
@@ -35,7 +35,14 @@ npm test
   npx playwright test --update-snapshots
   ```
 
-### 3. Jujutsu Commit Description
+### 3. Continuous Learning (`/learn`)
+
+Before finalizing and setting the commit description:
+
+- Evaluate whether any new patterns, workflow corrections, or project-specific gotchas were encountered during the task.
+- Apply any rule or documentation updates (such as updating `AGENTS.md`) directly in the working copy so they are bundled into the task's commit.
+
+### 4. Jujutsu Commit Description
 
 Check the status of the current working copy in Jujutsu (`jj`):
 
@@ -53,10 +60,3 @@ jj status
     ```bash
     jj describe -m "<suggested description>"
     ```
-
-### 4. Continuous Learning (`/learn`)
-
-After completing the commit sequence:
-
-- Evaluate whether any new patterns, workflow corrections, or project-specific gotchas were encountered during the task.
-- Proactively suggest running `/learn` to persist lessons for future tasks.

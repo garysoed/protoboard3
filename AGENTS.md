@@ -47,14 +47,17 @@
 
 - **In-Place Conflict Resolution**: When changes to an ancestor commit trigger rebase conflicts in descendant commits, never abandon (`jj abandon`) the descendant commits to recreate them. Always switch to the conflicted revision (`jj edit <rev>`) and resolve the conflicts in place.
 - **Task Revision Boundary**: When starting a new task or phase, if the current working copy (`@`) already has a description set or contains completed changes from a prior task, always create a new child revision (`jj new`) before making changes.
+- **Learning Documentation in Commit**: Documentation updates resulting from `/learn` or lessons learned during a task must be included directly within that task's committed changes rather than being placed in a separate child revision.
 
 ## Testing Conventions
 
 - **Unit Tests**:
   - Located in `src/`, co-located in the same directory as the module or component being tested (e.g. `src/pieces/d1.test.ts`).
   - Target browser: **Chromium** only.
-- **Method-Focused Organization**: Group unit tests by the function or method under test using `test.describe('<methodName>')`. Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
+- **Method-Focused Organization**: Group unit tests strictly by the individual function, action, or method under test using `test.describe('<methodName>')` (e.g. `test.describe('nextFace')` and `test.describe('prevFace')` separately, never combined). Maintain granular, single-scenario `test(...)` cases rather than bundling multiple distinct conditions into one test.
 - **Action Tests Focus on Effects**: Unit tests for action classes must strictly test the effects and state changes when triggered. Do not test custom shortcut attributes or different triggering mechanisms, as those are already covered by `BaseAction` and `BaseElement`.
+- **Targeted Piece Action Tests**: In piece component unit tests, action tests should verify only the primary state transition on the piece (e.g. `face0` flipping to its opposing face) without performing redundant multi-step state permutations or cycling chains already covered by the dedicated action unit test.
+- **Tag Registration Assertions**: When verifying batch custom element definitions in tests, use `tags.every((tag) => !!customElements.get(tag))` and assert `expect(result).toBe(true)` rather than mapping elements with `Boolean(...)` and asserting against boolean arrays.
 - **End-to-End (E2E) Tests**:
   - Located in the top-level `e2e/` directory, organized per component (e.g. `e2e/d1.test.ts`). Do not use generic smoke test files.
   - Target browsers: **Chromium**, **Firefox**, and **WebKit**.

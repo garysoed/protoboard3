@@ -14,7 +14,12 @@ import {initialize as coreInitialize, InitOptions} from '../core/initialize';
 import {matchesKey, parseTriggerKey, TriggerKey} from '../core/trigger-key';
 import {BasePiece} from '../pieces/base-piece';
 import {D1} from '../pieces/d1';
+import {D12} from '../pieces/d12';
 import {D2} from '../pieces/d2';
+import {D20} from '../pieces/d20';
+import {D4} from '../pieces/d4';
+import {D6} from '../pieces/d6';
+import {D8} from '../pieces/d8';
 
 import {TestFace} from './test-face';
 
@@ -34,7 +39,12 @@ export {
   BasePiece,
   computed,
   D1,
+  D12,
   D2,
+  D20,
+  D4,
+  D6,
+  D8,
   FlipAction,
   HandService,
   handServiceContext,

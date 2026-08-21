@@ -88,11 +88,11 @@ graph TD
     - [x] 3.1.4 `rotations` attribute parsing (comma-separated degrees, e.g. `0, 180, 270`, cyclic progression `(currentIndex + 1) % rotations.length`) and CSS transform rendering.
   - [ ] **3.2 Flippable Pieces & Polyhedral Components (`src/pieces/`)**
     - [x] 3.2.1 `D2Piece` (`<pb-d2>`): 2 faces (coins, double-sided cards), implements `flip()` (shortcut `f`: `face0 <-> face1`).
-    - [ ] 3.2.2 `D4Piece` (`<pb-d4>`): 4 faces (tetrahedral die), implements `flip()` (shortcut `f`: `face0 <-> face3`, `face1 <-> face2`).
-    - [ ] 3.2.3 `D6Piece` (`<pb-d6>`): 6 faces (cubic die), implements `flip()` with opposite sum 7 (`(N - 1) - current`).
-    - [ ] 3.2.4 `D8Piece` (`<pb-d8>`): 8 faces (octahedral die), implements `flip()` with opposite sum 9.
-    - [ ] 3.2.5 `D12Piece` (`<pb-d12>`): 12 faces (dodecahedral die), implements `flip()` with opposite sum 13.
-    - [ ] 3.2.6 `D20Piece` (`<pb-d20>`): 20 faces (icosahedral die), implements `flip()` with opposite sum 21.
+    - [x] 3.2.2 `D4Piece` (`<pb-d4>`): 4 faces (tetrahedral die), implements `flip()` (shortcut `f`: `face0 <-> face3`, `face1 <-> face2`).
+    - [x] 3.2.3 `D6Piece` (`<pb-d6>`): 6 faces (cubic die), implements `flip()` with opposite sum 7 (`(N - 1) - current`).
+    - [x] 3.2.4 `D8Piece` (`<pb-d8>`): 8 faces (octahedral die), implements `flip()` with opposite sum 9.
+    - [x] 3.2.5 `D12Piece` (`<pb-d12>`): 12 faces (dodecahedral die), implements `flip()` with opposite sum 13.
+    - [x] 3.2.6 `D20Piece` (`<pb-d20>`): 20 faces (icosahedral die), implements `flip()` with opposite sum 21.
     - [ ] 3.2.7 `DNPiece` (`<pb-dn>`): N faces via `sides="N"` attribute.
   - [ ] **3.3 Registration & Showcase Update**
     - [ ] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.

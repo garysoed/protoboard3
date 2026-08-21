@@ -1,6 +1,6 @@
 import {expect, Page, test} from '@playwright/test';
 
-import {D2} from './d2';
+import {D20} from './d20';
 
 async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.setContent(`
@@ -8,7 +8,7 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     <html>
       <head>
         <style>
-          .coin {
+          .die {
             width: 80px;
             height: 80px;
           }
@@ -30,27 +30,29 @@ test.describe('render', () => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <pb-test-face slot="face0" text="Heads" class="coin"></pb-test-face>
-        <pb-test-face slot="face1" text="Tails" class="coin"></pb-test-face>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <pb-test-face slot="face0" text="1" class="die"></pb-test-face>
+        <pb-test-face slot="face1" text="2" class="die"></pb-test-face>
+        <pb-test-face slot="face19" text="20" class="die"></pb-test-face>
+      </pb-d20>
     `,
     );
 
     const piece = page.locator('#piece');
-    await expect(piece).toHaveScreenshot('d2_face0.png');
+    await expect(piece).toHaveScreenshot('d20_face0.png');
   });
 
-  test('matches visual snapshot for rendered face1 slot after flipping', async ({
+  test('matches visual snapshot for rendered face19 slot after flipping', async ({
     page,
   }) => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <pb-test-face slot="face0" text="Heads" class="coin"></pb-test-face>
-        <pb-test-face slot="face1" text="Tails" class="coin"></pb-test-face>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <pb-test-face slot="face0" text="1" class="die"></pb-test-face>
+        <pb-test-face slot="face1" text="2" class="die"></pb-test-face>
+        <pb-test-face slot="face19" text="20" class="die"></pb-test-face>
+      </pb-d20>
     `,
     );
 
@@ -58,21 +60,21 @@ test.describe('render', () => {
     await piece.hover();
     await page.keyboard.press('f');
 
-    await expect(piece).toHaveScreenshot('d2_face1.png');
+    await expect(piece).toHaveScreenshot('d20_face19.png');
   });
 });
 
 test.describe('flip', () => {
-  test('toggles active face between face0 and face1 when pressing f key', async ({
+  test('flips to opposite face summing to 21 in 1-based index (19 - current)', async ({
     page,
   }) => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <div slot="face0">Face 0</div>
-        <div slot="face1">Face 1</div>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <div slot="face0">1</div>
+        <div slot="face19">20</div>
+      </pb-d20>
     `,
     );
 
@@ -80,19 +82,11 @@ test.describe('flip', () => {
     await piece.hover();
     await page.keyboard.press('f');
 
-    const firstFlip = await page.evaluate(() => {
-      const el = document.querySelector<D2>('#piece');
+    const slot = await page.evaluate(() => {
+      const el = document.querySelector<D20>('#piece');
       return el?.shadowRoot?.querySelector('slot')?.name;
     });
-    expect(firstFlip).toBe('face1');
-
-    await page.keyboard.press('f');
-
-    const secondFlip = await page.evaluate(() => {
-      const el = document.querySelector<D2>('#piece');
-      return el?.shadowRoot?.querySelector('slot')?.name;
-    });
-    expect(secondFlip).toBe('face0');
+    expect(slot).toBe('face19');
   });
 });
 
@@ -101,10 +95,10 @@ test.describe('nextFace', () => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <div slot="face0">Face 0</div>
-        <div slot="face1">Face 1</div>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <div slot="face0">1</div>
+        <div slot="face1">2</div>
+      </pb-d20>
     `,
     );
 
@@ -113,7 +107,7 @@ test.describe('nextFace', () => {
     await page.keyboard.press(']');
 
     const nextSlot = await page.evaluate(() => {
-      const el = document.querySelector<D2>('#piece');
+      const el = document.querySelector<D20>('#piece');
       return el?.shadowRoot?.querySelector('slot')?.name;
     });
     expect(nextSlot).toBe('face1');
@@ -125,10 +119,10 @@ test.describe('prevFace', () => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <div slot="face0">Face 0</div>
-        <div slot="face1">Face 1</div>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <div slot="face0">1</div>
+        <div slot="face19">20</div>
+      </pb-d20>
     `,
     );
 
@@ -137,10 +131,10 @@ test.describe('prevFace', () => {
     await page.keyboard.press('[');
 
     const prevSlot = await page.evaluate(() => {
-      const el = document.querySelector<D2>('#piece');
+      const el = document.querySelector<D20>('#piece');
       return el?.shadowRoot?.querySelector('slot')?.name;
     });
-    expect(prevSlot).toBe('face1');
+    expect(prevSlot).toBe('face19');
   });
 });
 
@@ -149,10 +143,9 @@ test.describe('roll', () => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <div slot="face0">Face 0</div>
-        <div slot="face1">Face 1</div>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <div slot="face0">1</div>
+      </pb-d20>
     `,
     );
 
@@ -161,10 +154,10 @@ test.describe('roll', () => {
     await page.keyboard.press('r');
 
     const slotName = await page.evaluate(() => {
-      const el = document.querySelector<D2>('#piece');
+      const el = document.querySelector<D20>('#piece');
       return el?.shadowRoot?.querySelector('slot')?.name;
     });
-    expect(slotName).toMatch(/^face[0-1]$/);
+    expect(slotName).toMatch(/^face([0-9]|1[0-9])$/);
   });
 });
 
@@ -176,10 +169,9 @@ test.describe('pick', () => {
       page,
       `
       <div id="board">
-        <pb-d2 id="piece">
-          <div slot="face0" style="width: 50px; height: 50px;">Face 0</div>
-          <div slot="face1" style="width: 50px; height: 50px;">Face 1</div>
-        </pb-d2>
+        <pb-d20 id="piece">
+          <div slot="face0" style="width: 50px; height: 50px;">1</div>
+        </pb-d20>
       </div>
     `,
     );
@@ -191,7 +183,7 @@ test.describe('pick', () => {
     await page.keyboard.press('c');
 
     await expect(overlay.locator('#piece')).toBeAttached();
-    await expect(page.locator('#board pb-d2')).not.toBeAttached();
+    await expect(page.locator('#board pb-d20')).not.toBeAttached();
   });
 });
 
@@ -202,10 +194,9 @@ test.describe('rotate', () => {
     await setupPage(
       page,
       `
-      <pb-d2 id="piece">
-        <pb-test-face slot="face0" text="Coin"></pb-test-face>
-        <pb-test-face slot="face1" text="Back"></pb-test-face>
-      </pb-d2>
+      <pb-d20 id="piece">
+        <pb-test-face slot="face0" text="D20"></pb-test-face>
+      </pb-d20>
     `,
     );
 
@@ -213,6 +204,6 @@ test.describe('rotate', () => {
     await piece.hover();
     await page.keyboard.press('t');
 
-    await expect(piece).toHaveScreenshot('d2_rotated_90.png');
+    await expect(piece).toHaveScreenshot('d20_rotated_90.png');
   });
 });
