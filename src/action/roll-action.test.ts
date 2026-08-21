@@ -34,9 +34,7 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
       }
     }
 
-    if (!customElements.get('pb-test-piece')) {
-      customElements.define('pb-test-piece', TestPiece);
-    }
+    customElements.define('pb-test-piece', TestPiece);
   });
 }
 

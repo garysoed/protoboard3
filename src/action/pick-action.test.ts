@@ -1,7 +1,5 @@
 import {expect, Page, test} from '@playwright/test';
 
-import {BaseElement} from '../core/base-element';
-
 async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.setContent(`
     <!DOCTYPE html>
@@ -14,6 +12,16 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.addScriptTag({path: 'dist/testing.min.js'});
   await page.evaluate(() => {
     window.Protoboard.initialize();
+
+    class TestPiece extends window.Protoboard.BasePiece {
+      readonly sides = 1;
+
+      constructor() {
+        super(() => [new window.Protoboard.PickAction(this.handService)]);
+      }
+    }
+
+    customElements.define('pb-test-piece', TestPiece);
   });
 }
 
@@ -23,9 +31,9 @@ test.describe('PickAction', () => {
       page,
       `
       <div id="board">
-        <pb-d1 id="piece">
-          <div slot="face0">Card</div>
-        </pb-d1>
+        <pb-test-piece id="piece">
+          <pb-test-face slot="face0" text="Card"></pb-test-face>
+        </pb-test-piece>
       </div>
     `,
     );
@@ -33,17 +41,10 @@ test.describe('PickAction', () => {
     const overlay = page.locator('pb-hand-overlay');
     await expect(overlay).not.toBeAttached();
 
-    await page.evaluate(() => {
-      const piece = document.querySelector<BaseElement>('#piece');
-      const action = new window.Protoboard.PickAction(piece!.handService);
-      action.observe(piece!);
-      const keyboardEvent = new KeyboardEvent('keydown', {key: 'c'});
-      piece!.dispatchEvent(
-        new window.Protoboard.ActionEvent('c', keyboardEvent),
-      );
-    });
+    await page.locator('#piece').hover();
+    await page.keyboard.press('c');
 
     await expect(overlay.locator('#piece')).toBeAttached();
-    await expect(page.locator('#board pb-d1')).not.toBeAttached();
+    await expect(page.locator('#board pb-test-piece')).not.toBeAttached();
   });
 });

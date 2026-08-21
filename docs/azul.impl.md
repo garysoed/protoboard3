@@ -87,7 +87,7 @@ graph TD
     - [x] 3.1.3 Base piece actions: `roll()` (shortcut `r`), `nextFace()` (shortcut `]`), `prevFace()` (shortcut `[`), `rotate()` (shortcut `t`).
     - [x] 3.1.4 `rotations` attribute parsing (comma-separated degrees, e.g. `0, 180, 270`, cyclic progression `(currentIndex + 1) % rotations.length`) and CSS transform rendering.
   - [ ] **3.2 Flippable Pieces & Polyhedral Components (`src/pieces/`)**
-    - [ ] 3.2.1 `D2Piece` (`<pb-d2>`): 2 faces (coins, double-sided cards), implements `flip()` (shortcut `f`: `face0 <-> face1`).
+    - [x] 3.2.1 `D2Piece` (`<pb-d2>`): 2 faces (coins, double-sided cards), implements `flip()` (shortcut `f`: `face0 <-> face1`).
     - [ ] 3.2.2 `D4Piece` (`<pb-d4>`): 4 faces (tetrahedral die), implements `flip()` (shortcut `f`: `face0 <-> face3`, `face1 <-> face2`).
     - [ ] 3.2.3 `D6Piece` (`<pb-d6>`): 6 faces (cubic die), implements `flip()` with opposite sum 7 (`(N - 1) - current`).
     - [ ] 3.2.4 `D8Piece` (`<pb-d8>`): 8 faces (octahedral die), implements `flip()` with opposite sum 9.

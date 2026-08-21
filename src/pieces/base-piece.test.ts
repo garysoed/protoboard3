@@ -31,9 +31,7 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
         this.activeFace.set(face);
       }
     }
-    if (!customElements.get('pb-test-piece')) {
-      customElements.define('pb-test-piece', TestPiece);
-    }
+    customElements.define('pb-test-piece', TestPiece);
   });
 }
 

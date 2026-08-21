@@ -1,6 +1,7 @@
 import {ContextProvider} from '@lit/context';
 
 import {D1} from '../pieces/d1';
+import {D2} from '../pieces/d2';
 
 import {HandOverlay} from './hand-overlay';
 import {HandService, handServiceContext} from './hand-service';
@@ -13,6 +14,7 @@ export interface InitOptions {
 
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
   d1: D1,
+  d2: D2,
   'hand-overlay': HandOverlay,
 };
 

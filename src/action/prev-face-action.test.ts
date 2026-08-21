@@ -28,9 +28,7 @@ async function setupPage(
       }
     }
 
-    if (!customElements.get('pb-test-piece')) {
-      customElements.define('pb-test-piece', TestPiece);
-    }
+    customElements.define('pb-test-piece', TestPiece);
   }, initialFace);
 }
 
