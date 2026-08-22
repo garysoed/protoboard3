@@ -259,4 +259,18 @@ test.describe('parseTriggerKey', () => {
       shift: null,
     });
   });
+
+  test('returns key with empty string for empty input', async ({page}) => {
+    const result = await page.evaluate(() => {
+      return window.Protoboard.parseTriggerKey('');
+    });
+
+    expect(result).toEqual({
+      alt: false,
+      ctrl: false,
+      key: '',
+      meta: false,
+      shift: false,
+    });
+  });
 });

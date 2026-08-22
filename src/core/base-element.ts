@@ -5,6 +5,7 @@ import {LitElement} from 'lit';
 
 import {BaseAction} from '../action/base-action';
 
+import {ActionDescriptor} from './action-descriptor';
 import {ActionEvent} from './action-event';
 import {HandService, handServiceContext} from './hand-service';
 
@@ -47,6 +48,9 @@ export class BaseElement extends SignalWatcher(LitElement) {
     this.removeEventListener('mouseenter', this.boundOnMouseEnter);
     this.removeEventListener('mouseleave', this.boundOnMouseLeave);
     window.removeEventListener('keydown', this.boundOnWindowKeyDown);
+  }
+  getActionDescriptors(): readonly ActionDescriptor[] {
+    return this.actions.map((action) => action.getActionDescriptor(this));
   }
 
   private onMouseEnter(): void {

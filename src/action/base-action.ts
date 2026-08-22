@@ -1,10 +1,12 @@
 import {Signal, signal} from '@lit-labs/signals';
 
+import {ActionDescriptor} from '../core/action-descriptor';
 import {ActionEvent} from '../core/action-event';
 import {matchesKey, parseTriggerKey, TriggerKey} from '../core/trigger-key';
 
 export abstract class BaseAction {
   abstract readonly attrName: string;
+  abstract readonly label: string;
 
   protected readonly triggerKey: Signal.State<TriggerKey>;
 
@@ -32,6 +34,16 @@ export abstract class BaseAction {
     this.triggerKey = signal(defaultTriggerKey);
   }
 
+  getActionDescriptor(element: Element): ActionDescriptor {
+    return {
+      handler: () => {
+        this.onTrigger(element);
+      },
+      id: this.constructor,
+      label: this.label,
+      shortcut: this.triggerKey.get(),
+    };
+  }
   observe(element: Element): void {
     element.addEventListener(ActionEvent.TYPE, this.boundOnAction);
     this.onTriggerKeyChanged(element);

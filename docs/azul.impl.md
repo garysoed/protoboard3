@@ -109,10 +109,10 @@ graph TD
 **Dependencies**: Phase 2, Phase 3.
 
 - [ ] **4. Phase 4: Action Discovery & Help Popup System (`?`)**
-  - [ ] **4.1 `QueryActionsEvent` & Action Descriptors (`src/core/action-descriptor.ts`)**
-    - [ ] 4.1.1 Define action metadata interfaces (`ActionDescriptor`: id, label, shortcut, enabled, isShadowed, handler).
-    - [ ] 4.1.2 Implement `QueryActionsEvent` custom bubbling event (`pb-query-actions`, `bubbles: true`, `composed: true`).
-    - [ ] 4.1.3 Implement `getActionDescriptors()` on `BaseProtoboardElement` returning local actions and shortcut bindings.
+  - [x] **4.1 `QueryActionsEvent` & Action Descriptors (`src/core/action-descriptor.ts`)**
+    - [x] 4.1.1 Define action metadata interfaces (`ActionDescriptor`: id, label, shortcut, enabled, isShadowed, handler).
+    - [x] 4.1.2 Implement `QueryActionsEvent` custom bubbling event (`pb-query-actions`, `bubbles: true`, `composed: true`).
+    - [x] 4.1.3 Implement `getActionDescriptors()` on `BaseProtoboardElement` returning local actions and shortcut bindings.
   - [ ] **4.2 Ancestor Event Interception & Action Aggregation**
     - [ ] 4.2.1 Intercept `pb-query-actions` as it bubbles through intermediate Protoboard components and append action groups with custom component `name` (or tag name).
     - [ ] 4.2.2 Implement shortcut shadowing resolution (marking container actions as shadowed when child components claim the same key).

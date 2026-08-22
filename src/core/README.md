@@ -4,6 +4,7 @@ This directory contains the core infrastructure, base element abstraction, and a
 
 ## Directory Inventory
 
+- [`action-descriptor.ts`](./action-descriptor.ts): Action metadata interfaces and action query bubbling event (`ActionDescriptor`, `ActionGroup`, `QueryActionsDetail`, `QueryActionsEvent`).
 - [`action-event.ts`](./action-event.ts): Custom bubbling event dispatched on keydown when hovered (`ActionEvent`).
 - [`base-element.ts`](./base-element.ts): Base LitElement component providing Context access, hover tracking, and declarative action registration (`BaseElement`).
 - [`hand-overlay.ts`](./hand-overlay.ts): Fixed floating overlay component (`HandOverlay`).

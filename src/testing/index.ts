@@ -7,6 +7,12 @@ import {PickAction} from '../action/pick-action';
 import {PrevFaceAction} from '../action/prev-face-action';
 import {RollAction} from '../action/roll-action';
 import {RotateAction} from '../action/rotate-action';
+import {
+  ActionDescriptor,
+  ActionGroup,
+  QueryActionsDetail,
+  QueryActionsEvent,
+} from '../core/action-descriptor';
 import {ActionEvent} from '../core/action-event';
 import {BaseElement} from '../core/base-element';
 import {HandService, handServiceContext} from '../core/hand-service';
@@ -55,10 +61,11 @@ export {
   parseTriggerKey,
   PickAction,
   PrevFaceAction,
+  QueryActionsEvent,
   RollAction,
   RotateAction,
   signal,
   SignalWatcher,
   TestFace,
 };
-export type {TriggerKey};
+export type {ActionDescriptor, ActionGroup, QueryActionsDetail, TriggerKey};

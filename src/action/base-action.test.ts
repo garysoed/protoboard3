@@ -14,6 +14,7 @@ test.describe('BaseAction', () => {
         let passedElement: Element | undefined;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onTrigger(el: Element): void {
             passedElement = el;
@@ -41,6 +42,7 @@ test.describe('BaseAction', () => {
         let count = 0;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onTrigger(): void {
             count++;
@@ -65,6 +67,7 @@ test.describe('BaseAction', () => {
         let count = 0;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onTrigger(): void {
             count++;
@@ -95,6 +98,7 @@ test.describe('BaseAction', () => {
         let triggered = false;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override initAttributes(el: Element): void {
             initAttrValue = el.getAttribute('action-custom-config');
@@ -137,6 +141,7 @@ test.describe('BaseAction', () => {
         let triggerCount = 0;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onTrigger(): void {
             triggerCount++;
@@ -169,6 +174,7 @@ test.describe('BaseAction', () => {
         let observedValue: null | string = null;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onAttributeChanged(
             subName: string,
@@ -204,6 +210,7 @@ test.describe('BaseAction', () => {
         let attributeChangedCount = 0;
         class CustomAction extends window.Protoboard.BaseAction {
           readonly attrName = 'action-custom';
+          readonly label = 'Custom';
 
           protected override onAttributeChanged(): void {
             attributeChangedCount++;
@@ -231,6 +238,34 @@ test.describe('BaseAction', () => {
 
       expect(result.triggerCount).toBe(0);
       expect(result.attributeChangedCount).toBe(0);
+    });
+  });
+
+  test.describe('getActionDescriptor', () => {
+    test('generates descriptor for FlipAction and handler executes action', async ({
+      page,
+    }) => {
+      const result = await page.evaluate(() => {
+        const activeFace = window.Protoboard.signal(0);
+        const action = new window.Protoboard.FlipAction(activeFace, 2);
+        const el = document.createElement('div');
+        action.observe(el);
+
+        const descriptor = action.getActionDescriptor(el);
+        descriptor.handler();
+
+        return {
+          faceAfter: activeFace.get(),
+          isFlipAction: descriptor.id === window.Protoboard.FlipAction,
+          key: descriptor.shortcut.key,
+          label: descriptor.label,
+        };
+      });
+
+      expect(result.isFlipAction).toBe(true);
+      expect(result.label).toBe('Flip');
+      expect(result.key).toBe('f');
+      expect(result.faceAfter).toBe(1);
     });
   });
 });

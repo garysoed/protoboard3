@@ -150,4 +150,52 @@ test.describe('BaseElement', () => {
     await expect(overlay.locator('#piece')).not.toBeAttached();
     await expect(page.locator('#text-input')).toHaveValue('c');
   });
+
+  test.describe('getActionDescriptors', () => {
+    test('returns descriptors for configured actions with correct shortcut keys', async ({
+      page,
+    }) => {
+      await page.setContent(`
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <pb-d1 id="piece" action-pick="x">
+              <div slot="face0">Face</div>
+            </pb-d1>
+          </body>
+        </html>
+      `);
+      await page.addScriptTag({path: 'dist/testing.min.js'});
+      await page.evaluate(() => {
+        window.Protoboard.initialize();
+      });
+
+      const descriptors = await page.evaluate(() => {
+        const piece = document.querySelector<window.Protoboard.D1>('#piece');
+        if (!piece) {
+          return [];
+        }
+        return piece.getActionDescriptors().map((desc) => ({
+          isPickAction: desc.id === window.Protoboard.PickAction,
+          isRotateAction: desc.id === window.Protoboard.RotateAction,
+          key: desc.shortcut.key,
+          label: desc.label,
+        }));
+      });
+
+      expect(descriptors.length).toBe(2);
+      expect(descriptors.find((d) => d.isPickAction)).toEqual({
+        isPickAction: true,
+        isRotateAction: false,
+        key: 'x',
+        label: 'Pick',
+      });
+      expect(descriptors.find((d) => d.isRotateAction)).toEqual({
+        isPickAction: false,
+        isRotateAction: true,
+        key: 't',
+        label: 'Rotate',
+      });
+    });
+  });
 });

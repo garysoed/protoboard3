@@ -8,6 +8,7 @@ const DEFAULT_STOPS: readonly number[] = [0, 90, 180, 270];
 
 export class RotateAction extends BaseAction {
   readonly attrName = 'action-rotate';
+  readonly label = 'Rotate';
 
   private readonly stops = signal<readonly number[]>(DEFAULT_STOPS);
   private readonly currentAngle = computed(() => {

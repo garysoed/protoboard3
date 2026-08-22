@@ -7,6 +7,7 @@ import {BaseAction} from './base-action';
 
 export class PickAction extends BaseAction {
   readonly attrName = 'action-pick';
+  readonly label = 'Pick';
 
   constructor(
     private readonly handService: Signal.State<HandService | undefined>,

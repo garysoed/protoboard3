@@ -4,6 +4,7 @@ import {BaseAction} from './base-action';
 
 export class RollAction extends BaseAction {
   readonly attrName = 'action-roll';
+  readonly label = 'Roll';
 
   constructor(private readonly onRoll: (element: Element) => unknown) {
     super(parseTriggerKey('r'));

@@ -6,6 +6,7 @@ import {BaseAction} from './base-action';
 
 export class FlipAction extends BaseAction {
   readonly attrName = 'action-flip';
+  readonly label = 'Flip';
 
   constructor(
     private readonly activeFace: Signal.State<number>,

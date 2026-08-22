@@ -6,6 +6,7 @@ import {BaseAction} from './base-action';
 
 export class NextFaceAction extends BaseAction {
   readonly attrName = 'action-next-face';
+  readonly label = 'Next Face';
 
   constructor(
     private readonly activeFace: Signal.State<number>,
