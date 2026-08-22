@@ -1,6 +1,6 @@
 import {expect, test} from '@playwright/test';
 
-test.describe('D2 end-to-end interactions', () => {
+test.describe('D6 end-to-end interactions', () => {
   test.beforeEach(async ({page}) => {
     await page.setContent(`
       <!DOCTYPE html>
@@ -13,34 +13,31 @@ test.describe('D2 end-to-end interactions', () => {
               background-color: #0f172a;
               font-family: sans-serif;
             }
-            .coin {
-              width: 100px;
-              height: 100px;
-              border-radius: 50%;
+            .die {
+              width: 80px;
+              height: 80px;
+              border-radius: 8px;
               display: flex;
               align-items: center;
               justify-content: center;
               font-weight: bold;
-              font-size: 18px;
-            }
-            .heads {
-              background-color: #fbbf24;
-              border: 3px solid #d97706;
-              color: #78350f;
-            }
-            .tails {
-              background-color: #94a3b8;
-              border: 3px solid #64748b;
-              color: #1e293b;
+              font-size: 20px;
+              background-color: #ef4444;
+              border: 2px solid #f87171;
+              color: #ffffff;
             }
           </style>
         </head>
         <body>
           <div id="tabletop">
-            <pb-d2 id="coin">
-              <div slot="face0" class="coin heads">HEADS</div>
-              <div slot="face1" class="coin tails">TAILS</div>
-            </pb-d2>
+            <pb-d6 id="die">
+              <div slot="face0" class="die">1</div>
+              <div slot="face1" class="die">2</div>
+              <div slot="face2" class="die">3</div>
+              <div slot="face3" class="die">4</div>
+              <div slot="face4" class="die">5</div>
+              <div slot="face5" class="die">6</div>
+            </pb-d6>
           </div>
         </body>
       </html>
@@ -54,25 +51,25 @@ test.describe('D2 end-to-end interactions', () => {
   test('renders face0 slot initially and matches visual snapshot', async ({
     page,
   }) => {
-    const piece = page.locator('#coin');
-    await expect(piece).toHaveScreenshot('d2_e2e-initial.png');
+    const piece = page.locator('#die');
+    await expect(piece).toHaveScreenshot('d6_e2e-initial.png');
   });
 
-  test('flips coin to face1 on keypress and matches visual snapshot', async ({
+  test('flips die to face5 on keypress and matches visual snapshot', async ({
     page,
   }) => {
-    const piece = page.locator('#coin');
+    const piece = page.locator('#die');
     await piece.hover();
     await page.keyboard.press('f');
-    await expect(piece).toHaveScreenshot('d2_e2e-flipped.png');
+    await expect(piece).toHaveScreenshot('d6_e2e-flipped.png');
   });
 
-  test('picks up coin into hand overlay on hover and keypress', async ({
+  test('picks up die into hand overlay on hover and keypress', async ({
     page,
   }) => {
     await page.mouse.move(50, 50);
     await page.keyboard.press('c');
     await page.mouse.move(100, 200);
-    await expect(page).toHaveScreenshot('d2_e2e-picked.png');
+    await expect(page).toHaveScreenshot('d6_e2e-picked.png');
   });
 });

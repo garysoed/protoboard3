@@ -80,7 +80,7 @@ graph TD
 **Goal**: Implement the remaining piece components, face switching, dice rolling, opposite face arithmetic on flippable pieces, and visual golden tests.
 **Dependencies**: Phase 2.
 
-- [ ] **3. Phase 3: Multi-Sided Pieces (`pb-d2` through `pb-dn`)**
+- [x] **3. Phase 3: Multi-Sided Pieces (`pb-d2` through `pb-dn`)**
   - [x] **3.1 Base Piece Abstraction (`src/pieces/base-piece.ts`)**
     - [x] 3.1.1 Reactive `activeFace` property (0-indexed).
     - [x] 3.1.2 Shadow DOM projection rendering `<slot name="face${this.activeFace}"></slot>`.
@@ -97,9 +97,9 @@ graph TD
   - [x] **3.3 Registration & Showcase Update**
     - [x] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
     - [x] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).
-  - [ ] **3.4 Unit & Visual Golden Testing**
-    - [ ] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, roll distributions, and rotation cycling.
-    - [ ] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces, flipping state transitions, and piece rotation angles.
+  - [x] **3.4 Unit & Visual Golden Testing**
+    - [x] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, roll distributions, and rotation cycling.
+    - [x] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces, flipping state transitions, and piece rotation angles.
 
 ---
 
