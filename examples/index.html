@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protoboard — Dice & Piece Gallery</title>
+    <style>
+      :root {
+        --bg-color: #0f172a;
+        --surface-color: #1e293b;
+        --border-color: #334155;
+        --text-color: #f8fafc;
+        --text-muted: #94a3b8;
+        --accent-color: #38bdf8;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 32px 24px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          sans-serif;
+        line-height: 1.5;
+      }
+
+      header {
+        max-width: 1000px;
+        margin: 0 auto 32px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        color: var(--text-color);
+      }
+
+      p.description {
+        margin: 0 0 16px;
+        color: var(--text-muted);
+        font-size: 16px;
+      }
+
+      .instructions-card {
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+      }
+
+      .instructions-card h2 {
+        margin: 0 0 8px;
+        font-size: 16px;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .key-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 8px 16px;
+        font-size: 14px;
+      }
+
+      .key-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      kbd {
+        background-color: #334155;
+        color: #f1f5f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-family: monospace;
+        border: 1px solid #475569;
+        min-width: 20px;
+        text-align: center;
+      }
+
+      .gallery-grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .piece-card {
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .piece-card h3 {
+        margin: 0 0 4px;
+        font-size: 16px;
+        color: var(--text-color);
+      }
+
+      .piece-card .type-label {
+        font-size: 12px;
+        color: var(--accent-color);
+        margin-bottom: 16px;
+        font-family: monospace;
+      }
+
+      .piece-stage {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 90px;
+        margin-bottom: 12px;
+      }
+
+      /* Die & Piece Styles */
+      .token-d1 {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #0284c7, #0369a1);
+        border: 2px solid #38bdf8;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: #f8fafc;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        cursor: grab;
+      }
+
+      .coin {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 13px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        cursor: grab;
+      }
+
+      .coin.heads {
+        background: radial-gradient(circle, #fbbf24, #d97706);
+        border: 3px solid #fef3c7;
+        color: #78350f;
+      }
+
+      .coin.tails {
+        background: radial-gradient(circle, #cbd5e1, #64748b);
+        border: 3px solid #f1f5f9;
+        color: #0f172a;
+      }
+
+      .polyhedral {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        cursor: grab;
+      }
+
+      .d4-face {
+        background: linear-gradient(135deg, #ec4899, #be185d);
+        border: 2px solid #f472b6;
+        color: #fdf2f8;
+      }
+
+      .d6-face {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        border: 2px solid #f87171;
+        color: #ffffff;
+      }
+
+      .d8-face {
+        background: linear-gradient(135deg, #f97316, #c2410c);
+        border: 2px solid #fb923c;
+        color: #ffffff;
+      }
+
+      .d12-face {
+        background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+        border: 2px solid #a78bfa;
+        color: #ffffff;
+      }
+
+      .d20-face {
+        background: linear-gradient(135deg, #10b981, #047857);
+        border: 2px solid #34d399;
+        color: #ffffff;
+      }
+
+      .dn-face {
+        background: linear-gradient(135deg, #06b6d4, #0e7490);
+        border: 2px solid #22d3ee;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Protoboard Piece & Dice Gallery</h1>
+      <p class="description">
+        Hover over any piece and press keyboard shortcuts to trigger physical
+        interactions.
+      </p>
+
+      <div class="instructions-card">
+        <h2>Keyboard Shortcuts</h2>
+        <div class="key-grid">
+          <div class="key-item"><kbd>r</kbd> <span>Roll / Randomize</span></div>
+          <div class="key-item"><kbd>f</kbd> <span>Flip Opposite</span></div>
+          <div class="key-item"><kbd>]</kbd> <span>Next Face</span></div>
+          <div class="key-item"><kbd>[</kbd> <span>Previous Face</span></div>
+          <div class="key-item"><kbd>t</kbd> <span>Rotate Angle</span></div>
+          <div class="key-item">
+            <kbd>c</kbd> <span>Pick / Hold Piece</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="gallery-grid">
+      <!-- D1 Single Face Piece -->
+      <div class="piece-card">
+        <h3>Pawn Token</h3>
+        <div class="type-label">&lt;pb-d1&gt;</div>
+        <div class="piece-stage">
+          <pb-d1 id="piece-d1" rotations="0, 45, 90, 135, 180, 225, 270, 315">
+            <div slot="face0" class="token-d1">♟</div>
+          </pb-d1>
+        </div>
+      </div>
+
+      <!-- D2 Coin -->
+      <div class="piece-card">
+        <h3>Coin</h3>
+        <div class="type-label">&lt;pb-d2&gt;</div>
+        <div class="piece-stage">
+          <pb-d2 id="piece-d2">
+            <div slot="face0" class="coin heads">HEADS</div>
+            <div slot="face1" class="coin tails">TAILS</div>
+          </pb-d2>
+        </div>
+      </div>
+
+      <!-- D4 Tetrahedral Die -->
+      <div class="piece-card">
+        <h3>D4 Die</h3>
+        <div class="type-label">&lt;pb-d4&gt;</div>
+        <div class="piece-stage">
+          <pb-d4 id="piece-d4">
+            <div slot="face0" class="polyhedral d4-face">1</div>
+            <div slot="face1" class="polyhedral d4-face">2</div>
+            <div slot="face2" class="polyhedral d4-face">3</div>
+            <div slot="face3" class="polyhedral d4-face">4</div>
+          </pb-d4>
+        </div>
+      </div>
+
+      <!-- D6 Cubic Die -->
+      <div class="piece-card">
+        <h3>D6 Die</h3>
+        <div class="type-label">&lt;pb-d6&gt;</div>
+        <div class="piece-stage">
+          <pb-d6 id="piece-d6">
+            <div slot="face0" class="polyhedral d6-face">⚀ 1</div>
+            <div slot="face1" class="polyhedral d6-face">⚁ 2</div>
+            <div slot="face2" class="polyhedral d6-face">⚂ 3</div>
+            <div slot="face3" class="polyhedral d6-face">⚃ 4</div>
+            <div slot="face4" class="polyhedral d6-face">⚄ 5</div>
+            <div slot="face5" class="polyhedral d6-face">⚅ 6</div>
+          </pb-d6>
+        </div>
+      </div>
+
+      <!-- D8 Octahedral Die -->
+      <div class="piece-card">
+        <h3>D8 Die</h3>
+        <div class="type-label">&lt;pb-d8&gt;</div>
+        <div class="piece-stage">
+          <pb-d8 id="piece-d8">
+            <div slot="face0" class="polyhedral d8-face">1</div>
+            <div slot="face1" class="polyhedral d8-face">2</div>
+            <div slot="face2" class="polyhedral d8-face">3</div>
+            <div slot="face3" class="polyhedral d8-face">4</div>
+            <div slot="face4" class="polyhedral d8-face">5</div>
+            <div slot="face5" class="polyhedral d8-face">6</div>
+            <div slot="face6" class="polyhedral d8-face">7</div>
+            <div slot="face7" class="polyhedral d8-face">8</div>
+          </pb-d8>
+        </div>
+      </div>
+
+      <!-- D12 Dodecahedral Die -->
+      <div class="piece-card">
+        <h3>D12 Die</h3>
+        <div class="type-label">&lt;pb-d12&gt;</div>
+        <div class="piece-stage">
+          <pb-d12 id="piece-d12">
+            <div slot="face0" class="polyhedral d12-face">1</div>
+            <div slot="face1" class="polyhedral d12-face">2</div>
+            <div slot="face2" class="polyhedral d12-face">3</div>
+            <div slot="face3" class="polyhedral d12-face">4</div>
+            <div slot="face4" class="polyhedral d12-face">5</div>
+            <div slot="face5" class="polyhedral d12-face">6</div>
+            <div slot="face6" class="polyhedral d12-face">7</div>
+            <div slot="face7" class="polyhedral d12-face">8</div>
+            <div slot="face8" class="polyhedral d12-face">9</div>
+            <div slot="face9" class="polyhedral d12-face">10</div>
+            <div slot="face10" class="polyhedral d12-face">11</div>
+            <div slot="face10" class="polyhedral d12-face">12</div>
+          </pb-d12>
+        </div>
+      </div>
+
+      <!-- D20 Icosahedral Die -->
+      <div class="piece-card">
+        <h3>D20 Die</h3>
+        <div class="type-label">&lt;pb-d20&gt;</div>
+        <div class="piece-stage">
+          <pb-d20 id="piece-d20">
+            <div slot="face0" class="polyhedral d20-face">1</div>
+            <div slot="face1" class="polyhedral d20-face">2</div>
+            <div slot="face2" class="polyhedral d20-face">3</div>
+            <div slot="face3" class="polyhedral d20-face">4</div>
+            <div slot="face4" class="polyhedral d20-face">5</div>
+            <div slot="face5" class="polyhedral d20-face">6</div>
+            <div slot="face6" class="polyhedral d20-face">7</div>
+            <div slot="face7" class="polyhedral d20-face">8</div>
+            <div slot="face8" class="polyhedral d20-face">9</div>
+            <div slot="face9" class="polyhedral d20-face">10</div>
+            <div slot="face10" class="polyhedral d20-face">11</div>
+            <div slot="face11" class="polyhedral d20-face">12</div>
+            <div slot="face12" class="polyhedral d20-face">13</div>
+            <div slot="face13" class="polyhedral d20-face">14</div>
+            <div slot="face14" class="polyhedral d20-face">15</div>
+            <div slot="face15" class="polyhedral d20-face">16</div>
+            <div slot="face16" class="polyhedral d20-face">17</div>
+            <div slot="face17" class="polyhedral d20-face">18</div>
+            <div slot="face18" class="polyhedral d20-face">19</div>
+            <div slot="face19" class="polyhedral d20-face">20</div>
+          </pb-d20>
+        </div>
+      </div>
+
+      <!-- DN Custom N-Sided Die -->
+      <div class="piece-card">
+        <h3>D10 Die (DN)</h3>
+        <div class="type-label">&lt;pb-dn sides="10"&gt;</div>
+        <div class="piece-stage">
+          <pb-dn id="piece-dn" sides="10">
+            <div slot="face0" class="polyhedral dn-face">0</div>
+            <div slot="face1" class="polyhedral dn-face">1</div>
+            <div slot="face2" class="polyhedral dn-face">2</div>
+            <div slot="face3" class="polyhedral dn-face">3</div>
+            <div slot="face4" class="polyhedral dn-face">4</div>
+            <div slot="face5" class="polyhedral dn-face">5</div>
+            <div slot="face6" class="polyhedral dn-face">6</div>
+            <div slot="face7" class="polyhedral dn-face">7</div>
+            <div slot="face8" class="polyhedral dn-face">8</div>
+            <div slot="face9" class="polyhedral dn-face">9</div>
+          </pb-dn>
+        </div>
+      </div>
+    </main>
+
+    <pb-hand-overlay></pb-hand-overlay>
+
+    <script src="../dist/protoboard.min.js"></script>
+    <script>
+      Protoboard.initialize();
+    </script>
+  </body>
+</html>

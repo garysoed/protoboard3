@@ -19,6 +19,7 @@ test.describe('Protoboard Registration Foundation', () => {
         'pb-d8',
         'pb-d12',
         'pb-d20',
+        'pb-dn',
         'pb-hand-overlay',
       ];
       return tags.every((tag) => !!customElements.get(tag));
@@ -38,6 +39,7 @@ test.describe('Protoboard Registration Foundation', () => {
         'tabletop-d8',
         'tabletop-d12',
         'tabletop-d20',
+        'tabletop-dn',
         'tabletop-hand-overlay',
       ];
       return tags.every((tag) => !!customElements.get(tag));

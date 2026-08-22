@@ -79,4 +79,4 @@
   - `npm run test:unit`: Runs unit tests on Chromium.
   - `npm run test:e2e`: Runs E2E tests across Chromium, Firefox, and WebKit.
 - **Environment Notes**:
-  - Running Playwright browsers on macOS requires `BypassSandbox: true` due to OS child process IPC sandbox restrictions.
+  - Running Playwright browsers and Jujutsu commands that snapshot or modify repository state (`jj status`, `jj describe`, `jj new`, etc.) on macOS require `BypassSandbox: true` due to OS child process IPC and `.git/objects` filesystem sandbox restrictions.

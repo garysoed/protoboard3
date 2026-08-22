@@ -86,7 +86,7 @@ graph TD
     - [x] 3.1.2 Shadow DOM projection rendering `<slot name="face${this.activeFace}"></slot>`.
     - [x] 3.1.3 Base piece actions: `roll()` (shortcut `r`), `nextFace()` (shortcut `]`), `prevFace()` (shortcut `[`), `rotate()` (shortcut `t`).
     - [x] 3.1.4 `rotations` attribute parsing (comma-separated degrees, e.g. `0, 180, 270`, cyclic progression `(currentIndex + 1) % rotations.length`) and CSS transform rendering.
-  - [ ] **3.2 Flippable Pieces & Polyhedral Components (`src/pieces/`)**
+  - [x] **3.2 Flippable Pieces & Polyhedral Components (`src/pieces/`)**
     - [x] 3.2.1 `D2Piece` (`<pb-d2>`): 2 faces (coins, double-sided cards), implements `flip()` (shortcut `f`: `face0 <-> face1`).
     - [x] 3.2.2 `D4Piece` (`<pb-d4>`): 4 faces (tetrahedral die), implements `flip()` (shortcut `f`: `face0 <-> face3`, `face1 <-> face2`).
     - [x] 3.2.3 `D6Piece` (`<pb-d6>`): 6 faces (cubic die), implements `flip()` with opposite sum 7 (`(N - 1) - current`).
@@ -94,9 +94,9 @@ graph TD
     - [x] 3.2.5 `D12Piece` (`<pb-d12>`): 12 faces (dodecahedral die), implements `flip()` with opposite sum 13.
     - [x] 3.2.6 `D20Piece` (`<pb-d20>`): 20 faces (icosahedral die), implements `flip()` with opposite sum 21.
     - [x] 3.2.7 `DNPiece` (`<pb-dn>`): N faces via `sides="N"` attribute.
-  - [ ] **3.3 Registration & Showcase Update**
-    - [ ] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
-    - [ ] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).
+  - [x] **3.3 Registration & Showcase Update**
+    - [x] 3.3.1 Incrementally register all piece tags in `registerProtoboard`.
+    - [x] 3.3.2 Update `examples/index.html` with dice gallery (coins, d4, d6, d8, d12, d20, dn).
   - [ ] **3.4 Unit & Visual Golden Testing**
     - [ ] 3.4.1 Playwright unit & component tests for face cycling, opposite math verification, roll distributions, and rotation cycling.
     - [ ] 3.4.2 Playwright visual golden screenshot tests for multi-sided dice faces, flipping state transitions, and piece rotation angles.

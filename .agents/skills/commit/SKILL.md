@@ -60,3 +60,4 @@ jj status
     ```bash
     jj describe -m "<suggested description>"
     ```
+  - _Note_: On macOS sandbox environments, running Jujutsu commands (`jj status`, `jj describe`) requires `BypassSandbox: true` due to `.git/objects` filesystem sandbox restrictions.
