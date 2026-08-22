@@ -1,5 +1,7 @@
 import {expect, test} from '@playwright/test';
 
+import type {BaseElement} from './base-element';
+
 test.describe('BaseElement', () => {
   test.beforeEach(async ({page}) => {
     await page.setContent('<!DOCTYPE html><html><body></body></html>');
@@ -171,10 +173,7 @@ test.describe('BaseElement', () => {
       });
 
       const descriptors = await page.evaluate(() => {
-        const piece = document.querySelector<window.Protoboard.D1>('#piece');
-        if (!piece) {
-          return [];
-        }
+        const piece = document.querySelector('#piece')! as BaseElement;
         return piece.getActionDescriptors().map((desc) => ({
           isPickAction: desc.id === window.Protoboard.PickAction,
           isRotateAction: desc.id === window.Protoboard.RotateAction,
@@ -195,6 +194,65 @@ test.describe('BaseElement', () => {
         isRotateAction: true,
         key: 't',
         label: 'Rotate',
+      });
+    });
+  });
+
+  test.describe('onQueryActions', () => {
+    test('aggregates action groups in bubbling order using default tag names', async ({
+      page,
+    }) => {
+      await page.setContent(`
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <test-container id="container">
+              <pb-d1 id="piece">
+                <div slot="face0">Face</div>
+              </pb-d1>
+            </test-container>
+          </body>
+        </html>
+      `);
+      await page.addScriptTag({path: 'dist/testing.min.js'});
+      await page.evaluate(() => {
+        class CustomAction extends window.Protoboard.BaseAction {
+          readonly attrName = 'action-custom';
+          readonly label = 'Custom Container Action';
+
+          protected override onTrigger(): void {}
+        }
+        class TestContainer extends window.Protoboard.BaseElement {
+          protected override readonly defaultName = 'Test Container';
+
+          constructor() {
+            super(() => [
+              new CustomAction(window.Protoboard.parseTriggerKey('s')),
+            ]);
+          }
+        }
+        customElements.define('test-container', TestContainer);
+        window.Protoboard.initialize();
+      });
+
+      const groups = await page.evaluate(() => {
+        const piece = document.querySelector('#piece')! as BaseElement;
+        const event = new window.Protoboard.QueryActionsEvent(piece, []);
+        piece.dispatchEvent(event);
+        return event.detail.actionGroups.map((g) => ({
+          actionLabels: g.actions.map((a) => a.label),
+          name: g.name,
+        }));
+      });
+
+      expect(groups.length).toBe(2);
+      expect(groups[0]!).toEqual({
+        actionLabels: ['Pick', 'Rotate'],
+        name: 'D1',
+      });
+      expect(groups[1]!).toEqual({
+        actionLabels: ['Custom Container Action'],
+        name: 'Test Container',
       });
     });
   });

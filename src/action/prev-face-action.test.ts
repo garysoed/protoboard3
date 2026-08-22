@@ -22,6 +22,8 @@ async function setupPage(
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = 3;
 
+      protected override readonly defaultName = 'Test Piece';
+
       constructor() {
         super(() => [
           new window.Protoboard.PrevFaceAction(
@@ -109,6 +111,8 @@ test.describe('PrevFaceAction', () => {
       class DynamicPiece extends window.Protoboard.BasePiece {
         readonly sides = 4;
         readonly totalSides = window.Protoboard.signal(4);
+
+        protected override readonly defaultName = 'Dynamic Piece';
 
         constructor() {
           super(() => [

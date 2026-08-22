@@ -18,6 +18,8 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = 3;
 
+      protected override readonly defaultName = 'Test Piece';
+
       constructor() {
         super(() => [
           new window.Protoboard.NextFaceAction(
@@ -105,6 +107,8 @@ test.describe('NextFaceAction', () => {
       class DynamicPiece extends window.Protoboard.BasePiece {
         readonly sides = 2;
         readonly totalSides = window.Protoboard.signal(2);
+
+        protected override readonly defaultName = 'Dynamic Piece';
 
         constructor() {
           super(() => [

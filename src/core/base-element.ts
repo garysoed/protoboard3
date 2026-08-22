@@ -5,15 +5,18 @@ import {LitElement} from 'lit';
 
 import {BaseAction} from '../action/base-action';
 
-import {ActionDescriptor} from './action-descriptor';
+import {ActionDescriptor, QueryActionsEvent} from './action-descriptor';
 import {ActionEvent} from './action-event';
 import {HandService, handServiceContext} from './hand-service';
 
-export class BaseElement extends SignalWatcher(LitElement) {
+export abstract class BaseElement extends SignalWatcher(LitElement) {
   readonly handService = signal<HandService | undefined>(undefined);
+
+  protected abstract readonly defaultName: string;
 
   private readonly boundOnMouseEnter = this.onMouseEnter.bind(this);
   private readonly boundOnMouseLeave = this.onMouseLeave.bind(this);
+  private readonly boundOnQueryActions = this.onQueryActions.bind(this);
   private readonly boundOnWindowKeyDown = this.onWindowKeyDown.bind(this);
   private readonly handServiceConsumer = new ContextConsumer(this, {
     callback: (service) => {
@@ -38,6 +41,7 @@ export class BaseElement extends SignalWatcher(LitElement) {
     }
     this.addEventListener('mouseenter', this.boundOnMouseEnter);
     this.addEventListener('mouseleave', this.boundOnMouseLeave);
+    this.addEventListener(QueryActionsEvent.TYPE, this.boundOnQueryActions);
     window.addEventListener('keydown', this.boundOnWindowKeyDown);
   }
   override disconnectedCallback(): void {
@@ -47,6 +51,7 @@ export class BaseElement extends SignalWatcher(LitElement) {
     }
     this.removeEventListener('mouseenter', this.boundOnMouseEnter);
     this.removeEventListener('mouseleave', this.boundOnMouseLeave);
+    this.removeEventListener(QueryActionsEvent.TYPE, this.boundOnQueryActions);
     window.removeEventListener('keydown', this.boundOnWindowKeyDown);
   }
   getActionDescriptors(): readonly ActionDescriptor[] {
@@ -58,6 +63,16 @@ export class BaseElement extends SignalWatcher(LitElement) {
   }
   private onMouseLeave(): void {
     this.isHovered.set(false);
+  }
+  private onQueryActions(event: Event): void {
+    if (!(event instanceof QueryActionsEvent)) {
+      return;
+    }
+
+    event.addActionGroup({
+      actions: this.getActionDescriptors(),
+      name: this.defaultName,
+    });
   }
   private onWindowKeyDown(event: KeyboardEvent): void {
     const target = event.target;

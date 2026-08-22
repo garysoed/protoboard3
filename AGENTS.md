@@ -27,6 +27,8 @@
 - **No Action Methods on Components**: Custom piece and element classes must not expose methods corresponding to actions (e.g. no `piece.flip()` or `piece.roll()`). Action logic and execution must remain encapsulated inside action instances, modifying internal reactive signals directly rather than via component methods.
 - **No Unsolicited Interface or Signature Changes**: Always check with the user before modifying, widening, narrowing, or altering any function, constructor, method signature, or interface type definition. Never make preemptive signature adjustments (e.g. widening parameter types to accept `null`) without explicit instruction.
 - **Preserve Working Internal Implementation**: Do not modify, re-architect, or inject conditional branches into existing working internal methods or internal state properties when adapting code for an external return type or boundary interface. Compute derived or transformed values at the boundary (such as in descriptors or getters) rather than altering stable internal logic.
+- **Human-Readable Component Names**: Component default names (`defaultName`) must be human-readable strings (e.g. `'D1'`, `'D20'`, `'DN'`, `'Test Piece'`) without library prefixes (e.g. no `pb-`) or dashes.
+- **No Unsolicited Property Accessors**: Do not add Lit `@property()` or `@state()` accessors or DOM attribute reflections unless explicitly requested. Avoid adding property reflections for DOM attributes when internal or protected class properties are sufficient.
 
 ## Dependency Injection & Context (`@lit/context`)
 

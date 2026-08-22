@@ -12,6 +12,8 @@ export class DN extends BasePiece {
   @property({type: Number})
   accessor sides = 6;
 
+  protected override readonly defaultName = 'DN';
+
   private readonly totalSides = signal(6);
 
   constructor() {

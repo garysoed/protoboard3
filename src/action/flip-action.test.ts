@@ -22,6 +22,8 @@ async function setupPage(
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = sides;
 
+      protected override readonly defaultName = 'Test Piece';
+
       constructor() {
         super(() => [new window.Protoboard.FlipAction(this.activeFace, sides)]);
       }
