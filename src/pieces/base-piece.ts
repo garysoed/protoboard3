@@ -17,8 +17,11 @@ export abstract class BasePiece extends BaseElement {
 
   protected readonly activeFace = signal(0);
 
-  constructor(actionsFactory: () => readonly BaseAction[]) {
-    super(() => [
+  constructor(
+    defaultName: string,
+    actionsFactory: () => readonly BaseAction[],
+  ) {
+    super(defaultName, () => [
       new PickAction(this.handService),
       new RotateAction(),
       ...actionsFactory(),

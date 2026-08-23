@@ -14,7 +14,7 @@
 
 ## Reactive State & Signals (`@lit-labs/signals`)
 
-- **Signals for Reactive State**: Manage mutable reactive state using TC39 Signals (`signal()`) and derived reactive values using `computed()`. Custom elements consuming signals must inherit from `SignalWatcher(LitElement)`.
+- **Signals for Reactive State**: Manage mutable reactive state using TC39 Signals (`signal()`) and derived reactive values using `computed()`. Custom elements consuming signals must inherit from `SignalWatcher(LitElement)`. All mutable element properties and attribute-backed state must be stored as reactive signals.
 - **No Signal Suffix**: Do not append a `Signal` suffix to signal property names (e.g. use `overlay`, `cursorX`, `stopIndex`, not `overlaySignal`).
 - **Getter Memoization**: Use `@cached()` from `gs-tools/export/data` for memoizing getter calculations and lazy singleton references. Do not convert lazy getters into signals.
 - **Constant vs Reactive Properties**: Do not create reactive signals or `computed()` wrappers for immutable class constants. Compute derived values directly in methods where properties are constant.
@@ -23,6 +23,7 @@
 ## Piece Architecture & Element Contracts
 
 - **Abstract Piece Base Classes**: `BasePiece` and other piece base abstractions must be declared as `abstract class` and never registered as custom HTML elements. Only concrete piece components (e.g. `<pb-d1>`) are registered.
+- **Constructor-Injected Default Names**: `BaseElement` and `BasePiece` subclasses must pass `defaultName: string` as a required constructor parameter rather than defining abstract class properties.
 - **Intrinsic Properties**: Invariant piece characteristics (such as `sides`) must be defined as typed class properties (`abstract readonly sides: number;`) rather than Lit `@property()` accessors or HTML attributes.
 - **No Action Methods on Components**: Custom piece and element classes must not expose methods corresponding to actions (e.g. no `piece.flip()` or `piece.roll()`). Action logic and execution must remain encapsulated inside action instances, modifying internal reactive signals directly rather than via component methods.
 - **No Unsolicited Interface or Signature Changes**: Always check with the user before modifying, widening, narrowing, or altering any function, constructor, method signature, or interface type definition. Never make preemptive signature adjustments (e.g. widening parameter types to accept `null`) without explicit instruction.

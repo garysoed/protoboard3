@@ -223,10 +223,8 @@ test.describe('BaseElement', () => {
           protected override onTrigger(): void {}
         }
         class TestContainer extends window.Protoboard.BaseElement {
-          protected override readonly defaultName = 'Test Container';
-
           constructor() {
-            super(() => [
+            super('Test Container', () => [
               new CustomAction(window.Protoboard.parseTriggerKey('s')),
             ]);
           }
@@ -254,6 +252,119 @@ test.describe('BaseElement', () => {
         actionLabels: ['Custom Container Action'],
         name: 'Test Container',
       });
+    });
+
+    test('uses customized element names from name attributes', async ({
+      page,
+    }) => {
+      await page.setContent(`
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <test-container id="container" name="Special Zone">
+              <pb-d1 id="piece" name="Custom Die">
+                <div slot="face0">Face</div>
+              </pb-d1>
+            </test-container>
+          </body>
+        </html>
+      `);
+      await page.addScriptTag({path: 'dist/testing.min.js'});
+      await page.evaluate(() => {
+        class CustomAction extends window.Protoboard.BaseAction {
+          readonly attrName = 'action-custom';
+          readonly label = 'Custom Container Action';
+
+          protected override onTrigger(): void {}
+        }
+        class TestContainer extends window.Protoboard.BaseElement {
+          constructor() {
+            super('Test Container', () => [
+              new CustomAction(window.Protoboard.parseTriggerKey('s')),
+            ]);
+          }
+        }
+        customElements.define('test-container', TestContainer);
+        window.Protoboard.initialize();
+      });
+
+      const groups = await page.evaluate(() => {
+        const piece = document.querySelector('#piece')! as BaseElement;
+        const event = new window.Protoboard.QueryActionsEvent(piece, []);
+        piece.dispatchEvent(event);
+        return event.detail.actionGroups.map((g) => ({
+          actionLabels: g.actions.map((a) => a.label),
+          name: g.name,
+        }));
+      });
+
+      expect(groups.length).toBe(2);
+      expect(groups[0]!).toEqual({
+        actionLabels: ['Pick', 'Rotate'],
+        name: 'Custom Die',
+      });
+      expect(groups[1]!).toEqual({
+        actionLabels: ['Custom Container Action'],
+        name: 'Special Zone',
+      });
+    });
+
+    test('updates element name reactively when name attribute changes', async ({
+      page,
+    }) => {
+      await page.setContent(`
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <pb-d1 id="piece">
+              <div slot="face0">Face</div>
+            </pb-d1>
+          </body>
+        </html>
+      `);
+      await page.addScriptTag({path: 'dist/testing.min.js'});
+      await page.evaluate(() => {
+        window.Protoboard.initialize();
+      });
+
+      const updatedName = await page.evaluate(() => {
+        const piece = document.querySelector('#piece')! as BaseElement;
+        piece.setAttribute('name', 'Dynamically Renamed');
+        const event = new window.Protoboard.QueryActionsEvent(piece, []);
+        piece.dispatchEvent(event);
+        return event.detail.actionGroups[0]!.name;
+      });
+
+      expect(updatedName).toBe('Dynamically Renamed');
+    });
+
+    test('reverts element name to defaultName when name attribute is removed', async ({
+      page,
+    }) => {
+      await page.setContent(`
+        <!DOCTYPE html>
+        <html>
+          <body>
+            <pb-d1 id="piece" name="Custom Die">
+              <div slot="face0">Face</div>
+            </pb-d1>
+          </body>
+        </html>
+      `);
+      await page.addScriptTag({path: 'dist/testing.min.js'});
+      await page.evaluate(() => {
+        window.Protoboard.initialize();
+      });
+
+      const revertedName = await page.evaluate(() => {
+        const piece = document.querySelector('#piece')! as BaseElement;
+        piece.removeAttribute('name');
+        const event = new window.Protoboard.QueryActionsEvent(piece, []);
+        piece.dispatchEvent(event);
+        return event.detail.actionGroups[0]!.name;
+      });
+
+      expect(revertedName).toBe('D1');
     });
   });
 });

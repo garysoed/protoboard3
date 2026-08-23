@@ -16,10 +16,10 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = 1;
 
-      protected override readonly defaultName = 'Test Piece';
-
       constructor() {
-        super(() => [new window.Protoboard.PickAction(this.handService)]);
+        super('Test Piece', () => [
+          new window.Protoboard.PickAction(this.handService),
+        ]);
       }
     }
 

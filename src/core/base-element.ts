@@ -1,5 +1,5 @@
 import {ContextConsumer} from '@lit/context';
-import {SignalWatcher, signal} from '@lit-labs/signals';
+import {Signal, SignalWatcher, signal} from '@lit-labs/signals';
 import {cached} from 'gs-tools/export/data';
 import {LitElement} from 'lit';
 
@@ -11,8 +11,6 @@ import {HandService, handServiceContext} from './hand-service';
 
 export abstract class BaseElement extends SignalWatcher(LitElement) {
   readonly handService = signal<HandService | undefined>(undefined);
-
-  protected abstract readonly defaultName: string;
 
   private readonly boundOnMouseEnter = this.onMouseEnter.bind(this);
   private readonly boundOnMouseLeave = this.onMouseLeave.bind(this);
@@ -26,11 +24,26 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
     subscribe: true,
   });
   private readonly isHovered = signal(false);
+  private readonly name: Signal.State<string>;
 
-  constructor(private readonly actionsFactory: () => readonly BaseAction[]) {
+  constructor(
+    private readonly defaultName: string,
+    private readonly actionsFactory: () => readonly BaseAction[],
+  ) {
     super();
+    this.name = signal(defaultName);
   }
 
+  override attributeChangedCallback(
+    name: string,
+    _old: null | string,
+    value: null | string,
+  ): void {
+    super.attributeChangedCallback(name, _old, value);
+    if (name === 'name') {
+      this.name.set(value ?? this.defaultName);
+    }
+  }
   override connectedCallback(): void {
     super.connectedCallback();
     if (!this.hasAttribute('tabindex')) {
@@ -58,6 +71,10 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
     return this.actions.map((action) => action.getActionDescriptor(this));
   }
 
+  static override get observedAttributes(): string[] {
+    return ['name', ...(super.observedAttributes ?? [])];
+  }
+
   private onMouseEnter(): void {
     this.isHovered.set(true);
   }
@@ -71,7 +88,7 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
 
     event.addActionGroup({
       actions: this.getActionDescriptors(),
-      name: this.defaultName,
+      name: this.name.get(),
     });
   }
   private onWindowKeyDown(event: KeyboardEvent): void {

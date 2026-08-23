@@ -18,10 +18,8 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     class TestPiece extends window.Protoboard.BasePiece {
       readonly sides = 3;
 
-      protected override readonly defaultName = 'Test Piece';
-
       constructor() {
-        super(() => [
+        super('Test Piece', () => [
           new window.Protoboard.RollAction((element) => {
             if (element instanceof TestPiece) {
               element.roll();

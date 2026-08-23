@@ -10,10 +10,8 @@ import {BasePiece} from './base-piece';
 export class D6 extends BasePiece {
   readonly sides = 6;
 
-  protected override readonly defaultName = 'D6';
-
   constructor() {
-    super(() => [
+    super('D6', () => [
       new FlipAction(this.activeFace, this.sides),
       new NextFaceAction(this.activeFace, signal(this.sides)),
       new PrevFaceAction(this.activeFace, signal(this.sides)),

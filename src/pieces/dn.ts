@@ -12,12 +12,10 @@ export class DN extends BasePiece {
   @property({type: Number})
   accessor sides = 6;
 
-  protected override readonly defaultName = 'DN';
-
   private readonly totalSides = signal(6);
 
   constructor() {
-    super(() => [
+    super('DN', () => [
       new NextFaceAction(this.activeFace, this.totalSides),
       new PrevFaceAction(this.activeFace, this.totalSides),
       new RollAction(() => {
