@@ -174,27 +174,35 @@ test.describe('BaseElement', () => {
 
       const descriptors = await page.evaluate(() => {
         const piece = document.querySelector('#piece')! as BaseElement;
+        const idNames = new Map<unknown, string>([
+          [window.Protoboard.HelpAction, 'HelpAction'],
+          [window.Protoboard.PickAction, 'PickAction'],
+          [window.Protoboard.RotateAction, 'RotateAction'],
+        ]);
         return piece.getActionDescriptors().map((desc) => ({
-          isPickAction: desc.id === window.Protoboard.PickAction,
-          isRotateAction: desc.id === window.Protoboard.RotateAction,
+          id: idNames.get(desc.id),
           key: desc.shortcut.key,
           label: desc.label,
         }));
       });
 
-      expect(descriptors.length).toBe(2);
-      expect(descriptors.find((d) => d.isPickAction)).toEqual({
-        isPickAction: true,
-        isRotateAction: false,
-        key: 'x',
-        label: 'Pick',
-      });
-      expect(descriptors.find((d) => d.isRotateAction)).toEqual({
-        isPickAction: false,
-        isRotateAction: true,
-        key: 't',
-        label: 'Rotate',
-      });
+      expect(descriptors).toEqual([
+        {
+          id: 'HelpAction',
+          key: '?',
+          label: 'Help',
+        },
+        {
+          id: 'PickAction',
+          key: 'x',
+          label: 'Pick',
+        },
+        {
+          id: 'RotateAction',
+          key: 't',
+          label: 'Rotate',
+        },
+      ]);
     });
   });
 
@@ -245,11 +253,11 @@ test.describe('BaseElement', () => {
 
       expect(groups.length).toBe(2);
       expect(groups[0]!).toEqual({
-        actionLabels: ['Pick', 'Rotate'],
+        actionLabels: ['Help', 'Pick', 'Rotate'],
         name: 'D1',
       });
       expect(groups[1]!).toEqual({
-        actionLabels: ['Custom Container Action'],
+        actionLabels: ['Help', 'Custom Container Action'],
         name: 'Test Container',
       });
     });
@@ -300,11 +308,11 @@ test.describe('BaseElement', () => {
 
       expect(groups.length).toBe(2);
       expect(groups[0]!).toEqual({
-        actionLabels: ['Pick', 'Rotate'],
+        actionLabels: ['Help', 'Pick', 'Rotate'],
         name: 'Custom Die',
       });
       expect(groups[1]!).toEqual({
-        actionLabels: ['Custom Container Action'],
+        actionLabels: ['Help', 'Custom Container Action'],
         name: 'Special Zone',
       });
     });

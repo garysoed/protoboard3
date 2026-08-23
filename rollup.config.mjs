@@ -22,6 +22,23 @@ const localPkgsResolver = {
   },
 };
 
+const litCssPlugin = {
+  name: 'lit-css',
+  transform(code, id) {
+    if (id.endsWith('.css')) {
+      const escaped = code
+        .replace(/\\/g, '\\\\')
+        .replace(/`/g, '\\`')
+        .replace(/\${/g, '\\${');
+      return {
+        code: `import {css} from 'lit';\nexport default css\`${escaped}\`;`,
+        map: {mappings: ''},
+      };
+    }
+    return null;
+  },
+};
+
 export default [
   {
     input: 'src/index.ts',
@@ -41,8 +58,9 @@ export default [
     ],
     plugins: [
       localPkgsResolver,
+      litCssPlugin,
       nodeResolve({
-        extensions: ['.js', '.ts', '.mjs'],
+        extensions: ['.js', '.ts', '.mjs', '.css'],
       }),
       typescript({
         declaration: true,
@@ -76,8 +94,9 @@ export default [
     ],
     plugins: [
       localPkgsResolver,
+      litCssPlugin,
       nodeResolve({
-        extensions: ['.js', '.ts', '.mjs'],
+        extensions: ['.js', '.ts', '.mjs', '.css'],
       }),
       typescript({
         declaration: false,

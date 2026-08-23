@@ -274,3 +274,57 @@ test.describe('parseTriggerKey', () => {
     });
   });
 });
+
+test.describe('formatTriggerKey', () => {
+  test.beforeEach(async ({page}) => {
+    await page.setContent('<!DOCTYPE html><html><body></body></html>');
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+  });
+
+  test('formats single letter key as uppercase', async ({page}) => {
+    const formatted = await page.evaluate(() => {
+      return window.Protoboard.formatTriggerKey(
+        window.Protoboard.parseTriggerKey('r'),
+      );
+    });
+    expect(formatted).toBe('R');
+  });
+
+  test('formats modifier keys in order with uppercase key', async ({page}) => {
+    const formatted = await page.evaluate(() => {
+      return window.Protoboard.formatTriggerKey(
+        window.Protoboard.parseTriggerKey('ctrl+shift+alt+x'),
+      );
+    });
+    expect(formatted).toBe('Ctrl+Alt+Shift+X');
+  });
+
+  test('formats space key as Space', async ({page}) => {
+    const formatted = await page.evaluate(() => {
+      return window.Protoboard.formatTriggerKey(
+        window.Protoboard.parseTriggerKey('space'),
+      );
+    });
+    expect(formatted).toBe('Space');
+  });
+
+  test('formats symbol key without altering symbol', async ({page}) => {
+    const formatted = await page.evaluate(() => {
+      return window.Protoboard.formatTriggerKey(
+        window.Protoboard.parseTriggerKey('?'),
+      );
+    });
+    expect(formatted).toBe('?');
+  });
+
+  test('returns empty string for trigger key with empty key', async ({
+    page,
+  }) => {
+    const formatted = await page.evaluate(() => {
+      return window.Protoboard.formatTriggerKey(
+        window.Protoboard.parseTriggerKey(''),
+      );
+    });
+    expect(formatted).toBe('');
+  });
+});

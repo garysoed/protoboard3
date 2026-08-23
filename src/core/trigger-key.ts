@@ -101,3 +101,37 @@ export function matchesKey(
 
   return true;
 }
+
+export function formatTriggerKey(triggerKey: TriggerKey): string {
+  if (!triggerKey.key) {
+    return '';
+  }
+
+  const parts: string[] = [];
+  if (triggerKey.ctrl) {
+    parts.push('Ctrl');
+  }
+  if (triggerKey.alt) {
+    parts.push('Alt');
+  }
+  if (triggerKey.meta) {
+    parts.push('Cmd');
+  }
+  if (triggerKey.shift) {
+    parts.push('Shift');
+  }
+
+  let displayKey = triggerKey.key;
+  if (displayKey.toLowerCase() === 'space' || displayKey === ' ') {
+    displayKey = 'Space';
+  } else if (
+    displayKey.length === 1 &&
+    displayKey >= 'a' &&
+    displayKey <= 'z'
+  ) {
+    displayKey = displayKey.toUpperCase();
+  }
+
+  parts.push(displayKey);
+  return parts.join('+');
+}

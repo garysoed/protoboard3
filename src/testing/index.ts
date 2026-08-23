@@ -2,6 +2,7 @@ import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 
 import {BaseAction} from '../action/base-action';
 import {FlipAction} from '../action/flip-action';
+import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
 import {PrevFaceAction} from '../action/prev-face-action';
@@ -14,10 +15,16 @@ import {
   QueryActionsEvent,
 } from '../core/action-descriptor';
 import {ActionEvent} from '../core/action-event';
+import {ActionPopup} from '../core/action-popup';
 import {BaseElement} from '../core/base-element';
 import {HandService, handServiceContext} from '../core/hand-service';
 import {initialize as coreInitialize, InitOptions} from '../core/initialize';
-import {matchesKey, parseTriggerKey, TriggerKey} from '../core/trigger-key';
+import {
+  formatTriggerKey,
+  matchesKey,
+  parseTriggerKey,
+  TriggerKey,
+} from '../core/trigger-key';
 import {BasePiece} from '../pieces/base-piece';
 import {D1} from '../pieces/d1';
 import {D12} from '../pieces/d12';
@@ -41,6 +48,7 @@ export function initialize(options: InitOptions = {}): void {
 
 export {
   ActionEvent,
+  ActionPopup,
   BaseAction,
   BaseElement,
   BasePiece,
@@ -54,8 +62,10 @@ export {
   D8,
   DN,
   FlipAction,
+  formatTriggerKey,
   HandService,
   handServiceContext,
+  HelpAction,
   matchesKey,
   NextFaceAction,
   parseTriggerKey,

@@ -4,6 +4,7 @@ import {cached} from 'gs-tools/export/data';
 import {LitElement} from 'lit';
 
 import {BaseAction} from '../action/base-action';
+import {HelpAction} from '../action/help-action';
 
 import {ActionDescriptor, QueryActionsEvent} from './action-descriptor';
 import {ActionEvent} from './action-event';
@@ -125,6 +126,6 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
 
   @cached()
   private get actions(): readonly BaseAction[] {
-    return this.actionsFactory();
+    return [new HelpAction(), ...this.actionsFactory()];
   }
 }

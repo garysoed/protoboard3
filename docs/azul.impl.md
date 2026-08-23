@@ -116,12 +116,12 @@ graph TD
   - [x] **4.2 Ancestor Event Interception & Action Aggregation**
     - [x] 4.2.1 Intercept `pb-query-actions` as it bubbles through intermediate Protoboard components and append action groups with custom component `name` (or tag name).
     - [x] 4.2.2 Implement shortcut shadowing resolution (marking container actions as shadowed when child components claim the same key).
-  - [ ] **4.3 `<pb-action-popup>` Custom Element (`src/core/action-popup.ts`)**
-    - [ ] 4.3.1 Implement `<pb-action-popup>` element listening at document root for `pb-query-actions`.
-    - [ ] 4.3.2 Render floating popup anchored to `event.detail.targetElement` with categorized action lists.
-    - [ ] 4.3.3 Implement click-to-execute action handlers.
-    - [ ] 4.3.4 Implement dismissal handlers (`Escape`, pressing `?` again, clicking outside, or executing an action).
-    - [ ] 4.3.5 Register `pb-action-popup` in `registerProtoboard`.
+  - [x] **4.3 `<pb-action-popup>` Custom Element (`src/core/action-popup.ts`)**
+    - [x] 4.3.1 Implement `<pb-action-popup>` element listening at document root for `pb-query-actions`.
+    - [x] 4.3.2 Render floating popup anchored to `event.detail.targetElement` with categorized action lists.
+    - [x] 4.3.3 Implement click-to-execute action handlers.
+    - [x] 4.3.4 Implement dismissal handlers (`Escape`, pressing `?` again, clicking outside, or executing an action).
+    - [x] 4.3.5 Register `pb-action-popup` in `registerProtoboard`.
   - [ ] **4.4 Testing & Visual Goldens**
     - [ ] 4.4.1 Playwright unit & component tests for `QueryActionsEvent` bubbling, action descriptor aggregation, and custom name display.
     - [ ] 4.4.2 Playwright visual golden screenshot tests for `<pb-action-popup>` anchored to pieces with keyboard and click flows.

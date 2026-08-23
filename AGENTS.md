@@ -3,11 +3,14 @@
 ## Component Architecture & Styling
 
 - **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
+- **Dedicated CSS Files**: Place custom element styling in dedicated `.css` files (e.g. `src/core/action-popup.css`) and import them directly (`import styles from './<name>.css'`) rather than using `.css.ts` or inline string templates.
+- **No Premature CSS Variables**: Avoid adding speculative CSS custom properties (`var(--pb-*, ...)`) for prospective customization. Use direct literal CSS properties and values until theming or dynamic overrides are requested.
 - **Clean Public Exports**: Keep `src/index.ts` focused strictly on consumer-facing functions (such as `initialize`) without exporting internal component classes or unnecessary intermediary dependency sources.
 - **Dedicated Testing Entrypoint**: Shared internal services and cross-test fixture components (e.g. `TestFace`, `HandService`, `handServiceContext`) must be exported through `src/testing/index.ts` and bundled as `dist/testing.min.js`. Unit tests in `src/` should load `dist/testing.min.js`, whereas end-to-end tests in `e2e/` represent consumer usage and must load the production bundle `dist/protoboard.min.js` and use standard HTML/DOM elements. Single-use test fixture classes should be defined and registered directly within their respective test file.
 - **Type Narrowing without Typecasts**: Never use `as` type assertions in production code. Use `instanceof` checks (e.g. `if (piece instanceof Element)`) to safely narrow DOM elements and objects.
 - **Lit Decorators Syntax**: In TypeScript with standard TC39 decorators, properties decorated with `@state()` or `@property()` must use the `accessor` keyword (e.g. `@state() private accessor cursorX = 0;`).
 - **Action Registration**: Base classes must not conditionally register actions based on property values. Specialized or multi-variant actions (e.g. `roll`, `next-face`, `flip`) must be registered directly by the subclasses that support them.
+- **Universal Element Actions**: Built-in actions that apply across all interactive pieces and containers (e.g. `HelpAction`) must be registered directly in `BaseElement` rather than individual piece or component subclasses.
 - **Single Action Factory**: `BaseElement` and its subclasses must take a single non-optional `actionsFactory: () => readonly BaseAction[]` function parameter evaluated lazily by the `@cached()` actions getter.
 - **Non-Optional Parameters by Default**: Most parameters across classes, constructors, methods, and functions must be required. Never add default parameter values (`param = default`) or make parameters optional (`param?: type`) without explicit user instruction.
 - **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
@@ -15,6 +18,7 @@
 ## Reactive State & Signals (`@lit-labs/signals`)
 
 - **Signals for Reactive State**: Manage mutable reactive state using TC39 Signals (`signal()`) and derived reactive values using `computed()`. Custom elements consuming signals must inherit from `SignalWatcher(LitElement)`. All mutable element properties and attribute-backed state must be stored as reactive signals.
+- **Cohesive Coordinate Signals**: Store co-dependent spatial positions and coordinates (e.g. `{left: number; top: number}`) in a single unified signal rather than separate scalar coordinate signals.
 - **No Signal Suffix**: Do not append a `Signal` suffix to signal property names (e.g. use `overlay`, `cursorX`, `stopIndex`, not `overlaySignal`).
 - **Getter Memoization**: Use `@cached()` from `gs-tools/export/data` for memoizing getter calculations and lazy singleton references. Do not convert lazy getters into signals.
 - **Constant vs Reactive Properties**: Do not create reactive signals or `computed()` wrappers for immutable class constants. Compute derived values directly in methods where properties are constant.

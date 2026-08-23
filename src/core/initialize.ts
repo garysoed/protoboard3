@@ -9,6 +9,7 @@ import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 
+import {ActionPopup} from './action-popup';
 import {HandOverlay} from './hand-overlay';
 import {HandService, handServiceContext} from './hand-service';
 
@@ -19,6 +20,7 @@ export interface InitOptions {
 }
 
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
+  'action-popup': ActionPopup,
   d1: D1,
   d12: D12,
   d2: D2,
