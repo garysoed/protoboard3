@@ -44,4 +44,42 @@ test.describe('HandService', () => {
     expect(popped2Id).toBe('p1');
     await expect(overlay.locator('#p1')).not.toBeAttached();
   });
+
+  test('popAll returns all pieces in LIFO order and clears overlay', async ({
+    page,
+  }) => {
+    const handles = await page.evaluateHandle(() => {
+      window.Protoboard.initialize();
+      const piece1 = document.createElement('div');
+      piece1.id = 'p1';
+      const piece2 = document.createElement('div');
+      piece2.id = 'p2';
+      const piece3 = document.createElement('div');
+      piece3.id = 'p3';
+
+      const service = new window.Protoboard.HandService();
+      return {piece1, piece2, piece3, service};
+    });
+
+    const overlay = page.locator('pb-hand-overlay');
+
+    await handles.evaluate(({piece1, piece2, piece3, service}) => {
+      service.push(piece1);
+      service.push(piece2);
+      service.push(piece3);
+    });
+
+    await expect(overlay.locator('#p1')).toBeAttached();
+    await expect(overlay.locator('#p2')).toBeAttached();
+    await expect(overlay.locator('#p3')).toBeAttached();
+
+    const poppedIds = await handles.evaluate(({service}) =>
+      service.popAll().map((el) => el.id),
+    );
+    expect(poppedIds).toEqual(['p3', 'p2', 'p1']);
+
+    await expect(overlay.locator('#p1')).not.toBeAttached();
+    await expect(overlay.locator('#p2')).not.toBeAttached();
+    await expect(overlay.locator('#p3')).not.toBeAttached();
+  });
 });

@@ -137,8 +137,8 @@ graph TD
   - [x] **5.1 Hierarchical Input Bubbling (`src/core/input-dispatcher.ts`)**
     - [x] 5.1.1 Bubble unhandled keypress events from piece to enclosing region.
     - [x] 5.1.2 Support direct region hover/focus targeting.
-  - [ ] **5.2 Base Region Abstraction (`src/regions/base-region.ts`)**
-    - [ ] 5.2.1 Common child management and drop handling (`drop()`, `dropAll()`).
+  - [x] **5.2 Base Region Abstraction (`src/regions/base-region.ts`)**
+    - [x] 5.2.1 Common child management and drop handling (`drop()`, `dropAll()`).
   - [ ] **5.3 `SlotRegion` Component (`<pb-slot>`, `src/regions/slot-region.ts`)**
     - [ ] 5.3.1 Tabletop spatial placement container rendering all child pieces.
     - [ ] 5.3.2 Drop handler: calculates cursor drop coordinates relative to `<pb-slot>` bounding box and positions piece via `position: absolute; left: ${x}px; top: ${y}px;`.

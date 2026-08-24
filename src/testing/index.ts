@@ -2,6 +2,8 @@ import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 import {html} from 'lit';
 
 import {BaseAction} from '../action/base-action';
+import {DropAction} from '../action/drop-action';
+import {DropAllAction} from '../action/drop-all-action';
 import {FlipAction} from '../action/flip-action';
 import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
@@ -35,6 +37,7 @@ import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
+import {BaseRegion} from '../regions/base-region';
 
 import {TestFace} from './test-face';
 
@@ -53,6 +56,7 @@ export {
   BaseAction,
   BaseElement,
   BasePiece,
+  BaseRegion,
   computed,
   D1,
   D12,
@@ -62,6 +66,8 @@ export {
   D6,
   D8,
   DN,
+  DropAction,
+  DropAllAction,
   FlipAction,
   formatTriggerKey,
   HandService,

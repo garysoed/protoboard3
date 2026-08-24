@@ -10,6 +10,15 @@ export class HandService {
     }
     return undefined;
   }
+  popAll(): readonly Element[] {
+    const pieces: Element[] = [];
+    let piece = this.pop();
+    while (piece) {
+      pieces.push(piece);
+      piece = this.pop();
+    }
+    return pieces;
+  }
   push(piece: Element): void {
     this.overlay.appendChild(piece);
   }
