@@ -69,17 +69,19 @@ export abstract class BaseAction {
     }
   }
 
-  private maybeTrigger(event: KeyboardEvent, element: Element): void {
-    if (matchesKey(this.triggerKey.get(), event)) {
-      this.onTrigger(element);
+  private maybeTrigger(event: ActionEvent): void {
+    const currentTarget = event.currentTarget;
+    if (
+      currentTarget instanceof Element &&
+      matchesKey(this.triggerKey.get(), event.keyboardEvent)
+    ) {
+      this.onTrigger(currentTarget);
+      event.stopPropagation();
     }
   }
   private onAction(event: Event): void {
-    if (
-      event instanceof ActionEvent &&
-      event.currentTarget instanceof Element
-    ) {
-      this.maybeTrigger(event.keyboardEvent, event.currentTarget);
+    if (event instanceof ActionEvent) {
+      this.maybeTrigger(event);
     }
   }
 

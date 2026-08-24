@@ -1,4 +1,5 @@
 import {computed, signal, SignalWatcher} from '@lit-labs/signals';
+import {html} from 'lit';
 
 import {BaseAction} from '../action/base-action';
 import {FlipAction} from '../action/flip-action';
@@ -66,6 +67,7 @@ export {
   HandService,
   handServiceContext,
   HelpAction,
+  html,
   matchesKey,
   NextFaceAction,
   parseTriggerKey,

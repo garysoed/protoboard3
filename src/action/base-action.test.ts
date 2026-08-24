@@ -87,6 +87,54 @@ test.describe('BaseAction', () => {
 
       expect(triggered.count).toBe(0);
     });
+
+    test('stops event propagation when action matches and triggers', async ({
+      page,
+    }) => {
+      const result = await page.evaluate(() => {
+        let childTriggered = false;
+        let parentTriggered = false;
+        class ChildAction extends window.Protoboard.BaseAction {
+          readonly attrName = 'action-child';
+          readonly label = 'Child';
+
+          protected override onTrigger(): void {
+            childTriggered = true;
+          }
+        }
+        class ParentAction extends window.Protoboard.BaseAction {
+          readonly attrName = 'action-parent';
+          readonly label = 'Parent';
+
+          protected override onTrigger(): void {
+            parentTriggered = true;
+          }
+        }
+        const childAction = new ChildAction(
+          window.Protoboard.parseTriggerKey('k'),
+        );
+        const parentAction = new ParentAction(
+          window.Protoboard.parseTriggerKey('k'),
+        );
+        const parentEl = document.createElement('div');
+        const childEl = document.createElement('div');
+        parentEl.appendChild(childEl);
+        document.body.appendChild(parentEl);
+
+        childAction.observe(childEl);
+        parentAction.observe(parentEl);
+
+        const keyboardEvent = new KeyboardEvent('keydown', {key: 'k'});
+        childEl.dispatchEvent(
+          new window.Protoboard.ActionEvent('k', keyboardEvent),
+        );
+
+        return {childTriggered, parentTriggered};
+      });
+
+      expect(result.childTriggered).toBe(true);
+      expect(result.parentTriggered).toBe(false);
+    });
   });
 
   test.describe('observe', () => {

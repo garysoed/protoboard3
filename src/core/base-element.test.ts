@@ -153,6 +153,222 @@ test.describe('BaseElement', () => {
     await expect(page.locator('#text-input')).toHaveValue('c');
   });
 
+  test('bubbles unhandled keypress from child piece to enclosing container', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <test-container
+            id="parent-container"
+            style="display: block; width: 200px; height: 200px;"
+          >
+            <pb-d1 id="piece" style="display: inline-block; width: 50px; height: 50px;">
+              <div slot="face0" style="width: 50px; height: 50px;">Piece</div>
+            </pb-d1>
+          </test-container>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      class CustomAction extends window.Protoboard.BaseAction {
+        readonly attrName = 'action-custom';
+        readonly label = 'Custom Container Action';
+
+        protected override onTrigger(el: Element): void {
+          el.setAttribute('data-triggered', 'true');
+        }
+      }
+      class TestContainer extends window.Protoboard.BaseElement {
+        constructor() {
+          super('Test Container', () => [
+            new CustomAction(window.Protoboard.parseTriggerKey('s')),
+          ]);
+        }
+
+        protected override render(): unknown {
+          return window.Protoboard.html`<slot></slot>`;
+        }
+      }
+      customElements.define('test-container', TestContainer);
+      window.Protoboard.initialize();
+    });
+
+    await page.locator('#piece').hover();
+    await page.keyboard.press('s');
+
+    await expect(page.locator('#parent-container')).toHaveAttribute(
+      'data-triggered',
+      'true',
+    );
+  });
+
+  test('does not trigger container action when key is handled by child piece', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <test-container
+            id="parent-container"
+            style="display: block; width: 200px; height: 200px;"
+          >
+            <pb-d1
+              id="piece"
+              action-pick="c"
+              style="display: inline-block; width: 50px; height: 50px;"
+            >
+              <div slot="face0" style="width: 50px; height: 50px;">Piece</div>
+            </pb-d1>
+          </test-container>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      class CustomAction extends window.Protoboard.BaseAction {
+        readonly attrName = 'action-custom';
+        readonly label = 'Custom Container Action';
+
+        protected override onTrigger(el: Element): void {
+          el.setAttribute('data-container-triggered', 'true');
+        }
+      }
+      class TestContainer extends window.Protoboard.BaseElement {
+        constructor() {
+          super('Test Container', () => [
+            new CustomAction(window.Protoboard.parseTriggerKey('c')),
+          ]);
+        }
+
+        protected override render(): unknown {
+          return window.Protoboard.html`<slot></slot>`;
+        }
+      }
+      customElements.define('test-container', TestContainer);
+      window.Protoboard.initialize();
+    });
+
+    const overlay = page.locator('pb-hand-overlay');
+
+    await page.locator('#piece').hover();
+    await page.keyboard.press('c');
+
+    await expect(overlay.locator('#piece')).toBeAttached();
+    await expect(page.locator('#parent-container')).not.toHaveAttribute(
+      'data-container-triggered',
+      'true',
+    );
+  });
+
+  test('triggers container action when container is directly hovered', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <test-container
+            id="parent-container"
+            style="display: block; width: 200px; height: 200px;"
+          >
+            <pb-d1 id="piece" style="display: inline-block; width: 50px; height: 50px;">
+              <div slot="face0" style="width: 50px; height: 50px;">Piece</div>
+            </pb-d1>
+          </test-container>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      class CustomAction extends window.Protoboard.BaseAction {
+        readonly attrName = 'action-custom';
+        readonly label = 'Custom Container Action';
+
+        protected override onTrigger(el: Element): void {
+          el.setAttribute('data-triggered', 'true');
+        }
+      }
+      class TestContainer extends window.Protoboard.BaseElement {
+        constructor() {
+          super('Test Container', () => [
+            new CustomAction(window.Protoboard.parseTriggerKey('s')),
+          ]);
+        }
+
+        protected override render(): unknown {
+          return window.Protoboard.html`<slot></slot>`;
+        }
+      }
+      customElements.define('test-container', TestContainer);
+      window.Protoboard.initialize();
+    });
+
+    await page.locator('#parent-container').hover({position: {x: 150, y: 150}});
+    await page.keyboard.press('s');
+
+    await expect(page.locator('#parent-container')).toHaveAttribute(
+      'data-triggered',
+      'true',
+    );
+  });
+
+  test('triggers container action when container is directly focused', async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <test-container
+            id="parent-container"
+            style="display: block; width: 200px; height: 200px;"
+          >
+            <pb-d1 id="piece" style="display: inline-block; width: 50px; height: 50px;">
+              <div slot="face0" style="width: 50px; height: 50px;">Piece</div>
+            </pb-d1>
+          </test-container>
+        </body>
+      </html>
+    `);
+    await page.addScriptTag({path: 'dist/testing.min.js'});
+    await page.evaluate(() => {
+      class CustomAction extends window.Protoboard.BaseAction {
+        readonly attrName = 'action-custom';
+        readonly label = 'Custom Container Action';
+
+        protected override onTrigger(el: Element): void {
+          el.setAttribute('data-triggered', 'true');
+        }
+      }
+      class TestContainer extends window.Protoboard.BaseElement {
+        constructor() {
+          super('Test Container', () => [
+            new CustomAction(window.Protoboard.parseTriggerKey('s')),
+          ]);
+        }
+
+        protected override render(): unknown {
+          return window.Protoboard.html`<slot></slot>`;
+        }
+      }
+      customElements.define('test-container', TestContainer);
+      window.Protoboard.initialize();
+    });
+
+    await page.mouse.move(0, 0);
+    await page.locator('#parent-container').focus();
+    await page.keyboard.press('s');
+
+    await expect(page.locator('#parent-container')).toHaveAttribute(
+      'data-triggered',
+      'true',
+    );
+  });
+
   test.describe('getActionDescriptors', () => {
     test('returns descriptors for configured actions with correct shortcut keys', async ({
       page,

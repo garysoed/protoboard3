@@ -2,6 +2,7 @@
 
 ## Component Architecture & Styling
 
+- **Parameter Derivation & Simplification**: When designing functions, constructors, or internal helper methods that accept multiple arguments, check if some parameters can be derived or accessed directly from other existing parameters (e.g. deriving `KeyboardEvent` or `currentTarget` directly from an `ActionEvent`). If so, simplify the parameter list by eliminating the redundant, derivable parameters.
 - **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
 - **Dedicated CSS Files**: Place custom element styling in dedicated `.css` files (e.g. `src/core/action-popup.css`) and import them directly (`import styles from './<name>.css'`) rather than using `.css.ts` or inline string templates.
 - **No Premature CSS Variables**: Avoid adding speculative CSS custom properties (`var(--pb-*, ...)`) for prospective customization. Use direct literal CSS properties and values until theming or dynamic overrides are requested.
@@ -81,6 +82,7 @@
 - **Visual Golden Screenshots**:
   - Visual snapshot baselines must be stored in `<directory_of_test>/goldens/<test_name>_<label>.png` (e.g. `src/**/goldens/` for unit tests and `e2e/goldens/` for E2E tests).
   - In test code, always specify screenshot names with underscores: `toHaveScreenshot('<name>_<label>.png')` (e.g. `'d1_face0.png'`).
+- **Distinct Test Fixture IDs**: Avoid using generic element IDs (e.g. `id="container"`) in test fixture markup that may collide with internal component shadow DOM element IDs (such as `<pb-hand-overlay>`'s internal container); use unique, context-specific IDs (e.g. `id="parent-container"` or `id="test-zone"`).
 - **No Redundant DOM Assertions**: Avoid adding redundant manual DOM traversal or slot inspection tests when a visual screenshot golden test already verifies the component rendering and slot projection.
 - **No Negative Feature Tests**: Do not write tests asserting the absence of unsupported actions or shortcuts (e.g. verifying pressing a key does nothing). Focus tests strictly on verifying supported behavior.
 - **No Custom Element Registry Guards**: In test fixtures, register custom elements directly via `customElements.define(...)` without `if (!customElements.get(...))` checks, as each test runs in a clean document context.
