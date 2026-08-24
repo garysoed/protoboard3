@@ -12,4 +12,4 @@ This directory contains the core infrastructure, base element abstraction, and a
 - [`hand-overlay.ts`](./hand-overlay.ts): Fixed floating overlay component (`HandOverlay`).
 - [`hand-service.ts`](./hand-service.ts): LIFO hand stack service (`HandService`, `handServiceContext`).
 - [`initialize.ts`](./initialize.ts): Custom element registration and context provider initialization (`initialize`).
-- [`trigger-key.ts`](./trigger-key.ts): Keyboard trigger matching interface, formatter, and evaluator (`TriggerKey`, `formatTriggerKey`, `matchesKey`, `parseTriggerKey`).
+- [`trigger-key.ts`](./trigger-key.ts): Keyboard trigger matching interface, formatter, and evaluator (`TriggerKey`, `getTriggerKeyParts`, `matchesKey`, `parseTriggerKey`).

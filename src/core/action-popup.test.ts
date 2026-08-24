@@ -57,6 +57,39 @@ test.describe('ActionPopup', () => {
       await expect(page).toHaveScreenshot('action_popup_opened.png');
     });
 
+    test('renders multi-key shortcut with separate kbd elements for each key', async ({
+      page,
+    }) => {
+      await setupPage(
+        page,
+        `
+        <div id="target" style="display: block; width: 60px; height: 60px;">Target</div>
+        <pb-action-popup id="popup"></pb-action-popup>
+      `,
+      );
+
+      await page.evaluate(() => {
+        const target = document.querySelector('#target')!;
+        const event = new window.Protoboard.QueryActionsEvent(target, [
+          {
+            actions: [
+              {
+                id: 'custom',
+                label: 'Custom Action',
+                shortcut: window.Protoboard.parseTriggerKey('ctrl+shift+k'),
+              },
+            ],
+            name: 'Test Target',
+          },
+        ]);
+        target.dispatchEvent(event);
+      });
+
+      const popup = page.locator('#popup .popup');
+      await expect(popup).toBeVisible();
+      await expect(page).toHaveScreenshot('action_popup_multi_key.png');
+    });
+
     test('toggles popup closed when event is dispatched again for the same element', async ({
       page,
     }) => {

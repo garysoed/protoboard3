@@ -102,9 +102,9 @@ export function matchesKey(
   return true;
 }
 
-export function formatTriggerKey(triggerKey: TriggerKey): string {
+export function getTriggerKeyParts(triggerKey: TriggerKey): readonly string[] {
   if (!triggerKey.key) {
-    return '';
+    return [];
   }
 
   const parts: string[] = [];
@@ -133,5 +133,5 @@ export function formatTriggerKey(triggerKey: TriggerKey): string {
   }
 
   parts.push(displayKey);
-  return parts.join('+');
+  return parts;
 }

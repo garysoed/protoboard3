@@ -8,7 +8,7 @@ import {
   QueryActionsEvent,
 } from './action-descriptor';
 import styles from './action-popup.css';
-import {formatTriggerKey} from './trigger-key';
+import {getTriggerKeyParts} from './trigger-key';
 
 export class ActionPopup extends SignalWatcher(LitElement) {
   static override styles = styles;
@@ -103,14 +103,14 @@ export class ActionPopup extends SignalWatcher(LitElement) {
     this.isOpen.set(true);
   }
   private renderAction(action: ActionDescriptor): TemplateResult {
-    const formattedShortcut = formatTriggerKey(action.shortcut);
+    const parts = getTriggerKeyParts(action.shortcut);
 
     return html`<div class="action-item" part="action-item">
       <span class="action-label" part="action-label">${action.label}</span>
       ${
-        formattedShortcut
-          ? html`<kbd class="action-shortcut" part="action-shortcut"
-              >${formattedShortcut}</kbd
+        parts.length > 0
+          ? html`<span class="action-shortcut" part="action-shortcut"
+              >${parts.map((part) => html`<kbd>${part}</kbd>`)}</span
             >`
           : null
       }

@@ -24,7 +24,7 @@ import {Coordinates, HandOverlay} from '../core/hand-overlay';
 import {HandService, handServiceContext} from '../core/hand-service';
 import {initialize as coreInitialize, InitOptions} from '../core/initialize';
 import {
-  formatTriggerKey,
+  getTriggerKeyParts,
   matchesKey,
   parseTriggerKey,
   TriggerKey,
@@ -71,7 +71,7 @@ export {
   DropAction,
   DropAllAction,
   FlipAction,
-  formatTriggerKey,
+  getTriggerKeyParts,
   HandOverlay,
   HandService,
   handServiceContext,

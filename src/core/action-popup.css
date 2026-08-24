@@ -61,6 +61,11 @@
 }
 
 .action-shortcut {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.action-shortcut kbd {
   background: #0f172a;
   border: 1px solid #334155;
   border-radius: 3px;

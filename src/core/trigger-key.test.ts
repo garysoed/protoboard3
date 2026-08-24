@@ -275,56 +275,54 @@ test.describe('parseTriggerKey', () => {
   });
 });
 
-test.describe('formatTriggerKey', () => {
+test.describe('getTriggerKeyParts', () => {
   test.beforeEach(async ({page}) => {
     await page.setContent('<!DOCTYPE html><html><body></body></html>');
     await page.addScriptTag({path: 'dist/testing.min.js'});
   });
 
-  test('formats single letter key as uppercase', async ({page}) => {
-    const formatted = await page.evaluate(() => {
-      return window.Protoboard.formatTriggerKey(
+  test('formats single letter key as uppercase array item', async ({page}) => {
+    const parts = await page.evaluate(() => {
+      return window.Protoboard.getTriggerKeyParts(
         window.Protoboard.parseTriggerKey('r'),
       );
     });
-    expect(formatted).toBe('R');
+    expect(parts).toEqual(['R']);
   });
 
   test('formats modifier keys in order with uppercase key', async ({page}) => {
-    const formatted = await page.evaluate(() => {
-      return window.Protoboard.formatTriggerKey(
+    const parts = await page.evaluate(() => {
+      return window.Protoboard.getTriggerKeyParts(
         window.Protoboard.parseTriggerKey('ctrl+shift+alt+x'),
       );
     });
-    expect(formatted).toBe('Ctrl+Alt+Shift+X');
+    expect(parts).toEqual(['Ctrl', 'Alt', 'Shift', 'X']);
   });
 
   test('formats space key as Space', async ({page}) => {
-    const formatted = await page.evaluate(() => {
-      return window.Protoboard.formatTriggerKey(
+    const parts = await page.evaluate(() => {
+      return window.Protoboard.getTriggerKeyParts(
         window.Protoboard.parseTriggerKey('space'),
       );
     });
-    expect(formatted).toBe('Space');
+    expect(parts).toEqual(['Space']);
   });
 
   test('formats symbol key without altering symbol', async ({page}) => {
-    const formatted = await page.evaluate(() => {
-      return window.Protoboard.formatTriggerKey(
+    const parts = await page.evaluate(() => {
+      return window.Protoboard.getTriggerKeyParts(
         window.Protoboard.parseTriggerKey('?'),
       );
     });
-    expect(formatted).toBe('?');
+    expect(parts).toEqual(['?']);
   });
 
-  test('returns empty string for trigger key with empty key', async ({
-    page,
-  }) => {
-    const formatted = await page.evaluate(() => {
-      return window.Protoboard.formatTriggerKey(
+  test('returns empty array for trigger key with empty key', async ({page}) => {
+    const parts = await page.evaluate(() => {
+      return window.Protoboard.getTriggerKeyParts(
         window.Protoboard.parseTriggerKey(''),
       );
     });
-    expect(formatted).toBe('');
+    expect(parts).toEqual([]);
   });
 });
