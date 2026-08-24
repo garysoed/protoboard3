@@ -159,6 +159,14 @@ test.describe('BaseElement', () => {
     await page.setContent(`
       <!DOCTYPE html>
       <html>
+        <head>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+            }
+          </style>
+        </head>
         <body>
           <test-container
             id="parent-container"
@@ -177,8 +185,13 @@ test.describe('BaseElement', () => {
         readonly attrName = 'action-custom';
         readonly label = 'Custom Container Action';
 
-        protected override onTrigger(el: Element): void {
+        protected override onTrigger(
+          el: Element,
+          event: InstanceType<typeof window.Protoboard.ActionEvent>,
+        ): void {
           el.setAttribute('data-triggered', 'true');
+          el.setAttribute('data-mouse-x', String(event.mousePosition.x));
+          el.setAttribute('data-mouse-y', String(event.mousePosition.y));
         }
       }
       class TestContainer extends window.Protoboard.BaseElement {
@@ -196,12 +209,20 @@ test.describe('BaseElement', () => {
       window.Protoboard.initialize();
     });
 
-    await page.locator('#piece').hover();
+    await page.mouse.move(25, 25);
     await page.keyboard.press('s');
 
     await expect(page.locator('#parent-container')).toHaveAttribute(
       'data-triggered',
       'true',
+    );
+    await expect(page.locator('#parent-container')).toHaveAttribute(
+      'data-mouse-x',
+      '25',
+    );
+    await expect(page.locator('#parent-container')).toHaveAttribute(
+      'data-mouse-y',
+      '25',
     );
   });
 

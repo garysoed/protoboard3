@@ -7,7 +7,7 @@ import {BaseAction} from '../action/base-action';
 import {HelpAction} from '../action/help-action';
 
 import {ActionDescriptor, QueryActionsEvent} from './action-descriptor';
-import {ActionEvent} from './action-event';
+import {ActionEvent, MousePosition} from './action-event';
 import {HandService, handServiceContext} from './hand-service';
 
 export abstract class BaseElement extends SignalWatcher(LitElement) {
@@ -15,6 +15,7 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
 
   private readonly boundOnMouseEnter = this.onMouseEnter.bind(this);
   private readonly boundOnMouseLeave = this.onMouseLeave.bind(this);
+  private readonly boundOnMouseMove = this.onMouseMove.bind(this);
   private readonly boundOnQueryActions = this.onQueryActions.bind(this);
   private readonly boundOnWindowKeyDown = this.onWindowKeyDown.bind(this);
   private readonly handServiceConsumer = new ContextConsumer(this, {
@@ -25,6 +26,7 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
     subscribe: true,
   });
   private readonly isHovered = signal(false);
+  private readonly mousePosition = signal<MousePosition>({x: 0, y: 0});
   private readonly name: Signal.State<string>;
 
   constructor(
@@ -57,6 +59,7 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
     this.addEventListener('mouseleave', this.boundOnMouseLeave);
     this.addEventListener(QueryActionsEvent.TYPE, this.boundOnQueryActions);
     window.addEventListener('keydown', this.boundOnWindowKeyDown);
+    window.addEventListener('mousemove', this.boundOnMouseMove);
   }
   override disconnectedCallback(): void {
     super.disconnectedCallback();
@@ -67,6 +70,7 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
     this.removeEventListener('mouseleave', this.boundOnMouseLeave);
     this.removeEventListener(QueryActionsEvent.TYPE, this.boundOnQueryActions);
     window.removeEventListener('keydown', this.boundOnWindowKeyDown);
+    window.removeEventListener('mousemove', this.boundOnMouseMove);
   }
   getActionDescriptors(): readonly ActionDescriptor[] {
     return this.actions.map((action) => action.getActionDescriptor(this));
@@ -81,6 +85,9 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
   }
   private onMouseLeave(): void {
     this.isHovered.set(false);
+  }
+  private onMouseMove(event: MouseEvent): void {
+    this.mousePosition.set({x: event.clientX, y: event.clientY});
   }
   private onQueryActions(event: Event): void {
     if (!(event instanceof QueryActionsEvent)) {
@@ -121,7 +128,9 @@ export abstract class BaseElement extends SignalWatcher(LitElement) {
       }
     }
 
-    this.dispatchEvent(new ActionEvent(event.key, event));
+    this.dispatchEvent(
+      new ActionEvent(event.key, event, this.mousePosition.get()),
+    );
   }
 
   @cached()

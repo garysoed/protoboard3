@@ -1,7 +1,6 @@
 import {TriggerKey} from './trigger-key';
 
 export interface ActionDescriptor {
-  readonly handler: () => void;
   readonly id: unknown;
   readonly label: string;
   readonly shortcut: TriggerKey;

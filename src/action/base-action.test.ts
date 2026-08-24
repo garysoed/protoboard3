@@ -27,7 +27,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'k'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('k', keyboardEvent),
+          new window.Protoboard.ActionEvent('k', keyboardEvent, {x: 0, y: 0}),
         );
         return {passedElementId: passedElement?.id};
       });
@@ -54,7 +54,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'z'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('z', keyboardEvent),
+          new window.Protoboard.ActionEvent('z', keyboardEvent, {x: 0, y: 0}),
         );
         return {count};
       });
@@ -80,7 +80,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'k'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('k', keyboardEvent),
+          new window.Protoboard.ActionEvent('k', keyboardEvent, {x: 0, y: 0}),
         );
         return {count};
       });
@@ -126,7 +126,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'k'});
         childEl.dispatchEvent(
-          new window.Protoboard.ActionEvent('k', keyboardEvent),
+          new window.Protoboard.ActionEvent('k', keyboardEvent, {x: 0, y: 0}),
         );
 
         return {childTriggered, parentTriggered};
@@ -164,13 +164,13 @@ test.describe('BaseAction', () => {
         const oldKeyEvent = new KeyboardEvent('keydown', {key: 'k'});
         const newKeyEvent = new KeyboardEvent('keydown', {key: 'm'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('k', oldKeyEvent),
+          new window.Protoboard.ActionEvent('k', oldKeyEvent, {x: 0, y: 0}),
         );
         const didTriggerOld = triggered;
 
         triggered = false;
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('m', newKeyEvent),
+          new window.Protoboard.ActionEvent('m', newKeyEvent, {x: 0, y: 0}),
         );
         const didTriggerNew = triggered;
 
@@ -205,7 +205,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'p'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('p', keyboardEvent),
+          new window.Protoboard.ActionEvent('p', keyboardEvent, {x: 0, y: 0}),
         );
 
         return {triggerCount};
@@ -275,7 +275,7 @@ test.describe('BaseAction', () => {
 
         const keyboardEvent = new KeyboardEvent('keydown', {key: 'k'});
         element.dispatchEvent(
-          new window.Protoboard.ActionEvent('k', keyboardEvent),
+          new window.Protoboard.ActionEvent('k', keyboardEvent, {x: 0, y: 0}),
         );
 
         element.setAttribute('action-custom-options', 'newValue');
@@ -290,9 +290,7 @@ test.describe('BaseAction', () => {
   });
 
   test.describe('getActionDescriptor', () => {
-    test('generates descriptor for FlipAction and handler executes action', async ({
-      page,
-    }) => {
+    test('generates descriptor for FlipAction', async ({page}) => {
       const result = await page.evaluate(() => {
         const activeFace = window.Protoboard.signal(0);
         const action = new window.Protoboard.FlipAction(activeFace, 2);
@@ -300,10 +298,8 @@ test.describe('BaseAction', () => {
         action.observe(el);
 
         const descriptor = action.getActionDescriptor(el);
-        descriptor.handler();
 
         return {
-          faceAfter: activeFace.get(),
           isFlipAction: descriptor.id === window.Protoboard.FlipAction,
           key: descriptor.shortcut.key,
           label: descriptor.label,
@@ -313,7 +309,6 @@ test.describe('BaseAction', () => {
       expect(result.isFlipAction).toBe(true);
       expect(result.label).toBe('Flip');
       expect(result.key).toBe('f');
-      expect(result.faceAfter).toBe(1);
     });
   });
 });

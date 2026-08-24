@@ -61,21 +61,6 @@ test.describe('ActionPopup end-to-end interactions', () => {
     await expect(page).toHaveScreenshot('action-popup_opened.png');
   });
 
-  test('executes action on piece and closes popup when action item is clicked', async ({
-    page,
-  }) => {
-    const piece = page.locator('#die');
-    await piece.hover();
-    await page.keyboard.press('?');
-
-    const popup = page.locator('#popup .popup');
-    await expect(popup).toBeVisible();
-
-    await page.locator('#popup .action-item').filter({hasText: 'Flip'}).click();
-    await expect(popup).not.toBeAttached();
-    await expect(piece).toHaveScreenshot('action-popup_flipped.png');
-  });
-
   test('dismisses popup when Escape key is pressed', async ({page}) => {
     const piece = page.locator('#die');
     await piece.hover();

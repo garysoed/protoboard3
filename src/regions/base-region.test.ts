@@ -36,6 +36,10 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
       constructor() {
         super('Test Region', () => []);
       }
+
+      protected override onDrop(target: Element): void {
+        this.appendChild(target);
+      }
     }
 
     customElements.define('pb-test-region', TestRegion);

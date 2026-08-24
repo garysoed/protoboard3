@@ -17,9 +17,10 @@ import {
   QueryActionsDetail,
   QueryActionsEvent,
 } from '../core/action-descriptor';
-import {ActionEvent} from '../core/action-event';
+import {ActionEvent, MousePosition} from '../core/action-event';
 import {ActionPopup} from '../core/action-popup';
 import {BaseElement} from '../core/base-element';
+import {Coordinates, HandOverlay} from '../core/hand-overlay';
 import {HandService, handServiceContext} from '../core/hand-service';
 import {initialize as coreInitialize, InitOptions} from '../core/initialize';
 import {
@@ -38,6 +39,7 @@ import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 import {BaseRegion} from '../regions/base-region';
+import {Slot} from '../regions/slot';
 
 import {TestFace} from './test-face';
 
@@ -70,6 +72,7 @@ export {
   DropAllAction,
   FlipAction,
   formatTriggerKey,
+  HandOverlay,
   HandService,
   handServiceContext,
   HelpAction,
@@ -84,6 +87,14 @@ export {
   RotateAction,
   signal,
   SignalWatcher,
+  Slot,
   TestFace,
 };
-export type {ActionDescriptor, ActionGroup, QueryActionsDetail, TriggerKey};
+export type {
+  ActionDescriptor,
+  ActionGroup,
+  Coordinates,
+  MousePosition,
+  QueryActionsDetail,
+  TriggerKey,
+};

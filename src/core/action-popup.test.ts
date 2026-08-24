@@ -36,13 +36,11 @@ test.describe('ActionPopup', () => {
           {
             actions: [
               {
-                handler: () => {},
                 id: 'pick',
                 label: 'Pick',
                 shortcut: window.Protoboard.parseTriggerKey('c'),
               },
               {
-                handler: () => {},
                 id: 'rotate',
                 label: 'Rotate',
                 shortcut: window.Protoboard.parseTriggerKey('t'),
@@ -76,7 +74,6 @@ test.describe('ActionPopup', () => {
           {
             actions: [
               {
-                handler: () => {},
                 id: 'pick',
                 label: 'Pick',
                 shortcut: window.Protoboard.parseTriggerKey('c'),
@@ -101,54 +98,6 @@ test.describe('ActionPopup', () => {
     });
   });
 
-  test.describe('onActionClick', () => {
-    test('executes action handler and closes popup when action item is clicked', async ({
-      page,
-    }) => {
-      await setupPage(
-        page,
-        `
-        <div id="target" style="display: inline-block; width: 50px; height: 50px;">Target</div>
-        <pb-action-popup id="popup"></pb-action-popup>
-      `,
-      );
-
-      await page.evaluate(() => {
-        (window as unknown as {actionExecuted: boolean}).actionExecuted = false;
-        const target = document.querySelector('#target')!;
-        const event = new window.Protoboard.QueryActionsEvent(target, [
-          {
-            actions: [
-              {
-                handler: () => {
-                  (
-                    window as unknown as {actionExecuted: boolean}
-                  ).actionExecuted = true;
-                },
-                id: 'test',
-                label: 'Execute Test',
-                shortcut: window.Protoboard.parseTriggerKey('e'),
-              },
-            ],
-            name: 'Piece',
-          },
-        ]);
-        target.dispatchEvent(event);
-      });
-
-      const popup = page.locator('#popup .popup');
-      await expect(popup).toBeVisible();
-
-      await page.locator('#popup .action-item').click();
-
-      const executed = await page.evaluate(() => {
-        return (window as unknown as {actionExecuted: boolean}).actionExecuted;
-      });
-      expect(executed).toBe(true);
-      await expect(popup).not.toBeAttached();
-    });
-  });
-
   test.describe('onKeyDown', () => {
     test('dismisses popup when Escape key is pressed', async ({page}) => {
       await setupPage(
@@ -165,7 +114,6 @@ test.describe('ActionPopup', () => {
           {
             actions: [
               {
-                handler: () => {},
                 id: 'test',
                 label: 'Test Action',
                 shortcut: window.Protoboard.parseTriggerKey('t'),
@@ -202,7 +150,6 @@ test.describe('ActionPopup', () => {
           {
             actions: [
               {
-                handler: () => {},
                 id: 'test',
                 label: 'Test Action',
                 shortcut: window.Protoboard.parseTriggerKey('t'),
@@ -243,7 +190,6 @@ test.describe('ActionPopup', () => {
           {
             actions: [
               {
-                handler: () => {},
                 id: 'test',
                 label: 'Test Action',
                 shortcut: window.Protoboard.parseTriggerKey('t'),

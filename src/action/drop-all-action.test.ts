@@ -27,7 +27,12 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
     class TestRegion extends window.Protoboard.BaseElement {
       constructor() {
         super('Test Region', () => [
-          new window.Protoboard.DropAllAction(this.handService),
+          new window.Protoboard.DropAllAction(
+            this.handService,
+            (target: Element) => {
+              this.appendChild(target);
+            },
+          ),
         ]);
       }
     }

@@ -66,10 +66,6 @@ export class ActionPopup extends SignalWatcher(LitElement) {
     </div>`;
   }
 
-  private onActionClick(action: ActionDescriptor): void {
-    this.close();
-    action.handler();
-  }
   private onKeyDown(event: KeyboardEvent): void {
     if (this.isOpen.get() && event.key === 'Escape') {
       this.close();
@@ -109,12 +105,7 @@ export class ActionPopup extends SignalWatcher(LitElement) {
   private renderAction(action: ActionDescriptor): TemplateResult {
     const formattedShortcut = formatTriggerKey(action.shortcut);
 
-    return html`<button
-      class="action-item"
-      part="action-item"
-      type="button"
-      @click=${() => this.onActionClick(action)}
-    >
+    return html`<div class="action-item" part="action-item">
       <span class="action-label" part="action-label">${action.label}</span>
       ${
         formattedShortcut
@@ -123,7 +114,7 @@ export class ActionPopup extends SignalWatcher(LitElement) {
             >`
           : null
       }
-    </button>`;
+    </div>`;
   }
   private renderGroup(group: ActionGroup): TemplateResult {
     return html`<div class="group" part="group">

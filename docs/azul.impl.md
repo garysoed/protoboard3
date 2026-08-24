@@ -139,10 +139,10 @@ graph TD
     - [x] 5.1.2 Support direct region hover/focus targeting.
   - [x] **5.2 Base Region Abstraction (`src/regions/base-region.ts`)**
     - [x] 5.2.1 Common child management and drop handling (`drop()`, `dropAll()`).
-  - [ ] **5.3 `SlotRegion` Component (`<pb-slot>`, `src/regions/slot-region.ts`)**
-    - [ ] 5.3.1 Tabletop spatial placement container rendering all child pieces.
-    - [ ] 5.3.2 Drop handler: calculates cursor drop coordinates relative to `<pb-slot>` bounding box and positions piece via `position: absolute; left: ${x}px; top: ${y}px;`.
-    - [ ] 5.3.3 Actions: `drop` (`Space`), `dropAll` (`Shift+Space`).
+  - [x] **5.3 `SlotRegion` Component (`<pb-slot>`, `src/regions/slot-region.ts`)**
+    - [x] 5.3.1 Tabletop spatial placement container rendering all child pieces.
+    - [x] 5.3.2 Drop handler: calculates cursor drop coordinates relative to `<pb-slot>` bounding box and positions piece via `position: absolute; left: ${x}px; top: ${y}px;`.
+    - [x] 5.3.3 Actions: `drop` (`Space`), `dropAll` (`Shift+Space`).
   - [ ] **5.4 Registration, Demo & Visual Golden Testing**
     - [ ] 5.4.1 Register `pb-slot` in `registerProtoboard`.
     - [ ] 5.4.2 Update `examples/index.html` with interactive tabletop slot allowing picking pieces and dropping at exact cursor coordinates.

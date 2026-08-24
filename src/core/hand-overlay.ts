@@ -2,15 +2,20 @@ import {computed, signal, SignalWatcher} from '@lit-labs/signals';
 import {html, LitElement, TemplateResult} from 'lit';
 import {styleMap} from 'lit/directives/style-map.js';
 
+export interface Coordinates {
+  readonly left: number;
+  readonly top: number;
+}
+
 export class HandOverlay extends SignalWatcher(LitElement) {
+  readonly cursor = signal<Coordinates>({left: 0, top: 0});
+
   private readonly boundOnMouseMoveHandler = this.onMouseMoveHandler.bind(this);
-  private readonly cursorX = signal(0);
-  private readonly cursorY = signal(0);
   private readonly containerStyles = computed(() => ({
-    left: `${this.cursorX.get()}px`,
+    left: `${this.cursor.get().left}px`,
     pointerEvents: 'none',
     position: 'fixed',
-    top: `${this.cursorY.get()}px`,
+    top: `${this.cursor.get().top}px`,
     zIndex: '9999',
   }));
 
@@ -32,7 +37,6 @@ export class HandOverlay extends SignalWatcher(LitElement) {
   }
 
   private onMouseMoveHandler(event: MouseEvent): void {
-    this.cursorX.set(event.clientX);
-    this.cursorY.set(event.clientY);
+    this.cursor.set({left: event.clientX, top: event.clientY});
   }
 }

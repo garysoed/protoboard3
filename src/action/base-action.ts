@@ -34,11 +34,8 @@ export abstract class BaseAction {
     this.triggerKey = signal(defaultTriggerKey);
   }
 
-  getActionDescriptor(element: Element): ActionDescriptor {
+  getActionDescriptor(_element: Element): ActionDescriptor {
     return {
-      handler: () => {
-        this.onTrigger(element);
-      },
       id: this.constructor,
       label: this.label,
       shortcut: this.triggerKey.get(),
@@ -75,7 +72,7 @@ export abstract class BaseAction {
       currentTarget instanceof Element &&
       matchesKey(this.triggerKey.get(), event.keyboardEvent)
     ) {
-      this.onTrigger(currentTarget);
+      this.onTrigger(currentTarget, event);
       event.stopPropagation();
     }
   }
@@ -85,5 +82,5 @@ export abstract class BaseAction {
     }
   }
 
-  protected abstract onTrigger(element: Element): unknown;
+  protected abstract onTrigger(element: Element, event: ActionEvent): unknown;
 }

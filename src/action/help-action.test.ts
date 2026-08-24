@@ -57,6 +57,7 @@ test.describe('HelpAction', () => {
           new window.Protoboard.ActionEvent(
             '?',
             new KeyboardEvent('keydown', {key: '?'}),
+            {x: 0, y: 0},
           ),
         );
       });
