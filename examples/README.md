@@ -4,4 +4,4 @@ This directory contains interactive HTML demonstration and showcase pages for Pr
 
 ## Directory Inventory
 
-- [`index.html`](./index.html): Interactive piece and dice gallery showcasing all multi-sided pieces (`pb-d1` through `pb-dn`), keyboard shortcuts, and hand overlay mechanics.
+- [`index.html`](./index.html): Interactive piece and dice gallery showcasing all multi-sided pieces (`pb-d1` through `pb-dn`), keyboard shortcuts, action discovery popup, and hand overlay mechanics.

@@ -108,7 +108,7 @@ graph TD
 **Goal**: Implement the interactive action discovery popup triggered by `?` using a bubbling DOM event (`QueryActionsEvent`), custom name resolution, and the dedicated `<pb-action-popup>` custom element.
 **Dependencies**: Phase 2, Phase 3.
 
-- [ ] **4. Phase 4: Action Discovery & Help Popup System (`?`)**
+- [x] **4. Phase 4: Action Discovery & Help Popup System (`?`)**
   - [x] **4.1 `QueryActionsEvent` & Action Descriptors (`src/core/action-descriptor.ts`)**
     - [x] 4.1.1 Define action metadata interfaces (`ActionDescriptor`: id, label, shortcut, enabled, isShadowed, handler).
     - [x] 4.1.2 Implement `QueryActionsEvent` custom bubbling event (`pb-query-actions`, `bubbles: true`, `composed: true`).
@@ -122,9 +122,9 @@ graph TD
     - [x] 4.3.3 Implement click-to-execute action handlers.
     - [x] 4.3.4 Implement dismissal handlers (`Escape`, pressing `?` again, clicking outside, or executing an action).
     - [x] 4.3.5 Register `pb-action-popup` in `registerProtoboard`.
-  - [ ] **4.4 Testing & Visual Goldens**
-    - [ ] 4.4.1 Playwright unit & component tests for `QueryActionsEvent` bubbling, action descriptor aggregation, and custom name display.
-    - [ ] 4.4.2 Playwright visual golden screenshot tests for `<pb-action-popup>` anchored to pieces with keyboard and click flows.
+  - [x] **4.4 Testing & Visual Goldens**
+    - [x] 4.4.1 Playwright unit & component tests for `QueryActionsEvent` bubbling, action descriptor aggregation, and custom name display.
+    - [x] 4.4.2 Playwright visual golden screenshot tests for `<pb-action-popup>` anchored to pieces with keyboard and click flows.
 
 ---
 
