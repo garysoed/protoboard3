@@ -8,6 +8,7 @@ import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
+import {Slot} from '../regions/slot';
 
 import {ActionPopup} from './action-popup';
 import {HandOverlay} from './hand-overlay';
@@ -30,6 +31,7 @@ const DEFINITIONS: Record<string, CustomElementConstructor> = {
   d8: D8,
   dn: DN,
   'hand-overlay': HandOverlay,
+  slot: Slot,
 };
 
 export function initialize(options: InitOptions = {}): void {

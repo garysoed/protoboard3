@@ -21,6 +21,7 @@ test.describe('Protoboard Registration Foundation', () => {
         'pb-d20',
         'pb-dn',
         'pb-hand-overlay',
+        'pb-slot',
       ];
       return tags.every((tag) => !!customElements.get(tag));
     });
@@ -41,6 +42,7 @@ test.describe('Protoboard Registration Foundation', () => {
         'tabletop-d20',
         'tabletop-dn',
         'tabletop-hand-overlay',
+        'tabletop-slot',
       ];
       return tags.every((tag) => !!customElements.get(tag));
     });

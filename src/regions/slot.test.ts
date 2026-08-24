@@ -35,8 +35,6 @@ async function setupPage(page: Page, bodyContent: string): Promise<void> {
   await page.addScriptTag({path: 'dist/testing.min.js'});
   await page.evaluate(() => {
     window.Protoboard.initialize();
-
-    customElements.define('pb-slot', window.Protoboard.Slot);
   });
 }
 

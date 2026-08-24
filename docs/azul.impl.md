@@ -133,7 +133,7 @@ graph TD
 **Goal**: Implement the spatial placement region (`pb-slot`), drop mechanics, relative coordinate positioning, and action bubbling from pieces to regions.
 **Dependencies**: Phase 4.
 
-- [ ] **5. Phase 5: Tabletop Spatial Region (`pb-slot`)**
+- [x] **5. Phase 5: Tabletop Spatial Region (`pb-slot`)**
   - [x] **5.1 Hierarchical Input Bubbling (`src/core/input-dispatcher.ts`)**
     - [x] 5.1.1 Bubble unhandled keypress events from piece to enclosing region.
     - [x] 5.1.2 Support direct region hover/focus targeting.
@@ -143,12 +143,12 @@ graph TD
     - [x] 5.3.1 Tabletop spatial placement container rendering all child pieces.
     - [x] 5.3.2 Drop handler: calculates cursor drop coordinates relative to `<pb-slot>` bounding box and positions piece via `position: absolute; left: ${x}px; top: ${y}px;`.
     - [x] 5.3.3 Actions: `drop` (`Space`), `dropAll` (`Shift+Space`).
-  - [ ] **5.4 Registration, Demo & Visual Golden Testing**
-    - [ ] 5.4.1 Register `pb-slot` in `registerProtoboard`.
-    - [ ] 5.4.2 Update `examples/index.html` with interactive tabletop slot allowing picking pieces and dropping at exact cursor coordinates.
-    - [ ] 5.4.3 Playwright unit & component tests for coordinate math, reparenting, and drop lifecycle.
-    - [ ] 5.4.4 Playwright visual golden screenshot tests for tabletop slot layout with dropped pieces.
-    - [ ] 5.4.5 Playwright visual golden screenshot tests for action popup (`?`) showing aggregated slot + piece actions.
+  - [x] **5.4 Registration, Demo & Visual Golden Testing**
+    - [x] 5.4.1 Register `pb-slot` in `registerProtoboard`.
+    - [x] 5.4.2 Update `examples/index.html` with interactive tabletop slot allowing picking pieces and dropping at exact cursor coordinates.
+    - [x] 5.4.3 Playwright unit & component tests for coordinate math, reparenting, and drop lifecycle.
+    - [x] 5.4.4 Playwright visual golden screenshot tests for tabletop slot layout with dropped pieces.
+    - [x] 5.4.5 Playwright visual golden screenshot tests for action popup (`?`) showing aggregated slot + piece actions.
 
 ---
 
