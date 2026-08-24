@@ -8,9 +8,11 @@ import {FlipAction} from '../action/flip-action';
 import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
+import {PickAllAction} from '../action/pick-all-action';
 import {PrevFaceAction} from '../action/prev-face-action';
 import {RollAction} from '../action/roll-action';
 import {RotateAction} from '../action/rotate-action';
+import {ShuffleAction} from '../action/shuffle-action';
 import {
   ActionDescriptor,
   ActionGroup,
@@ -39,6 +41,7 @@ import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 import {BaseRegion} from '../regions/base-region';
+import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
 
 import {TestFace} from './test-face';
@@ -67,6 +70,7 @@ export {
   D4,
   D6,
   D8,
+  Deck,
   DN,
   DropAction,
   DropAllAction,
@@ -81,10 +85,12 @@ export {
   NextFaceAction,
   parseTriggerKey,
   PickAction,
+  PickAllAction,
   PrevFaceAction,
   QueryActionsEvent,
   RollAction,
   RotateAction,
+  ShuffleAction,
   signal,
   SignalWatcher,
   Slot,
