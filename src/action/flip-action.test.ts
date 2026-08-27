@@ -23,9 +23,7 @@ async function setupPage(
       readonly sides = sides;
 
       constructor() {
-        super('Test Piece', () => [
-          new window.Protoboard.FlipAction(this.activeFace, sides),
-        ]);
+        super('Test Piece', () => [new window.Protoboard.FlipAction()]);
       }
     }
 

@@ -163,10 +163,10 @@ graph TD
     - [x] 6.1.2 Action `shuffle` (`s`): Fisher-Yates random shuffle of child DOM nodes.
     - [x] 6.1.3 Action `pickAll` (`Shift+C`): pops all pieces into held stack.
     - [x] 6.1.4 Action `drop` (`Space`) / `dropAll` (`Shift+Space`): appends dropped pieces to the top of the deck.
-  - [ ] **6.2 Action `flipAll` (`f`) (`src/action/flip-all-action.ts`)**
-    - [ ] 6.2.1 Action `flipAll` (`f`): reverses child DOM order AND triggers `flip()` on each child piece with re-entrancy protection.
-    - [ ] 6.2.2 Register `FlipAllAction` on `Deck`.
-    - [ ] 6.2.3 Playwright unit & component tests for `flipAll`.
+  - [x] **6.2 Action `flipAll` (`f`) (`src/action/flip-all-action.ts`)**
+    - [x] 6.2.1 Action `flipAll` (`f`): reverses child DOM order AND triggers `flip()` on each child piece with re-entrancy protection.
+    - [x] 6.2.2 Register `FlipAllAction` on `Deck`.
+    - [x] 6.2.3 Playwright unit & component tests for `flipAll`.
   - [ ] **6.3 Registration, Demo & Visual Golden Testing**
     - [ ] 6.3.1 Register `pb-deck` in `registerProtoboard`.
     - [ ] 6.3.2 Update `examples/index.html` with card deck (`pb-d2` cards) demonstrating drawing (hovering exposed top card + `c`), shuffling (`s`), and flipping (`f`).

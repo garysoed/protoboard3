@@ -292,8 +292,7 @@ test.describe('BaseAction', () => {
   test.describe('getActionDescriptor', () => {
     test('generates descriptor for FlipAction', async ({page}) => {
       const result = await page.evaluate(() => {
-        const activeFace = window.Protoboard.signal(0);
-        const action = new window.Protoboard.FlipAction(activeFace, 2);
+        const action = new window.Protoboard.FlipAction();
         const el = document.createElement('div');
         action.observe(el);
 

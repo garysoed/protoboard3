@@ -13,9 +13,8 @@ export abstract class BasePiece extends BaseElement {
     }
   `;
 
+  readonly activeFace = signal(0);
   abstract readonly sides: number;
-
-  protected readonly activeFace = signal(0);
 
   constructor(
     defaultName: string,

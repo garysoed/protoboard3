@@ -1,5 +1,6 @@
 import {css, CSSResultGroup} from 'lit';
 
+import {FlipAllAction} from '../action/flip-all-action';
 import {PickAllAction} from '../action/pick-all-action';
 import {ShuffleAction} from '../action/shuffle-action';
 import {ActionEvent} from '../core/action-event';
@@ -22,6 +23,7 @@ export class Deck extends BaseRegion {
 
   constructor() {
     super('Deck', () => [
+      new FlipAllAction(),
       new PickAllAction(this.handService),
       new ShuffleAction(),
     ]);

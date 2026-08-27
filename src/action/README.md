@@ -8,6 +8,8 @@ This directory contains reusable, composable action classes for tabletop pieces 
 - [`drop-action.ts`](./drop-action.ts): Action that triggers drop handling on the target element (`DropAction`).
 - [`drop-all-action.ts`](./drop-all-action.ts): Action that triggers drop-all handling on the target element (`DropAllAction`).
 - [`flip-action.ts`](./flip-action.ts): Action that flips the target piece to its opposite face (`FlipAction`).
+- [`flip-all-action.ts`](./flip-all-action.ts): Action that reverses child DOM order and flips all child pieces (`FlipAllAction`).
+- [`flip.ts`](./flip.ts): Helper function that inverts an active face reactive signal based on total sides (`flip`).
 - [`help-action.ts`](./help-action.ts): Action that dispatches action discovery query events on the target element (`HelpAction`).
 - [`next-face-action.ts`](./next-face-action.ts): Action that advances the target piece to its next face (`NextFaceAction`).
 - [`pick-action.ts`](./pick-action.ts): Action that pushes the target element into the hand stack (`PickAction`).

@@ -4,7 +4,9 @@ import {html} from 'lit';
 import {BaseAction} from '../action/base-action';
 import {DropAction} from '../action/drop-action';
 import {DropAllAction} from '../action/drop-all-action';
+import {flip} from '../action/flip';
 import {FlipAction} from '../action/flip-action';
+import {FlipAllAction} from '../action/flip-all-action';
 import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
@@ -75,6 +77,8 @@ export {
   DropAction,
   DropAllAction,
   FlipAction,
+  FlipAllAction,
+  flip,
   getTriggerKeyParts,
   HandOverlay,
   HandService,

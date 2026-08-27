@@ -12,7 +12,7 @@ export class D8 extends BasePiece {
 
   constructor() {
     super('D8', () => [
-      new FlipAction(this.activeFace, this.sides),
+      new FlipAction(),
       new NextFaceAction(this.activeFace, signal(this.sides)),
       new PrevFaceAction(this.activeFace, signal(this.sides)),
       new RollAction(() => {
