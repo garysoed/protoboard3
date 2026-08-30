@@ -8,6 +8,7 @@ import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
+import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
 
 import {ActionPopup} from './action-popup';
@@ -29,6 +30,7 @@ const DEFINITIONS: Record<string, CustomElementConstructor> = {
   d4: D4,
   d6: D6,
   d8: D8,
+  deck: Deck,
   dn: DN,
   'hand-overlay': HandOverlay,
   slot: Slot,

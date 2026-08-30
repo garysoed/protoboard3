@@ -247,6 +247,87 @@
         position: relative;
         overflow: hidden;
       }
+
+      /* Deck & Card Styles */
+      .deck-section {
+        max-width: 1000px;
+        margin: 32px auto 0;
+      }
+
+      .deck-section h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: var(--accent-color);
+      }
+
+      .deck-container {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      pb-deck {
+        display: inline-block;
+        width: 100px;
+        height: 140px;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-face {
+        width: 100px;
+        height: 140px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        box-sizing: border-box;
+        border: 2px solid;
+        user-select: none;
+        cursor: grab;
+      }
+
+      .card-front {
+        background: linear-gradient(135deg, #ffffff, #f1f5f9);
+        border-color: #cbd5e1;
+        color: #0f172a;
+      }
+
+      .card-front.red {
+        color: #dc2626;
+      }
+
+      .card-front .card-rank {
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .card-front .card-suit {
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .card-back {
+        background: repeating-linear-gradient(
+          45deg,
+          #1e3a8a,
+          #1e3a8a 10px,
+          #1e40af 10px,
+          #1e40af 20px
+        );
+        border-color: #3b82f6;
+        color: #93c5fd;
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
     </style>
   </head>
   <body>
@@ -261,13 +342,17 @@
         <h2>Keyboard Shortcuts</h2>
         <div class="key-grid">
           <div class="key-item"><kbd>r</kbd> <span>Roll / Randomize</span></div>
-          <div class="key-item"><kbd>f</kbd> <span>Flip Opposite</span></div>
+          <div class="key-item">
+            <kbd>f</kbd> <span>Flip Opposite / Flip All</span>
+          </div>
           <div class="key-item"><kbd>]</kbd> <span>Next Face</span></div>
           <div class="key-item"><kbd>[</kbd> <span>Previous Face</span></div>
           <div class="key-item"><kbd>t</kbd> <span>Rotate Angle</span></div>
+          <div class="key-item"><kbd>c</kbd> <span>Pick / Draw Card</span></div>
           <div class="key-item">
-            <kbd>c</kbd> <span>Pick / Hold Piece</span>
+            <kbd>Shift+C</kbd> <span>Pick All Pieces</span>
           </div>
+          <div class="key-item"><kbd>s</kbd> <span>Shuffle Deck</span></div>
           <div class="key-item"><kbd>Space</kbd> <span>Drop Piece</span></div>
           <div class="key-item">
             <kbd>Shift+Space</kbd> <span>Drop All Pieces</span>
@@ -458,6 +543,49 @@
           <div slot="face1" class="coin tails">TAILS</div>
         </pb-d2>
       </pb-slot>
+    </section>
+
+    <section class="deck-section">
+      <h2>Stacked Deck Region (&lt;pb-deck&gt;)</h2>
+      <p class="description">
+        Hover over the exposed top card and press <kbd>c</kbd> to draw it into
+        your hand. Hover over the deck and press <kbd>s</kbd> to shuffle,
+        <kbd>f</kbd> to flip all cards, <kbd>Shift+C</kbd> to pick up the entire
+        deck, or <kbd>Space</kbd> / <kbd>Shift+Space</kbd> to drop cards back
+        onto the deck.
+      </p>
+      <div class="deck-container">
+        <pb-deck id="card-deck" name="Draw Pile">
+          <pb-d2 id="card-ace-hearts" name="Ace of Hearts">
+            <div slot="face0" class="card-face card-front red">
+              <span class="card-rank">A</span>
+              <span class="card-suit">♥</span>
+            </div>
+            <div slot="face1" class="card-face card-back">PROTO</div>
+          </pb-d2>
+          <pb-d2 id="card-king-spades" name="King of Spades">
+            <div slot="face0" class="card-face card-front">
+              <span class="card-rank">K</span>
+              <span class="card-suit">♠</span>
+            </div>
+            <div slot="face1" class="card-face card-back">PROTO</div>
+          </pb-d2>
+          <pb-d2 id="card-queen-diamonds" name="Queen of Diamonds">
+            <div slot="face0" class="card-face card-front red">
+              <span class="card-rank">Q</span>
+              <span class="card-suit">♦</span>
+            </div>
+            <div slot="face1" class="card-face card-back">PROTO</div>
+          </pb-d2>
+          <pb-d2 id="card-jack-clubs" name="Jack of Clubs">
+            <div slot="face0" class="card-face card-front">
+              <span class="card-rank">J</span>
+              <span class="card-suit">♣</span>
+            </div>
+            <div slot="face1" class="card-face card-back">PROTO</div>
+          </pb-d2>
+        </pb-deck>
+      </div>
     </section>
 
     <pb-hand-overlay></pb-hand-overlay>

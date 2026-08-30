@@ -157,7 +157,7 @@ graph TD
 **Goal**: Implement the stacked pile region (`pb-deck`), top-card-only rendering, shuffling, flipping, and visual golden tests.
 **Dependencies**: Phase 5.
 
-- [ ] **6. Phase 6: Stacked Deck Region (`pb-deck`)**
+- [x] **6. Phase 6: Stacked Deck Region (`pb-deck`)**
   - [x] **6.1 `DeckRegion` Component (`src/regions/deck.ts`)**
     - [x] 6.1.1 Top-piece-only projection (hides all non-top child elements via Shadow DOM slot styling).
     - [x] 6.1.2 Action `shuffle` (`s`): Fisher-Yates random shuffle of child DOM nodes.
@@ -167,11 +167,11 @@ graph TD
     - [x] 6.2.1 Action `flipAll` (`f`): reverses child DOM order AND triggers `flip()` on each child piece with re-entrancy protection.
     - [x] 6.2.2 Register `FlipAllAction` on `Deck`.
     - [x] 6.2.3 Playwright unit & component tests for `flipAll`.
-  - [ ] **6.3 Registration, Demo & Visual Golden Testing**
-    - [ ] 6.3.1 Register `pb-deck` in `registerProtoboard`.
-    - [ ] 6.3.2 Update `examples/index.html` with card deck (`pb-d2` cards) demonstrating drawing (hovering exposed top card + `c`), shuffling (`s`), and flipping (`f`).
-    - [ ] 6.3.3 Playwright unit & component tests for DOM reordering on shuffle, flip-all reversal, child suppression, and drawing.
-    - [ ] 6.3.4 Playwright visual golden screenshot tests for stacked deck, top card display, card draw flow, and deck action popup.
+  - [x] **6.3 Registration, Demo & Visual Golden Testing**
+    - [x] 6.3.1 Register `pb-deck` in `registerProtoboard`.
+    - [x] 6.3.2 Update `examples/index.html` with card deck (`pb-d2` cards) demonstrating drawing (hovering exposed top card + `c`), shuffling (`s`), and flipping (`f`).
+    - [x] 6.3.3 Playwright unit & component tests for DOM reordering on shuffle, flip-all reversal, child suppression, and drawing.
+    - [x] 6.3.4 Playwright visual golden screenshot tests for stacked deck, top card display, card draw flow, and deck action popup.
 
 ---
 

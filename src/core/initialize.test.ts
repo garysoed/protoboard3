@@ -13,12 +13,13 @@ test.describe('Protoboard Registration Foundation', () => {
       window.Protoboard.initialize();
       const tags = [
         'pb-d1',
+        'pb-d12',
         'pb-d2',
+        'pb-d20',
         'pb-d4',
         'pb-d6',
         'pb-d8',
-        'pb-d12',
-        'pb-d20',
+        'pb-deck',
         'pb-dn',
         'pb-hand-overlay',
         'pb-slot',
@@ -34,12 +35,13 @@ test.describe('Protoboard Registration Foundation', () => {
       window.Protoboard.initialize({prefix: 'tabletop'});
       const tags = [
         'tabletop-d1',
+        'tabletop-d12',
         'tabletop-d2',
+        'tabletop-d20',
         'tabletop-d4',
         'tabletop-d6',
         'tabletop-d8',
-        'tabletop-d12',
-        'tabletop-d20',
+        'tabletop-deck',
         'tabletop-dn',
         'tabletop-hand-overlay',
         'tabletop-slot',
