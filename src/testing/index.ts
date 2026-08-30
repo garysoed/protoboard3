@@ -11,6 +11,7 @@ import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
 import {PickAllAction} from '../action/pick-all-action';
+import {PickRandomAction} from '../action/pick-random-action';
 import {PrevFaceAction} from '../action/prev-face-action';
 import {RollAction} from '../action/roll-action';
 import {RotateAction} from '../action/rotate-action';
@@ -42,6 +43,7 @@ import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
+import {Bag} from '../regions/bag';
 import {BaseRegion} from '../regions/base-region';
 import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
@@ -60,6 +62,7 @@ export function initialize(options: InitOptions = {}): void {
 export {
   ActionEvent,
   ActionPopup,
+  Bag,
   BaseAction,
   BaseElement,
   BasePiece,
@@ -90,6 +93,7 @@ export {
   parseTriggerKey,
   PickAction,
   PickAllAction,
+  PickRandomAction,
   PrevFaceAction,
   QueryActionsEvent,
   RollAction,

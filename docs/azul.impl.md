@@ -181,11 +181,11 @@ graph TD
 **Dependencies**: Phase 5.
 
 - [ ] **7. Phase 7: Blind Draw Bag Region (`pb-bag`)**
-  - [ ] **7.1 `BagRegion` Component (`src/regions/bag-region.ts`)**
-    - [ ] 7.1.1 Suppresses rendering of all child pieces (unslotted / hidden).
-    - [ ] 7.1.2 Action `pick` (`c`): randomly selects one child piece, removes it from the bag, and pushes it into the held stack.
-    - [ ] 7.1.3 Action `pickAll` (`Shift+C`): empties bag into held stack.
-    - [ ] 7.1.4 Action `drop` (`Space`) / `dropAll` (`Shift+Space`): inserts pieces into the bag.
+  - [x] **7.1 `BagRegion` Component (`src/regions/bag.ts`)**
+    - [x] 7.1.1 Suppresses rendering of all child pieces (unslotted / hidden).
+    - [x] 7.1.2 Action `pick` (`c`): randomly selects one child piece, removes it from the bag, and pushes it into the held stack.
+    - [x] 7.1.3 Action `pickAll` (`Shift+C`): empties bag into held stack.
+    - [x] 7.1.4 Action `drop` (`Space`) / `dropAll` (`Shift+Space`): inserts pieces into the bag.
   - [ ] **7.2 Registration, Demo & Visual Golden Testing**
     - [ ] 7.2.1 Register `pb-bag` in `registerProtoboard`.
     - [ ] 7.2.2 Update `examples/index.html` with token bag demonstration.

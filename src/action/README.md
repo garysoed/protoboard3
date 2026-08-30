@@ -14,6 +14,7 @@ This directory contains reusable, composable action classes for tabletop pieces 
 - [`next-face-action.ts`](./next-face-action.ts): Action that advances the target piece to its next face (`NextFaceAction`).
 - [`pick-action.ts`](./pick-action.ts): Action that pushes the target element into the hand stack (`PickAction`).
 - [`pick-all-action.ts`](./pick-all-action.ts): Action that pushes all child elements into the hand stack (`PickAllAction`).
+- [`pick-random-action.ts`](./pick-random-action.ts): Action that pushes a randomly chosen child element into the hand stack (`PickRandomAction`).
 - [`prev-face-action.ts`](./prev-face-action.ts): Action that steps back the target piece to its previous face (`PrevFaceAction`).
 - [`roll-action.ts`](./roll-action.ts): Action that triggers rolling behavior on the target piece (`RollAction`).
 - [`rotate-action.ts`](./rotate-action.ts): Action that rotates the target piece (`RotateAction`).

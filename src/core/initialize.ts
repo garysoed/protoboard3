@@ -8,6 +8,7 @@ import {D4} from '../pieces/d4';
 import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
+import {Bag} from '../regions/bag';
 import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
 
@@ -23,6 +24,7 @@ export interface InitOptions {
 
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
   'action-popup': ActionPopup,
+  bag: Bag,
   d1: D1,
   d12: D12,
   d2: D2,
