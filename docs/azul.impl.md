@@ -180,17 +180,17 @@ graph TD
 **Goal**: Implement the blind draw container (`pb-bag`), complete child element hiding, random drawing, and visual golden tests.
 **Dependencies**: Phase 5.
 
-- [ ] **7. Phase 7: Blind Draw Bag Region (`pb-bag`)**
+- [x] **7. Phase 7: Blind Draw Bag Region (`pb-bag`)**
   - [x] **7.1 `BagRegion` Component (`src/regions/bag.ts`)**
     - [x] 7.1.1 Suppresses rendering of all child pieces (unslotted / hidden).
     - [x] 7.1.2 Action `pick` (`c`): randomly selects one child piece, removes it from the bag, and pushes it into the held stack.
     - [x] 7.1.3 Action `pickAll` (`Shift+C`): empties bag into held stack.
     - [x] 7.1.4 Action `drop` (`Space`) / `dropAll` (`Shift+Space`): inserts pieces into the bag.
-  - [ ] **7.2 Registration, Demo & Visual Golden Testing**
-    - [ ] 7.2.1 Register `pb-bag` in `registerProtoboard`.
-    - [ ] 7.2.2 Update `examples/index.html` with token bag demonstration.
-    - [ ] 7.2.3 Playwright unit & component tests for random child selection, complete child hiding, and bag emptying.
-    - [ ] 7.2.4 Playwright visual golden screenshot tests for bag element, token blind draw, and bag action popup.
+  - [x] **7.2 Registration, Demo & Visual Golden Testing**
+    - [x] 7.2.1 Register `pb-bag` in `registerProtoboard`.
+    - [x] 7.2.2 Update `examples/index.html` with token bag demonstration.
+    - [x] 7.2.3 Playwright unit & component tests for random child selection, complete child hiding, and bag emptying.
+    - [x] 7.2.4 Playwright visual golden screenshot tests for bag element, token blind draw, and bag action popup.
 
 ---
 

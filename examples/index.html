@@ -328,6 +328,79 @@
         font-size: 14px;
         letter-spacing: 1px;
       }
+
+      /* Bag & Token Styles */
+      .bag-section {
+        max-width: 1000px;
+        margin: 32px auto 0;
+      }
+
+      .bag-section h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: var(--accent-color);
+      }
+
+      .bag-container {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      pb-bag {
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        border: 2px solid #8e44ad;
+        border-radius: 12px;
+        background: radial-gradient(circle, #5b2c6f, #2c133a);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        position: relative;
+        cursor: grab;
+      }
+
+      .token-gem {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 11px;
+        box-sizing: border-box;
+        border: 2px solid;
+        user-select: none;
+        cursor: grab;
+      }
+
+      .token-ruby {
+        background: linear-gradient(135deg, #ef4444, #991b1b);
+        border-color: #f87171;
+        color: #ffffff;
+      }
+
+      .token-sapphire {
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        border-color: #60a5fa;
+        color: #ffffff;
+      }
+
+      .token-emerald {
+        background: linear-gradient(135deg, #10b981, #065f46);
+        border-color: #34d399;
+        color: #ffffff;
+      }
+
+      .token-topaz {
+        background: linear-gradient(135deg, #f59e0b, #b45309);
+        border-color: #fbbf24;
+        color: #78350f;
+      }
     </style>
   </head>
   <body>
@@ -585,6 +658,32 @@
             <div slot="face1" class="card-face card-back">PROTO</div>
           </pb-d2>
         </pb-deck>
+      </div>
+    </section>
+
+    <section class="bag-section">
+      <h2>Blind Draw Bag Region (&lt;pb-bag&gt;)</h2>
+      <p class="description">
+        Hover over the bag and press <kbd>c</kbd> to randomly draw a token into
+        your hand. Hover over the bag and press <kbd>Shift+C</kbd> to empty all
+        tokens, or <kbd>Space</kbd> / <kbd>Shift+Space</kbd> to drop tokens back
+        into the bag.
+      </p>
+      <div class="bag-container">
+        <pb-bag id="token-bag" name="Token Bag">
+          <pb-d1 id="token-ruby" name="Ruby Token">
+            <div slot="face0" class="token-gem token-ruby">◆ Ruby</div>
+          </pb-d1>
+          <pb-d1 id="token-sapphire" name="Sapphire Token">
+            <div slot="face0" class="token-gem token-sapphire">◆ Sapphire</div>
+          </pb-d1>
+          <pb-d1 id="token-emerald" name="Emerald Token">
+            <div slot="face0" class="token-gem token-emerald">◆ Emerald</div>
+          </pb-d1>
+          <pb-d1 id="token-topaz" name="Topaz Token">
+            <div slot="face0" class="token-gem token-topaz">◆ Topaz</div>
+          </pb-d1>
+        </pb-bag>
       </div>
     </section>
 

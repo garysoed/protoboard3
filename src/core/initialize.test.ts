@@ -12,6 +12,7 @@ test.describe('Protoboard Registration Foundation', () => {
     const allRegistered = await page.evaluate(() => {
       window.Protoboard.initialize();
       const tags = [
+        'pb-bag',
         'pb-d1',
         'pb-d12',
         'pb-d2',
@@ -34,6 +35,7 @@ test.describe('Protoboard Registration Foundation', () => {
     const allRegistered = await page.evaluate(() => {
       window.Protoboard.initialize({prefix: 'tabletop'});
       const tags = [
+        'tabletop-bag',
         'tabletop-d1',
         'tabletop-d12',
         'tabletop-d2',
