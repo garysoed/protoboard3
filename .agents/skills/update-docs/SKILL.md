@@ -28,6 +28,7 @@ Maintain `README.md` in every directory following strict project guidelines:
 - **Current Directory Only**: Only list and describe files located directly in the current directory.
 - **No Subdirectory Descriptions**: Subdirectories may be linked for navigation, but must not be described.
 - **Exclude Test Files**: Never list or describe test files (e.g. `*.test.ts`).
+- **Exclude `README.md`**: Never list or describe `README.md` itself inside directory inventory sections.
 - **No Duplication**: Do not duplicate file listings or descriptions across multiple sections in the same `README.md`.
 - **Alphabetical Sorting**: Keep file listings sorted alphabetically.
 

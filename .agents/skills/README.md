@@ -2,6 +2,7 @@
 
 This directory contains custom workspace skills for extending agent capabilities and workflows.
 
-## Directory Inventory
+## Subdirectories
 
-- [`README.md`](./README.md): Directory documentation for workspace skills.
+- [`commit/`](./commit/)
+- [`update-docs/`](./update-docs/)

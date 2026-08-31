@@ -2,6 +2,6 @@
 
 This directory contains workspace-level agent customizations, rules, and skills.
 
-## Directory Inventory
+## Subdirectories
 
-- [`README.md`](./README.md): Directory documentation for agent customizations.
+- [`skills/`](./skills/)

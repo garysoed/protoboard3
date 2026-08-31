@@ -60,6 +60,7 @@
 ## Documentation & README Standards
 
 - **Centralized GitHub Documentation**: User guides, component references, keybindings matrices, and technical API references must be authored and maintained directly within the repository root `README.md` for GitHub presentation, rather than scattered across individual markdown files in `docs/` (such as `docs/usage.md` or `docs/api.md`). The `docs/` directory is reserved strictly for architectural specifications (`docs/azul.md`) and implementation roadmaps (`docs/azul.impl.md`).
+- **Exclude `README.md` from Directory Inventories**: Never list or describe `README.md` itself inside directory `README.md` inventory sections.
 
 ## Jujutsu (jj) Workflow
 

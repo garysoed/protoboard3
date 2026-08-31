@@ -220,15 +220,15 @@ graph TD
 **Goal**: Author comprehensive user documentation, establish an agent doc-updater skill, verify production packaging, and conduct cross-browser test verification.
 **Dependencies**: Phase 6, Phase 7, Phase 8.
 
-- [ ] **9. Phase 9: User Documentation, Documentation Skill & Packaging Verification**
+- [x] **9. Phase 9: User Documentation, Documentation Skill & Packaging Verification**
   - [x] **9.1 User-Facing Documentation & API Reference (`README.md`)**
     - [x] 9.1.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
     - [x] 9.1.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
   - [x] **9.2 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
     - [x] 9.2.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
-  - [ ] **9.3 Production Packaging Verification**
-    - [ ] 9.3.1 Verify Rollup produces self-contained distribution bundles: `dist/protoboard.min.js` (IIFE with zero runtime external dependencies) and `dist/index.mjs` (ESM module with TypeScript declarations in `dist/types/`).
-    - [ ] 9.3.2 Verify bundles can be imported and consumed in a standalone HTML page.
-  - [ ] **9.4 Cross-Browser Parity & Final Polish**
-    - [ ] 9.4.1 Run full Playwright test suite across Chromium, Firefox, and WebKit.
-    - [ ] 9.4.2 Ensure `README.md` files in every directory accurately list only local files according to project guidelines.
+  - [x] **9.3 Production Packaging Verification**
+    - [x] 9.3.1 Verify Rollup produces self-contained distribution bundles: `dist/protoboard.min.js` (IIFE with zero runtime external dependencies) and `dist/index.mjs` (ESM module with TypeScript declarations in `dist/types/`).
+    - [x] 9.3.2 Verify bundles can be imported and consumed in a standalone HTML page.
+  - [x] **9.4 Cross-Browser Parity & Final Polish**
+    - [x] 9.4.1 Run full Playwright test suite across Chromium, Firefox, and WebKit.
+    - [x] 9.4.2 Ensure `README.md` files in every directory accurately list only local files according to project guidelines.

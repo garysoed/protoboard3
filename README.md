@@ -345,7 +345,6 @@ All actions inherit from `BaseAction`:
 - [`package-lock.json`](./package-lock.json): Automatically generated lockfile defining the resolved dependency tree.
 - [`package.json`](./package.json): Package metadata, dependency declarations, and script definitions for the Protoboard library.
 - [`playwright.config.ts`](./playwright.config.ts): Playwright test runner configuration for cross-browser component testing and visual snapshots across Chromium, Firefox, and WebKit.
-- [`README.md`](./README.md): Project overview, documentation, and directory documentation for the repository root.
 - [`rollup.config.mjs`](./rollup.config.mjs): Rollup bundler configuration generating the standalone minified IIFE bundle and ESM module.
 - [`tsconfig.json`](./tsconfig.json): TypeScript compiler configuration tailored for modern web component development.
 - [`typedef.d.ts`](./typedef.d.ts): Global TypeScript definitions extending `Window` with `Protoboard`.
