@@ -15,6 +15,7 @@
 - **Single Action Factory**: `BaseElement` and its subclasses must take a single non-optional `actionsFactory: () => readonly BaseAction[]` function parameter evaluated lazily by the `@cached()` actions getter.
 - **Non-Optional Parameters by Default**: Most parameters across classes, constructors, methods, and functions must be required. Never add default parameter values (`param = default`) or make parameters optional (`param?: type`) without explicit user instruction.
 - **No Speculative Methods, Parameters, or Properties**: Do not add any speculative methods, parameters, or properties across classes, interfaces, functions, or constructors unless they are immediately required and utilized.
+- **Non-Visual Configuration Elements**: Custom elements used solely as configuration or structural child metadata (such as `<pb-chute-layer>`) that do not render visual content must implement `render()` returning an empty template (`return html``;`) without defining `static override styles` or unused `<slot>` projections.
 - **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
 
 ## Reactive State & Signals (`@lit-labs/signals`)

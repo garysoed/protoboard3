@@ -45,6 +45,7 @@ import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 import {Bag} from '../regions/bag';
 import {BaseRegion} from '../regions/base-region';
+import {ChuteLayer} from '../regions/chute-layer';
 import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
 
@@ -67,6 +68,7 @@ export {
   BaseElement,
   BasePiece,
   BaseRegion,
+  ChuteLayer,
   computed,
   D1,
   D12,

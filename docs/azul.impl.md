@@ -200,8 +200,8 @@ graph TD
 **Dependencies**: Phase 5.
 
 - [ ] **8. Phase 8: Probabilistic Drop Sink Region (`pb-chute`)**
-  - [ ] **8.1 `ChuteLayerElement` (`<pb-chute-layer>`, `src/regions/chute-layer-element.ts`)**
-    - [ ] 8.1.1 Declares `layer` index and pass `chance` (`[0, 1]`).
+  - [x] **8.1 `ChuteLayerElement` (`<pb-chute-layer>`, `src/regions/chute-layer-element.ts`)**
+    - [x] 8.1.1 Declares `layer` index and pass `chance` (`[0, 1]`).
   - [ ] **8.2 `ChuteRegion` (`<pb-chute>`, `src/regions/chute-region.ts`)**
     - [ ] 8.2.1 Hides all contained pieces from view.
     - [ ] 8.2.2 Target region linking via `target` attribute (resolved by ID via rootNode `getElementById`).
