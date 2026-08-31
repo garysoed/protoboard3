@@ -7,6 +7,7 @@ import {DropAllAction} from '../action/drop-all-action';
 import {flip} from '../action/flip';
 import {FlipAction} from '../action/flip-action';
 import {FlipAllAction} from '../action/flip-all-action';
+import {FlushAction} from '../action/flush-action';
 import {HelpAction} from '../action/help-action';
 import {NextFaceAction} from '../action/next-face-action';
 import {PickAction} from '../action/pick-action';
@@ -45,6 +46,7 @@ import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 import {Bag} from '../regions/bag';
 import {BaseRegion} from '../regions/base-region';
+import {Chute} from '../regions/chute';
 import {ChuteLayer} from '../regions/chute-layer';
 import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
@@ -68,6 +70,7 @@ export {
   BaseElement,
   BasePiece,
   BaseRegion,
+  Chute,
   ChuteLayer,
   computed,
   D1,
@@ -84,6 +87,7 @@ export {
   FlipAction,
   FlipAllAction,
   flip,
+  FlushAction,
   getTriggerKeyParts,
   HandOverlay,
   HandService,

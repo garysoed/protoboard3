@@ -9,6 +9,7 @@ import {D6} from '../pieces/d6';
 import {D8} from '../pieces/d8';
 import {DN} from '../pieces/dn';
 import {Bag} from '../regions/bag';
+import {Chute} from '../regions/chute';
 import {ChuteLayer} from '../regions/chute-layer';
 import {Deck} from '../regions/deck';
 import {Slot} from '../regions/slot';
@@ -26,6 +27,7 @@ export interface InitOptions {
 const DEFINITIONS: Record<string, CustomElementConstructor> = {
   'action-popup': ActionPopup,
   bag: Bag,
+  chute: Chute,
   'chute-layer': ChuteLayer,
   d1: D1,
   d12: D12,

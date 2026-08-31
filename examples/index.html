@@ -401,6 +401,40 @@
         border-color: #fbbf24;
         color: #78350f;
       }
+
+      /* Chute & Dice Tower Styles */
+      .chute-section {
+        max-width: 1000px;
+        margin: 32px auto 0;
+      }
+
+      .chute-section h2 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        color: var(--accent-color);
+      }
+
+      .chute-container {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+      }
+
+      pb-chute {
+        display: inline-block;
+        width: 120px;
+        height: 120px;
+        border: 2px solid #d35400;
+        border-radius: 12px;
+        background: radial-gradient(circle, #a04000, #5c2400);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        position: relative;
+        cursor: grab;
+      }
     </style>
   </head>
   <body>
@@ -684,6 +718,28 @@
             <div slot="face0" class="token-gem token-topaz">◆ Topaz</div>
           </pb-d1>
         </pb-bag>
+      </div>
+    </section>
+
+    <section class="chute-section">
+      <h2>Probabilistic Drop Sink / Dice Tower (&lt;pb-chute&gt;)</h2>
+      <p class="description">
+        Hover over pieces above and press <kbd>c</kbd> to pick them up, then
+        drop them into this chute with <kbd>Space</kbd> or
+        <kbd>Shift+Space</kbd>. Pieces that pass all internal layers (Layer 1:
+        60%, Layer 2: 80%) will exit into the Tabletop Board. Hover over the
+        chute and press <kbd>f</kbd>
+        to flush any trapped pieces into the Tabletop Board.
+      </p>
+      <div class="chute-container">
+        <pb-chute
+          id="dice-chute"
+          name="Dice Tower Chute"
+          target="#tabletop-slot"
+        >
+          <pb-chute-layer layer="1" chance="0.6"></pb-chute-layer>
+          <pb-chute-layer layer="2" chance="0.8"></pb-chute-layer>
+        </pb-chute>
       </div>
     </section>
 

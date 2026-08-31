@@ -199,19 +199,19 @@ graph TD
 **Goal**: Implement the probabilistic dice tower / drop sink (`pb-chute` & `pb-chute-layer`), target region linking, layer simulation, and visual golden tests.
 **Dependencies**: Phase 5.
 
-- [ ] **8. Phase 8: Probabilistic Drop Sink Region (`pb-chute`)**
+- [x] **8. Phase 8: Probabilistic Drop Sink Region (`pb-chute`)**
   - [x] **8.1 `ChuteLayerElement` (`<pb-chute-layer>`, `src/regions/chute-layer-element.ts`)**
     - [x] 8.1.1 Declares `layer` index and pass `chance` (`[0, 1]`).
-  - [ ] **8.2 `ChuteRegion` (`<pb-chute>`, `src/regions/chute-region.ts`)**
-    - [ ] 8.2.1 Hides all contained pieces from view.
-    - [ ] 8.2.2 Target region linking via `target` attribute (resolved by ID via rootNode `getElementById`).
-    - [ ] 8.2.3 Drop evaluation: sequentially evaluates each child layer; if all pass, reparents piece to target region; otherwise retains piece trapped in chute.
-    - [ ] 8.2.4 Action `flush` (`f`): evacuates all trapped pieces across all layers into the target region.
-  - [ ] **8.3 Registration, Demo & Visual Golden Testing**
-    - [ ] 8.3.1 Register `pb-chute` and `pb-chute-layer` in `registerProtoboard`.
-    - [ ] 8.3.2 Update `examples/index.html` with dice tower feeding into the tabletop slot.
-    - [ ] 8.3.3 Playwright unit & component tests for multi-layer probability progression, trapped piece retention, and flush evacuation.
-    - [ ] 8.3.4 Playwright visual golden screenshot tests for chute and dice tower interactions.
+  - [x] **8.2 `ChuteRegion` (`<pb-chute>`, `src/regions/chute-region.ts`)**
+    - [x] 8.2.1 Hides all contained pieces from view.
+    - [x] 8.2.2 Target region linking via `target` attribute (resolved by ID via rootNode `getElementById`).
+    - [x] 8.2.3 Drop evaluation: sequentially evaluates each child layer; if all pass, reparents piece to target region; otherwise retains piece trapped in chute.
+    - [x] 8.2.4 Action `flush` (`f`): evacuates all trapped pieces across all layers into the target region.
+  - [x] **8.3 Registration, Demo & Visual Golden Testing**
+    - [x] 8.3.1 Register `pb-chute` and `pb-chute-layer` in `registerProtoboard`.
+    - [x] 8.3.2 Update `examples/index.html` with dice tower feeding into the tabletop slot.
+    - [x] 8.3.3 Playwright unit & component tests for multi-layer probability progression, trapped piece retention, and flush evacuation.
+    - [x] 8.3.4 Playwright visual golden screenshot tests for chute and dice tower interactions.
 
 ---
 
