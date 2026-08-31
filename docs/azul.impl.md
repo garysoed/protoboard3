@@ -16,7 +16,7 @@ graph TD
     P5 --> P6["Phase 6: Stacked Deck Region (pb-deck)"]
     P5 --> P7["Phase 7: Blind Draw Bag Region (pb-bag)"]
     P5 --> P8["Phase 8: Probabilistic Drop Sink (pb-chute)"]
-    P6 --> P9["Phase 9: Example Projects, User Docs & Skills"]
+    P6 --> P9["Phase 9: User Docs, Packaging & Skills"]
     P7 --> P9
     P8 --> P9
 ```
@@ -215,28 +215,20 @@ graph TD
 
 ---
 
-### Phase 9: Example Projects, User Documentation & Documentation Skill
+### Phase 9: User Documentation, Documentation Skill & Packaging Verification
 
-**Goal**: Build a complete Chess game example and Tabletop sandbox showcase, generate user documentation, establish an agent doc-updater skill, and conduct cross-browser test verification.
+**Goal**: Author comprehensive user documentation, establish an agent doc-updater skill, verify production packaging, and conduct cross-browser test verification.
 **Dependencies**: Phase 6, Phase 7, Phase 8.
 
-- [ ] **9. Phase 9: Example Projects, User Documentation & Documentation Skill**
-  - [ ] **9.1 Interactive Chess Game (`examples/chess/index.html`)**
-    - [ ] 9.1.1 Implement 8x8 chessboard layout using arranged `<pb-slot>` grid squares.
-    - [ ] 9.1.2 Implement White and Black chess pieces using `<pb-d1>` with slotted piece graphics.
-    - [ ] 9.1.3 Implement captured piece holding areas using side `<pb-slot>` containers.
-    - [ ] 9.1.4 Playwright visual golden tests for initial chess board layout and piece move interactions.
-  - [ ] **9.2 Tabletop Sandbox Showcase (`examples/tabletop/index.html`)**
-    - [ ] 9.2.1 Assemble full tabletop board matching Section 6 of `docs/azul.md` (Tabletop slot, Draw deck with cards, Dice tower chute, Token bag, and D6 dice).
-    - [ ] 9.2.2 Playwright visual golden tests for complete multi-region interaction flows.
-  - [ ] **9.3 User-Facing Documentation (`docs/usage.md`, `docs/api.md`)**
-    - [ ] 9.3.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
-    - [ ] 9.3.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
-  - [ ] **9.4 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
-    - [ ] 9.4.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
-  - [ ] **9.5 Production Packaging Verification**
-    - [ ] 9.5.1 Verify Rollup produces self-contained distribution bundles: `dist/protoboard.min.js` (IIFE with zero runtime external dependencies) and `dist/index.mjs` (ESM module with TypeScript declarations in `dist/types/`).
-    - [ ] 9.5.2 Verify bundles can be imported and consumed in a standalone HTML page.
-  - [ ] **9.6 Cross-Browser Parity & Final Polish**
-    - [ ] 9.6.1 Run full Playwright test suite across Chromium, Firefox, and WebKit.
-    - [ ] 9.6.2 Ensure `README.md` files in every directory accurately list only local files according to project guidelines.
+- [ ] **9. Phase 9: User Documentation, Documentation Skill & Packaging Verification**
+  - [ ] **9.1 User-Facing Documentation (`docs/usage.md`, `docs/api.md`)**
+    - [ ] 9.1.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
+    - [ ] 9.1.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
+  - [ ] **9.2 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
+    - [ ] 9.2.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
+  - [ ] **9.3 Production Packaging Verification**
+    - [ ] 9.3.1 Verify Rollup produces self-contained distribution bundles: `dist/protoboard.min.js` (IIFE with zero runtime external dependencies) and `dist/index.mjs` (ESM module with TypeScript declarations in `dist/types/`).
+    - [ ] 9.3.2 Verify bundles can be imported and consumed in a standalone HTML page.
+  - [ ] **9.4 Cross-Browser Parity & Final Polish**
+    - [ ] 9.4.1 Run full Playwright test suite across Chromium, Firefox, and WebKit.
+    - [ ] 9.4.2 Ensure `README.md` files in every directory accurately list only local files according to project guidelines.
