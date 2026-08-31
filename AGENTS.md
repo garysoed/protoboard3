@@ -57,6 +57,10 @@
 
 - **Root Typedefs**: Maintain global type definitions in `typedef.d.ts` at the project root with `type Protoboard = typeof import('./src/testing/index')` so the compiler automatically enforces `window.Protoboard` interface fidelity across test suites without polluting `src/index.ts`.
 
+## Documentation & README Standards
+
+- **Centralized GitHub Documentation**: User guides, component references, keybindings matrices, and technical API references must be authored and maintained directly within the repository root `README.md` for GitHub presentation, rather than scattered across individual markdown files in `docs/` (such as `docs/usage.md` or `docs/api.md`). The `docs/` directory is reserved strictly for architectural specifications (`docs/azul.md`) and implementation roadmaps (`docs/azul.impl.md`).
+
 ## Jujutsu (jj) Workflow
 
 - **In-Place Conflict Resolution**: When changes to an ancestor commit trigger rebase conflicts in descendant commits, never abandon (`jj abandon`) the descendant commits to recreate them. Always switch to the conflicted revision (`jj edit <rev>`) and resolve the conflicts in place.

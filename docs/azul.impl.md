@@ -221,11 +221,11 @@ graph TD
 **Dependencies**: Phase 6, Phase 7, Phase 8.
 
 - [ ] **9. Phase 9: User Documentation, Documentation Skill & Packaging Verification**
-  - [ ] **9.1 User-Facing Documentation (`docs/usage.md`, `docs/api.md`)**
-    - [ ] 9.1.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
-    - [ ] 9.1.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
-  - [ ] **9.2 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
-    - [ ] 9.2.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
+  - [x] **9.1 User-Facing Documentation & API Reference (`README.md`)**
+    - [x] 9.1.1 Author comprehensive usage guide covering all custom tags (`<pb-d1>`..`<pb-dn>`, `<pb-slot>`, `<pb-deck>`, `<pb-bag>`, `<pb-chute>`).
+    - [x] 9.1.2 Document action attribute configurations (`action-*`), `rotations` attribute, keybindings, action popup (`?`), and registration options.
+  - [x] **9.2 Documentation Maintenance Skill (`.agents/skills/update-docs/SKILL.md`)**
+    - [x] 9.2.1 Create custom workspace skill instructing agents on how to maintain, synchronize, and update documentation when components, attributes, or actions change.
   - [ ] **9.3 Production Packaging Verification**
     - [ ] 9.3.1 Verify Rollup produces self-contained distribution bundles: `dist/protoboard.min.js` (IIFE with zero runtime external dependencies) and `dist/index.mjs` (ESM module with TypeScript declarations in `dist/types/`).
     - [ ] 9.3.2 Verify bundles can be imported and consumed in a standalone HTML page.
