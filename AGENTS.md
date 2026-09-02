@@ -59,7 +59,9 @@
 
 ## Documentation & README Standards
 
-- **Centralized GitHub Documentation**: User guides, component references, keybindings matrices, and technical API references must be authored and maintained directly within the repository root `README.md` for GitHub presentation, rather than scattered across individual markdown files in `docs/` (such as `docs/usage.md` or `docs/api.md`). The `docs/` directory is reserved strictly for architectural specifications (`docs/azul.md`) and implementation roadmaps (`docs/azul.impl.md`).
+- **Centralized GitHub Documentation**: User guides, component references, keybindings matrices, and technical API references must be authored and maintained directly within the repository root `README.md` for GitHub presentation, rather than scattered across individual markdown files in `docs/` (such as `docs/usage.md` or `docs/api.md`). The `docs/` directory is reserved strictly for architectural specifications (`docs/azul.md`, `docs/bohnanza.md`) and implementation roadmaps (`docs/azul.impl.md`).
+- **No Implementation Code in Design Documents**: Architectural design specifications in `docs/` must define systems, component contracts, behaviors, and data models using prose, tables, and structural diagrams rather than embedding raw implementation code blocks.
+- **Prefix-Free UI & Navigation Names**: In documentation apps, example showcases, and UI navigation bars, component labels, display titles, and URL route paths must use clean, human-readable names without library custom element tag prefixes (e.g. `D6`, `Slot`, `#d6`, `#slot` rather than `pb-d6`, `pb-slot`, `#pb-d6`).
 - **Exclude `README.md` from Directory Inventories**: Never list or describe `README.md` itself inside directory `README.md` inventory sections.
 
 ## Jujutsu (jj) Workflow
