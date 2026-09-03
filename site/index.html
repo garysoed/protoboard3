@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" cds-theme="g90">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protoboard — Documentation & Interactive Explorer</title>
+    <!-- Carbon Design System Plex Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/plex/sans.css"
+    />
+    <!-- Application Layout Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- IBM Carbon Header -->
+    <cds-header aria-label="Protoboard Explorer">
+      <cds-header-name prefix="Protoboard">Explorer</cds-header-name>
+    </cds-header>
+
+    <!-- 3-Pane Main Application Layout -->
+    <div id="app-container">
+      <div id="nav-pane"></div>
+      <main id="middle-pane"></main>
+      <aside id="sandbox-pane"></aside>
+    </div>
+
+    <!-- Protoboard Core Distribution Bundle -->
+    <script src="../dist/protoboard.min.js"></script>
+    <!-- Site Application Bundle -->
+    <script type="module" src="dist/site.min.js"></script>
+  </body>
+</html>

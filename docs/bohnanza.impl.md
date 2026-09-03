@@ -32,16 +32,16 @@ graph TD
 **Goal**: Install IBM Carbon dependencies, configure the Rollup build pipeline for `site/`, and establish the HTML/CSS entry point.
 **Dependencies**: None.
 
-- [ ] **1. Phase 1: Project Setup, Carbon Dependencies & Site Build Pipeline**
-  - [ ] **1.1 Dependency Installation**
-    - [ ] 1.1.1 Add `@carbon/web-components` and `@carbon/styles` to `package.json`.
-    - [ ] 1.1.2 Verify dependency installation and module resolution.
-  - [ ] **1.2 Build & Bundler Configuration**
-    - [ ] 1.2.1 Configure `rollup.config.mjs` with a new build target compiling `site/src/main.ts` into `site/dist/site.min.js`.
-    - [ ] 1.2.2 Add `build:site` script to `package.json` and update `build` script to build the Protoboard library followed by the site bundle.
-  - [ ] **1.3 Site Entry Point & Styling**
-    - [ ] 1.3.1 Create `site/index.html` loading Carbon Plex fonts, stylesheet, `dist/protoboard.min.js`, and `site/dist/site.min.js`.
-    - [ ] 1.3.2 Create `site/styles.css` establishing 3-pane flex/grid layout variables, theme styling, and base container styles.
+- [x] **1. Phase 1: Project Setup, Carbon Dependencies & Site Build Pipeline**
+  - [x] **1.1 Dependency Installation**
+    - [x] 1.1.1 Add `@carbon/web-components` and `@carbon/styles` to `package.json`.
+    - [x] 1.1.2 Verify dependency installation and module resolution.
+  - [x] **1.2 Build & Bundler Configuration**
+    - [x] 1.2.1 Configure `rollup.config.mjs` with a new build target compiling `site/src/main.ts` into `site/dist/site.min.js`.
+    - [x] 1.2.2 Add `build:site` script to `package.json` and update `build` script to build the Protoboard library followed by the site bundle.
+  - [x] **1.3 Site Entry Point & Styling**
+    - [x] 1.3.1 Create `site/index.html` loading Carbon Plex fonts, stylesheet, `dist/protoboard.min.js`, and `site/dist/site.min.js`.
+    - [x] 1.3.2 Create `site/styles.css` establishing 3-pane flex/grid layout variables, theme styling, and base container styles.
 
 ---
 

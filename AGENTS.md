@@ -3,6 +3,7 @@
 ## Component Architecture & Styling
 
 - **Parameter Derivation & Simplification**: When designing functions, constructors, or internal helper methods that accept multiple arguments, check if some parameters can be derived or accessed directly from other existing parameters (e.g. deriving `KeyboardEvent` or `currentTarget` directly from an `ActionEvent`). If so, simplify the parameter list by eliminating the redundant, derivable parameters.
+- **Carbon Semantic Design Tokens**: In documentation applications and showcase interfaces styled with IBM Carbon, strictly utilize native Carbon semantic design tokens (`--cds-background`, `--cds-layer-*`, `--cds-text-*`, `--cds-border-*`, `--cds-interactive`, etc.) and typography scales rather than defining custom CSS color/theme property namespaces.
 - **Host Display**: Custom piece components (e.g. `<pb-d1>`) must define `:host { display: inline-block; }` so they shrink-wrap to their slotted content size in layouts and visual screenshots.
 - **Dedicated CSS Files**: Place custom element styling in dedicated `.css` files (e.g. `src/core/action-popup.css`) and import them directly (`import styles from './<name>.css'`) rather than using `.css.ts` or inline string templates.
 - **No Premature CSS Variables**: Avoid adding speculative CSS custom properties (`var(--pb-*, ...)`) for prospective customization. Use direct literal CSS properties and values until theming or dynamic overrides are requested.
@@ -56,6 +57,7 @@
 ## Global Types & DOM Integration
 
 - **Root Typedefs**: Maintain global type definitions in `typedef.d.ts` at the project root with `type Protoboard = typeof import('./src/testing/index')` so the compiler automatically enforces `window.Protoboard` interface fidelity across test suites without polluting `src/index.ts`.
+- **No Redundant Window Guards in Browser Code**: In browser application modules and client-side scripts, do not add defensive `typeof window !== 'undefined'` checks. Access `window`, `document`, and DOM APIs directly.
 
 ## Documentation & README Standards
 

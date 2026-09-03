@@ -25,6 +25,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "site/**/*.ts",
     "e2e/**/*.ts",
     "*.ts",
     "*.d.ts",

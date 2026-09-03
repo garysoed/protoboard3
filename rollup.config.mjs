@@ -112,4 +112,37 @@ export default [
       }),
     ],
   },
+  {
+    input: 'site/src/main.ts',
+    output: [
+      {
+        file: 'site/dist/site.min.js',
+        format: 'es',
+        plugins: [terser()],
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      localPkgsResolver,
+      litCssPlugin,
+      nodeResolve({
+        extensions: ['.js', '.ts', '.mjs', '.css'],
+      }),
+      typescript({
+        declaration: false,
+        declarationDir: undefined,
+        exclude: ['**/*.test.ts'],
+        include: [
+          'site/**/*.ts',
+          'src/**/*.ts',
+          'typedef.d.ts',
+          '*.d.ts',
+          'node_modules/gs-tools/src/data/**/*.ts',
+          'node_modules/gs-tools/src/core/**/*.ts',
+          'node_modules/gs-tools/export/data.ts',
+        ],
+        tsconfig: './tsconfig.json',
+      }),
+    ],
+  },
 ];
