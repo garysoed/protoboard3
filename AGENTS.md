@@ -19,6 +19,7 @@
 - **Non-Visual Configuration Elements**: Custom elements used solely as configuration or structural child metadata (such as `<pb-chute-layer>`) that do not render visual content must implement `render()` returning an empty template (`return html``;`) without defining `static override styles` or unused `<slot>` projections.
 - **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
 - **Visual Selection Dropdowns**: Dropdown and select menus cannot host interactive tooltips on options. In visual pickers and selection menus displaying rich visual items (such as SVG thumbnails), pair the visual preview directly with a concise text label (`name`) and logical category grouping (e.g. `<optgroup>` or menu sections) rather than relying on hover tooltips or verbose sentence descriptions.
+- **Single-Pass Map Lookups**: When querying a `Map` or collection for a value, avoid calling `.has(key)` immediately prior to `.get(key)`. Retrieve directly using `const value = map.get(key)` and check if the result is nullish/undefined.
 
 ## Reactive State & Signals (`@lit-labs/signals`)
 

@@ -15,12 +15,75 @@
   <body>
     <!-- IBM Carbon Header -->
     <cds-header aria-label="Protoboard Explorer">
+      <cds-header-menu-button
+        button-label-active="Close menu"
+        button-label-inactive="Open menu"
+      ></cds-header-menu-button>
       <cds-header-name prefix="Protoboard">Explorer</cds-header-name>
+      <div class="cds--header__global">
+        <cds-header-global-action
+          aria-label="GitHub Repository"
+          tooltip-text="GitHub Repository"
+          href="https://github.com/garysoed/protoboard3"
+          target="_blank"
+        >
+          <svg
+            viewBox="0 0 32 32"
+            width="20"
+            height="20"
+            fill="currentColor"
+            slot="icon"
+          >
+            <path
+              d="M16 2a14 14 0 0 0-4.43 27.28c.7.13 1-.3 1-.67v-2.38c-3.89.84-4.71-1.88-4.71-1.88a3.71 3.71 0 0 0-1.56-2.05c-1.27-.87.1-.85.1-.85a2.94 2.94 0 0 1 2.14 1.44 3 3 0 0 0 4.08 1.16 2.93 2.93 0 0 1 .89-1.87c-3.11-.35-6.38-1.55-6.38-6.91a5.41 5.41 0 0 1 1.44-3.76 5 5 0 0 1 .14-3.71s1.17-.38 3.85 1.43a13.3 13.3 0 0 1 7 0c2.67-1.81 3.84-1.43 3.84-1.43a5 5 0 0 1 .14 3.71 5.41 5.41 0 0 1 1.44 3.76c0 5.38-3.28 6.55-6.4 6.9a3.34 3.34 0 0 1 1 2.6v3.86c0 .38.26.81 1 .67A14 14 0 0 0 16 2z"
+            />
+          </svg>
+        </cds-header-global-action>
+      </div>
     </cds-header>
 
     <!-- 3-Pane Main Application Layout -->
     <div id="app-container">
-      <div id="nav-pane"></div>
+      <div id="nav-pane">
+        <cds-side-nav
+          aria-label="Side navigation"
+          expanded
+          is-not-child-of-header
+        >
+          <cds-side-nav-items>
+            <cds-side-nav-link href="#overview">Overview</cds-side-nav-link>
+            <cds-side-nav-divider></cds-side-nav-divider>
+            <cds-side-nav-menu title="Pieces">
+              <cds-side-nav-menu-item href="#d1">D1</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d2">D2</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d4">D4</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d6">D6</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d8">D8</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d12">D12</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#d20">D20</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#dn">DN</cds-side-nav-menu-item>
+            </cds-side-nav-menu>
+            <cds-side-nav-divider></cds-side-nav-divider>
+            <cds-side-nav-menu title="Regions">
+              <cds-side-nav-menu-item href="#slot">Slot</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#deck">Deck</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#bag">Bag</cds-side-nav-menu-item>
+              <cds-side-nav-menu-item href="#chute"
+                >Chute</cds-side-nav-menu-item
+              >
+            </cds-side-nav-menu>
+            <cds-side-nav-divider></cds-side-nav-divider>
+            <cds-side-nav-menu title="System">
+              <cds-side-nav-menu-item href="#hand-overlay"
+                >Hand Overlay</cds-side-nav-menu-item
+              >
+              <cds-side-nav-menu-item href="#action-popup"
+                >Action Popup</cds-side-nav-menu-item
+              >
+            </cds-side-nav-menu>
+          </cds-side-nav-items>
+        </cds-side-nav>
+      </div>
       <main id="middle-pane"></main>
       <aside id="sandbox-pane"></aside>
     </div>

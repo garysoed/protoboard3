@@ -68,20 +68,20 @@ graph TD
 **Goal**: Build the IBM Carbon UI shell, left-side navigation with clean component names, and client-side hash router with redirect fallback.
 **Dependencies**: Phase 2.
 
-- [ ] **3. Phase 3: Core UI Shell, Hash Router & Carbon SideNav**
-  - [ ] **3.1 Carbon UI Shell (`site/src/main.ts`)**
-    - [ ] 3.1.1 Mount `<cds-header>` with title `Protoboard Explorer`, menu button toggle, and GitHub repository action.
-    - [ ] 3.1.2 Assemble 3-pane layout containers (`#nav-pane`, `#middle-pane`, `#sandbox-pane`).
-  - [ ] **3.2 Carbon SideNav**
-    - [ ] 3.2.1 Build `<cds-side-nav>` with `<cds-side-nav-items>` grouped into Overview (`#overview`), Pieces (`#d1` through `#dn`), Regions (`#slot`, `#deck`, `#bag`, `#chute`), and System (`#hand-overlay`, `#action-popup`).
-    - [ ] 3.2.2 Wire menu toggle button to expand and collapse `<cds-side-nav>`.
-  - [ ] **3.3 Client-Side Hash Router (`site/src/router.ts`)**
-    - [ ] 3.3.1 Implement route map associating `#overview`, piece routes, region routes, and system routes with corresponding `<pbd-page-*>` custom element tags.
-    - [ ] 3.3.2 Implement `hashchange` listener to dynamically mount active page elements into `#middle-pane`.
-    - [ ] 3.3.3 Implement active state synchronization across `<cds-side-nav-link>` items and parent menus.
-    - [ ] 3.3.4 Implement explicit redirect fallback setting `window.location.hash = '#overview'` on empty, missing, or unrecognized hashes.
-  - [ ] **3.4 Unit & Navigation Testing**
-    - [ ] 3.4.1 Test router hash resolution, element mounting, and redirect behavior.
+- [x] **3. Phase 3: Core UI Shell, Hash Router & Carbon SideNav**
+  - [x] **3.1 Carbon UI Shell (`site/src/main.ts`)**
+    - [x] 3.1.1 Mount `<cds-header>` with title `Protoboard Explorer`, menu button toggle, and GitHub repository action.
+    - [x] 3.1.2 Assemble 3-pane layout containers (`#nav-pane`, `#middle-pane`, `#sandbox-pane`).
+  - [x] **3.2 Carbon SideNav**
+    - [x] 3.2.1 Build `<cds-side-nav>` with `<cds-side-nav-items>` grouped into Overview (`#overview`), Pieces (`#d1` through `#dn`), Regions (`#slot`, `#deck`, `#bag`, `#chute`), and System (`#hand-overlay`, `#action-popup`).
+    - [x] 3.2.2 Wire menu toggle button to expand and collapse `<cds-side-nav>`.
+  - [x] **3.3 Client-Side Hash Router (`site/src/router.ts`)**
+    - [x] 3.3.1 Implement route map associating `#overview`, piece routes, region routes, and system routes with corresponding `<pbd-page-*>` custom element tags.
+    - [x] 3.3.2 Implement `hashchange` listener to dynamically mount active page elements into `#middle-pane`.
+    - [x] 3.3.3 Implement active state synchronization across `<cds-side-nav-link>` items and parent menus.
+    - [x] 3.3.4 Implement explicit redirect fallback setting `window.location.hash = '#overview'` on empty, missing, or unrecognized hashes.
+  - [x] **3.4 Unit & Navigation Testing**
+    - [x] 3.4.1 Test router hash resolution, element mounting, and redirect behavior (skipped per user instruction).
 
 ---
 
