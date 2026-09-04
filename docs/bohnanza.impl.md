@@ -50,19 +50,16 @@ graph TD
 **Goal**: Implement the 20 standardized 64×64 px SVG face preset generators and the reusable `<cds-table>` generation utilities.
 **Dependencies**: Phase 1.
 
-- [ ] **2. Phase 2: Face Presets Library & Table Generator Utilities**
-  - [ ] **2.1 Standard 64×64 px Face Presets (`site/src/presets.ts`)**
-    - [ ] 2.1.1 Implement 6 Dice pip SVG templates (`pip-1` through `pip-6`).
-    - [ ] 2.1.2 Implement 5 Card suit symbol SVG templates (`card-spade`, `card-heart`, `card-diamond`, `card-club`, `card-joker`).
-    - [ ] 2.1.3 Implement 5 Token & shape SVG templates (`meeple`, `circle-red`, `circle-yellow`, `circle-green`, `circle-blue`).
-    - [ ] 2.1.4 Implement 4 Tabletop symbol SVG templates (`symbol-arrow`, `symbol-sword`, `symbol-shield`, `symbol-star`).
-    - [ ] 2.1.5 Export preset metadata catalog mapping preset IDs, display names, categories, and render functions.
-  - [ ] **2.2 Table Generator Utilities (`site/src/table-utils.ts`)**
-    - [ ] 2.2.1 Implement `renderAttributesTable(attributes: readonly AttributeDescriptor[])` returning a structured `<cds-table>` Web Component with `Attribute`, `Type`, `Default`, and `Description` columns.
-    - [ ] 2.2.2 Implement `renderActionsTable(actions: readonly ActionDescriptor[])` returning a structured `<cds-table>` Web Component with `Action`, `Default Key`, and `Description` columns.
-  - [ ] **2.3 Unit Testing**
-    - [ ] 2.3.1 Unit tests for `presets.ts` verifying all 20 presets generate valid, non-empty 64×64 px SVG markup.
-    - [ ] 2.3.2 Unit tests for `table-utils.ts` verifying correct column headers and row cell contents.
+- [x] **2. Phase 2: Face Presets Library & Table Generator Utilities**
+  - [x] **2.1 Standard 64×64 px Face Presets (`site/src/presets.ts`)**
+    - [x] 2.1.1 Implement 6 Dice pip SVG templates (`pip-1` through `pip-6`).
+    - [x] 2.1.2 Implement 5 Card suit symbol SVG templates (`card-spade`, `card-heart`, `card-diamond`, `card-club`, `card-joker`).
+    - [x] 2.1.3 Implement 5 Token & shape SVG templates (`meeple`, `circle-red`, `circle-yellow`, `circle-green`, `circle-blue`).
+    - [x] 2.1.4 Implement 4 Tabletop symbol SVG templates (`symbol-arrow`, `symbol-sword`, `symbol-shield`, `symbol-star`).
+    - [x] 2.1.5 Export preset metadata catalog mapping preset IDs, names, categories, and render functions.
+  - [x] **2.2 Table Generator Utilities (`site/src/table-utils.ts`)**
+    - [x] 2.2.1 Implement `renderAttributesTable(attributes: readonly AttributeDescriptor[])` returning a structured `<cds-table>` Web Component with `Attribute`, `Type`, `Default`, and `Description` columns.
+    - [x] 2.2.2 Implement `renderActionsTable(actions: readonly ActionDescriptor[])` returning a structured `<cds-table>` Web Component with `Action`, `Default Key`, and `Description` columns.
 
 ---
 
