@@ -20,6 +20,8 @@
 - **Private Reactive State**: State managed and mutated internally by component actions (e.g. `activeFace`, `rotationIndex`) must be declared as private state using `@state() private accessor ...` rather than public `@property()`.
 - **Visual Selection Dropdowns**: Dropdown and select menus cannot host interactive tooltips on options. In visual pickers and selection menus displaying rich visual items (such as SVG thumbnails), pair the visual preview directly with a concise text label (`name`) and logical category grouping (e.g. `<optgroup>` or menu sections) rather than relying on hover tooltips or verbose sentence descriptions.
 - **Single-Pass Map Lookups**: When querying a `Map` or collection for a value, avoid calling `.has(key)` immediately prior to `.get(key)`. Retrieve directly using `const value = map.get(key)` and check if the result is nullish/undefined.
+- **Compiled Output Locations**: Compiled stylesheets and asset bundles must be output strictly into designated `dist/` directories (e.g. `site/dist/styles.css`) rather than residing alongside source files.
+- **Carbon UI Shell & SideNav Hierarchy**: When utilizing IBM Carbon UI Shell components, structure `<cds-side-nav>` as a direct sibling of `<cds-header>` without the `is-not-child-of-header` attribute to retain Carbon's standard expanded UX mode (`cds--side-nav--ux`). When configuring `collapse-mode="rail"`, equip top-level navigation links and category menus with 16×16px SVG icons using `slot="title-icon"` so they render cleanly in the 48px mini-rail.
 
 ## Reactive State & Signals (`@lit-labs/signals`)
 

@@ -40,8 +40,8 @@ graph TD
     - [x] 1.2.1 Configure `rollup.config.mjs` with a new build target compiling `site/src/main.ts` into `site/dist/site.min.js`.
     - [x] 1.2.2 Add `build:site` script to `package.json` and update `build` script to build the Protoboard library followed by the site bundle.
   - [x] **1.3 Site Entry Point & Styling**
-    - [x] 1.3.1 Create `site/index.html` loading Carbon Plex fonts, stylesheet, `dist/protoboard.min.js`, and `site/dist/site.min.js`.
-    - [x] 1.3.2 Create `site/styles.css` establishing 3-pane flex/grid layout variables, theme styling, and base container styles.
+    - [x] 1.3.1 Create `site/index.html` loading Carbon Plex fonts, stylesheet, Protoboard library bundle, and site application bundle.
+    - [x] 1.3.2 Create `site/styles.scss` (compiled to `site/dist/styles.css`) establishing 3-pane flex/grid layout variables, Carbon Sass theme styling, and base container styles.
 
 ---
 

@@ -10,7 +10,7 @@
       href="https://1.www.s81c.com/common/carbon/plex/sans.css"
     />
     <!-- Application Layout Styles -->
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./dist/styles.css" />
   </head>
   <body>
     <!-- IBM Carbon Header -->
@@ -18,6 +18,7 @@
       <cds-header-menu-button
         button-label-active="Close menu"
         button-label-inactive="Open menu"
+        collapse-mode="rail"
       ></cds-header-menu-button>
       <cds-header-name prefix="Protoboard">Explorer</cds-header-name>
       <div class="cds--header__global">
@@ -42,55 +43,97 @@
       </div>
     </cds-header>
 
-    <!-- 3-Pane Main Application Layout -->
+    <!-- Side Navigation -->
+    <cds-side-nav aria-label="Side navigation" collapse-mode="rail">
+      <cds-side-nav-items>
+        <cds-side-nav-link href="#overview">
+          <svg
+            slot="title-icon"
+            viewBox="0 0 32 32"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M16 4L2 14h4v14h8V18h4v10h8V14h4L16 4zm10 22h-4V16H10v10H6V15.2l10-7.15 10 7.15V26z"
+            />
+          </svg>
+          Overview
+        </cds-side-nav-link>
+        <cds-side-nav-divider></cds-side-nav-divider>
+        <cds-side-nav-menu title="Pieces">
+          <svg
+            slot="title-icon"
+            viewBox="0 0 32 32"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 6h20v20H6V6z"
+            />
+            <circle cx="11" cy="11" r="2" />
+            <circle cx="21" cy="21" r="2" />
+            <circle cx="16" cy="16" r="2" />
+          </svg>
+          <cds-side-nav-menu-item href="#d1">D1</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d2">D2</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d4">D4</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d6">D6</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d8">D8</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d12">D12</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#d20">D20</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#dn">DN</cds-side-nav-menu-item>
+        </cds-side-nav-menu>
+        <cds-side-nav-divider></cds-side-nav-divider>
+        <cds-side-nav-menu title="Regions">
+          <svg
+            slot="title-icon"
+            viewBox="0 0 32 32"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2zm-12 18H4V8h12zm12 0H18V8h10z"
+            />
+          </svg>
+          <cds-side-nav-menu-item href="#slot">Slot</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#deck">Deck</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#bag">Bag</cds-side-nav-menu-item>
+          <cds-side-nav-menu-item href="#chute">Chute</cds-side-nav-menu-item>
+        </cds-side-nav-menu>
+        <cds-side-nav-divider></cds-side-nav-divider>
+        <cds-side-nav-menu title="System">
+          <svg
+            slot="title-icon"
+            viewBox="0 0 32 32"
+            width="16"
+            height="16"
+            fill="currentColor"
+          >
+            <path
+              d="M26 18a5.9 5.9 0 0 0-2.2-.42 5.76 5.76 0 0 0-3.8 1.42L18.41 17A5.94 5.94 0 0 0 19 14a6 6 0 1 0-6 6 5.94 5.94 0 0 0 3-.59l1.57 1.59A5.88 5.88 0 0 0 16 26a6 6 0 1 0 10-8zm-13 0a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm9 8a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"
+            />
+          </svg>
+          <cds-side-nav-menu-item href="#hand-overlay"
+            >Hand Overlay</cds-side-nav-menu-item
+          >
+          <cds-side-nav-menu-item href="#action-popup"
+            >Action Popup</cds-side-nav-menu-item
+          >
+        </cds-side-nav-menu>
+      </cds-side-nav-items>
+    </cds-side-nav>
+
+    <!-- Main Application Layout -->
     <div id="app-container">
-      <div id="nav-pane">
-        <cds-side-nav
-          aria-label="Side navigation"
-          expanded
-          is-not-child-of-header
-        >
-          <cds-side-nav-items>
-            <cds-side-nav-link href="#overview">Overview</cds-side-nav-link>
-            <cds-side-nav-divider></cds-side-nav-divider>
-            <cds-side-nav-menu title="Pieces">
-              <cds-side-nav-menu-item href="#d1">D1</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d2">D2</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d4">D4</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d6">D6</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d8">D8</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d12">D12</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#d20">D20</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#dn">DN</cds-side-nav-menu-item>
-            </cds-side-nav-menu>
-            <cds-side-nav-divider></cds-side-nav-divider>
-            <cds-side-nav-menu title="Regions">
-              <cds-side-nav-menu-item href="#slot">Slot</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#deck">Deck</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#bag">Bag</cds-side-nav-menu-item>
-              <cds-side-nav-menu-item href="#chute"
-                >Chute</cds-side-nav-menu-item
-              >
-            </cds-side-nav-menu>
-            <cds-side-nav-divider></cds-side-nav-divider>
-            <cds-side-nav-menu title="System">
-              <cds-side-nav-menu-item href="#hand-overlay"
-                >Hand Overlay</cds-side-nav-menu-item
-              >
-              <cds-side-nav-menu-item href="#action-popup"
-                >Action Popup</cds-side-nav-menu-item
-              >
-            </cds-side-nav-menu>
-          </cds-side-nav-items>
-        </cds-side-nav>
-      </div>
       <main id="middle-pane"></main>
       <aside id="sandbox-pane"></aside>
     </div>
 
-    <!-- Protoboard Core Distribution Bundle -->
+    <!-- Library & Site Application Bundles -->
     <script src="../dist/protoboard.min.js"></script>
-    <!-- Site Application Bundle -->
-    <script type="module" src="dist/site.min.js"></script>
+    <script type="module" src="./dist/site.min.js"></script>
   </body>
 </html>

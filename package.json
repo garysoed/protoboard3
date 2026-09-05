@@ -12,10 +12,12 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rollup -c",
-    "build:site": "rollup -c",
+    "build": "npm run build:styles && rollup -c",
+    "build:site": "npm run build:styles && rollup -c",
+    "build:styles": "sass site/styles.scss site/dist/styles.css --load-path=node_modules --style=compressed --no-source-map",
     "format": "prettier --write \"**/*.{ts,js,mjs,json,md,html}\"",
     "lint": "eslint . --ext .ts",
+    "start": "npx serve site",
     "test": "npm run build && playwright test",
     "test:debug": "npm run build && playwright test --ui",
     "test:e2e": "npm run build && playwright test --project=e2e-chromium --project=e2e-firefox --project=e2e-webkit",
@@ -52,6 +54,7 @@
     "eslint-plugin-tsdoc": "^0.2.17",
     "prettier": "^3.2.5",
     "rollup": "^4.13.0",
+    "sass": "^1.79.4",
     "typescript": "^5.4.0"
   }
 }

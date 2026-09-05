@@ -1,19 +1,29 @@
-@import url('../node_modules/@carbon/styles/css/styles.min.css');
+@use 'sass:map';
+@use '@carbon/styles';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+
+$pcb-green-theme: map.merge(
+  themes.$g90,
+  (
+    interactive: #007a3d,
+    button-primary: #007a3d,
+    button-primary-hover: color-mix(in srgb, #007a3d, white 10%),
+    button-primary-active: color-mix(in srgb, #007a3d, black 25%),
+    focus: color-mix(in srgb, #007a3d, white 25%),
+    border-interactive: #007a3d,
+    link-primary: color-mix(in srgb, #007a3d, white 30%),
+    link-primary-hover: color-mix(in srgb, #007a3d, white 45%),
+  )
+);
 
 :root,
 [cds-theme] {
   --cds-header-height: 48px;
+  --cds-side-nav-rail-width: 48px;
   --cds-side-nav-width: 256px;
 
-  /* PCB Green Brand & Interactive Tokens */
-  --cds-interactive: #007a3d;
-  --cds-button-primary: #007a3d;
-  --cds-button-primary-hover: color-mix(in srgb, #007a3d, white 10%);
-  --cds-button-primary-active: color-mix(in srgb, #007a3d, black 25%);
-  --cds-focus: color-mix(in srgb, #007a3d, white 25%);
-  --cds-border-interactive: #007a3d;
-  --cds-link-primary: color-mix(in srgb, #007a3d, white 30%);
-  --cds-link-primary-hover: color-mix(in srgb, #007a3d, white 45%);
+  @include theme.theme($pcb-green-theme);
 }
 
 * {
@@ -45,27 +55,32 @@ cds-header {
   height: var(--cds-header-height);
 }
 
+cds-header-menu-button {
+  display: block;
+}
+
+/* Side Navigation */
+cds-side-nav {
+  position: fixed;
+  top: var(--cds-header-height);
+  left: 0;
+  bottom: 0;
+  z-index: 7000;
+  height: calc(100vh - var(--cds-header-height));
+}
+
 /* Application Container */
 #app-container {
   display: flex;
   margin-top: var(--cds-header-height);
+  margin-left: var(--cds-side-nav-rail-width);
   height: calc(100vh - var(--cds-header-height));
+  transition: margin-left 0.11s cubic-bezier(0.2, 0, 1, 0.9);
   overflow: hidden;
 }
 
-/* Left Pane: Navigation */
-#nav-pane {
-  flex-shrink: 0;
-  position: relative;
-  z-index: 7000;
-}
-
-cds-side-nav {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  height: 100%;
+body:has(cds-side-nav[expanded]) #app-container {
+  margin-left: var(--cds-side-nav-width);
 }
 
 /* Middle Pane: Documentation & Detail */
@@ -93,6 +108,7 @@ cds-side-nav {
 @media (max-width: 1024px) {
   #app-container {
     flex-direction: column;
+    margin-left: 0;
     height: auto;
   }
 
