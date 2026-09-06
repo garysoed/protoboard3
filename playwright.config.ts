@@ -22,7 +22,7 @@ export default defineConfig({
   projects: [
     {
       name: 'unit',
-      testMatch: 'src/**/*.test.ts',
+      testMatch: ['src/**/*.test.ts', 'site/**/*.test.ts'],
       use: {
         ...devices['Desktop Chrome'],
         viewport: DEFAULT_VIEWPORT,

@@ -4,6 +4,7 @@ import {fileURLToPath} from 'url';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
+import * as sass from 'sass';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,6 +26,20 @@ const localPkgsResolver = {
 const litCssPlugin = {
   name: 'lit-css',
   transform(code, id) {
+    if (id.endsWith('.scss')) {
+      const compiled = sass.compileString(code, {
+        loadPaths: [path.resolve(__dirname, 'node_modules')],
+        url: new URL(`file://${id}`),
+      });
+      const escaped = compiled.css
+        .replace(/\\/g, '\\\\')
+        .replace(/`/g, '\\`')
+        .replace(/\${/g, '\\${');
+      return {
+        code: `import {css} from 'lit';\nexport default css\`${escaped}\`;`,
+        map: {mappings: ''},
+      };
+    }
     if (id.endsWith('.css')) {
       const escaped = code
         .replace(/\\/g, '\\\\')
@@ -32,6 +47,19 @@ const litCssPlugin = {
         .replace(/\${/g, '\\${');
       return {
         code: `import {css} from 'lit';\nexport default css\`${escaped}\`;`,
+        map: {mappings: ''},
+      };
+    }
+    return null;
+  },
+};
+
+const svgPlugin = {
+  name: 'svg-loader',
+  transform(code, id) {
+    if (id.endsWith('.svg')) {
+      return {
+        code: `export default ${JSON.stringify(code.trim())};`,
         map: {mappings: ''},
       };
     }
@@ -59,8 +87,9 @@ export default [
     plugins: [
       localPkgsResolver,
       litCssPlugin,
+      svgPlugin,
       nodeResolve({
-        extensions: ['.js', '.ts', '.mjs', '.css'],
+        extensions: ['.js', '.ts', '.mjs', '.css', '.svg'],
       }),
       typescript({
         declaration: true,
@@ -95,8 +124,9 @@ export default [
     plugins: [
       localPkgsResolver,
       litCssPlugin,
+      svgPlugin,
       nodeResolve({
-        extensions: ['.js', '.ts', '.mjs', '.css'],
+        extensions: ['.js', '.ts', '.mjs', '.css', '.svg'],
       }),
       typescript({
         declaration: false,
@@ -125,8 +155,9 @@ export default [
     plugins: [
       localPkgsResolver,
       litCssPlugin,
+      svgPlugin,
       nodeResolve({
-        extensions: ['.js', '.ts', '.mjs', '.css'],
+        extensions: ['.js', '.ts', '.mjs', '.css', '.svg'],
       }),
       typescript({
         declaration: false,

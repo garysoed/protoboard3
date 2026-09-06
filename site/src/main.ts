@@ -1,9 +1,15 @@
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/code-snippet/index.js';
+import '@carbon/web-components/es/components/content-switcher/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/link/index.js';
+import '@carbon/web-components/es/components/select/index.js';
 import '@carbon/web-components/es/components/tag/index.js';
 import '@carbon/web-components/es/components/ui-shell/index.js';
 
+import './components/detail-layout.js';
+import {PbdSlotAssigner} from './components/slot-assigner.js';
+import {PbdSlotRow} from './components/slot-row.js';
 import {initializeRouter} from './router.js';
 
 /**
@@ -29,6 +35,9 @@ function initializeNavToggle(): void {
 export function initializeSite(): void {
   window.Protoboard.initialize();
   initializeNavToggle();
+
+  customElements.define('pbd-slot-row', PbdSlotRow);
+  customElements.define('pbd-slot-assigner', PbdSlotAssigner);
 
   const middlePane = document.getElementById('middle-pane');
   if (middlePane instanceof HTMLElement) {

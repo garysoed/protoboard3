@@ -14,3 +14,4 @@ This directory contains the TypeScript source code for the Protoboard library.
 
 - [`css.d.ts`](./css.d.ts): Ambient module declaration for importing CSS files.
 - [`index.ts`](./index.ts): Main library entry point exporting `initialize`.
+- [`svg.d.ts`](./svg.d.ts): Ambient module declaration for importing SVG files.

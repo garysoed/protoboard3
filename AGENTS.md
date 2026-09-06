@@ -22,6 +22,8 @@
 - **Single-Pass Map Lookups**: When querying a `Map` or collection for a value, avoid calling `.has(key)` immediately prior to `.get(key)`. Retrieve directly using `const value = map.get(key)` and check if the result is nullish/undefined.
 - **Compiled Output Locations**: Compiled stylesheets and asset bundles must be output strictly into designated `dist/` directories (e.g. `site/dist/styles.css`) rather than residing alongside source files.
 - **Carbon UI Shell & SideNav Hierarchy**: When utilizing IBM Carbon UI Shell components, structure `<cds-side-nav>` as a direct sibling of `<cds-header>` without the `is-not-child-of-header` attribute to retain Carbon's standard expanded UX mode (`cds--side-nav--ux`). When configuring `collapse-mode="rail"`, equip top-level navigation links and category menus with 16×16px SVG icons using `slot="title-icon"` so they render cleanly in the 48px mini-rail.
+- **Preserve Super Observed Attributes**: When overriding `static get observedAttributes()` in custom element subclasses (such as classes inheriting from `SignalWatcher(LitElement)` or `BaseElement`), always include `...(super.observedAttributes ?? [])`. Omitting `super.observedAttributes` prevents Lit's internal `finalize()` from executing, leaving `elementStyles` unpopulated and causing component stylesheets not to be adopted into the shadow DOM.
+- **Single Source of Truth for Controls**: Custom elements aggregating child form controls or selection rows must avoid caching redundant selection state in component properties or arrays. Read the selected values directly from child control instances on demand via query selectors and boundary accessors.
 
 ## Reactive State & Signals (`@lit-labs/signals`)
 
@@ -103,6 +105,7 @@
 - **No Negative Feature Tests**: Do not write tests asserting the absence of unsupported actions or shortcuts (e.g. verifying pressing a key does nothing). Focus tests strictly on verifying supported behavior.
 - **No Custom Element Registry Guards**: In test fixtures, register custom elements directly via `customElements.define(...)` without `if (!customElements.get(...))` checks, as each test runs in a clean document context.
 - **Browser Object Evaluation**: When verifying constructor functions or non-JSON serializable DOM objects in Playwright tests (e.g. `customElements.get(...)`), use `page.evaluateHandle(...)` to prevent JSON serialization errors.
+- **Testing Custom Element Lifecycle Errors**: In the DOM standard, exceptions thrown inside custom element lifecycle callbacks (such as `connectedCallback`) during DOM mutations (such as `appendChild`) are reported to `window.onerror` rather than thrown directly by `appendChild`. In Playwright tests, capture and assert these errors using `const errorPromise = page.waitForEvent('pageerror')` followed by `document.body.appendChild(...)` rather than using `try...catch` blocks.
 - **Test Commands**:
   - `npm test`: Runs the test suite.
   - `npm run test:unit`: Runs unit tests on Chromium.

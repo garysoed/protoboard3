@@ -5,8 +5,8 @@ This directory contains the source TypeScript modules for the Protoboard documen
 ## Directory Inventory
 
 - [`main.ts`](./main.ts): Application bootstrapper and entry point module initializing Protoboard and UI Shell elements.
-- [`presets.ts`](./presets.ts): Built-in 20 face presets library and SVG generators standardized to 64x64px for dice, cards, tokens, and symbols.
+- [`presets.ts`](./presets.ts): Built-in 20 face presets library importing vector SVG assets and exporting preset metadata.
 - [`router.ts`](./router.ts): Client-side hash router managing page transitions, SideNav active state, and `#overview` redirect fallback.
 - [`table-utils.ts`](./table-utils.ts): Helper utilities constructing standardized IBM Carbon `<cds-table>` components for attributes and actions.
 
-See also [`pages/`](./pages).
+See also [`components/`](./components), [`pages/`](./pages), and [`svg/`](./svg).

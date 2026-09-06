@@ -11,16 +11,19 @@ graph TD
     P1["Phase 1: Project Setup, Carbon Dependencies & Site Build Pipeline"] --> P2["Phase 2: Face Presets Library & Table Generator Utilities"]
     P2 --> P3["Phase 3: Core UI Shell, Hash Router & Carbon SideNav"]
     P2 --> P4["Phase 4: Common Detail Layout (<pbd-detail-layout>) & Slot Assigner (<pbd-slot-assigner>)"]
-    P3 --> P5["Phase 5: Tabletop Sandbox Canvas (<pbd-sandbox-pane>)"]
-    P4 --> P6["Phase 6: Getting Started / Overview Page (<pbd-page-overview>)"]
-    P4 --> P7["Phase 7: Piece Detail Pages (<pbd-page-d1>..<pbd-page-dn>)"]
-    P4 --> P8["Phase 8: Region Detail Pages (<pbd-page-slot>..<pbd-page-chute>)"]
-    P4 --> P9["Phase 9: System Detail Pages (<pbd-page-hand-overlay>, <pbd-page-action-popup>)"]
-    P5 --> P10["Phase 10: Full Integration, End-to-End Testing & Migration Cleanup"]
-    P6 --> P10
-    P7 --> P10
-    P8 --> P10
-    P9 --> P10
+    P4 --> P5["Phase 5: Test Infrastructure Simplification & Shared Test Harness"]
+    P3 --> P6["Phase 6: Tabletop Sandbox Canvas (<pbd-sandbox-pane>)"]
+    P5 --> P6
+    P5 --> P7["Phase 7: Getting Started / Overview Page (<pbd-page-overview>)"]
+    P5 --> P8["Phase 8: Piece Detail Pages (<pbd-page-d1>..<pbd-page-dn>)"]
+    P5 --> P9["Phase 9: Region Detail Pages (<pbd-page-slot>..<pbd-page-chute>)"]
+    P5 --> P10["Phase 10: System Detail Pages (<pbd-page-hand-overlay>, <pbd-page-action-popup>)"]
+    P6 --> P11["Phase 11: Full Integration, End-to-End Testing & Migration Cleanup"]
+    P7 --> P11
+    P8 --> P11
+    P9 --> P11
+    P10 --> P11
+    P11 --> P12["Phase 12: Syntax Highlighting for Code Snippets (<cds-code-snippet>)"]
 ```
 
 ---
@@ -90,127 +93,167 @@ graph TD
 **Goal**: Implement the reusable detail page layout component and the face slot assigner widget for piece pages.
 **Dependencies**: Phase 2.
 
-- [ ] **4. Phase 4: Common Detail Layout & Slot Assigner**
-  - [ ] **4.1 Reusable Slot Assigner (`<pbd-slot-assigner>`, `site/src/components/slot-assigner.ts`)**
-    - [ ] 4.1.1 Render slot rows for `slot="face0"` through `slot="faceN-1"`.
-    - [ ] 4.1.2 Provide visual preset picker dropdown/modal for selecting from the 20 built-in presets.
-    - [ ] 4.1.3 Render 64×64 px thumbnail preview for each selected slot.
-    - [ ] 4.1.4 Provide dynamic slot add/remove controls for `<pb-dn>`.
-  - [ ] **4.2 Detail Layout Component (`<pbd-detail-layout>`, `site/src/components/detail-layout.ts`)**
-    - [ ] 4.2.1 Accept `title` and `tag` attributes; provide slots for `description`, `attributes`, `actions`, `controls`, and `slot-assigner`.
-    - [ ] 4.2.2 Implement preview section with `<cds-content-switcher>` toggling between Live Component View and HTML Code View.
-    - [ ] 4.2.3 Integrate `<cds-code-snippet type="multi">` displaying reactive, token-highlighted HTML markup with one-click copy button.
-    - [ ] 4.2.4 Implement `<cds-button kind="primary">Add to Sandbox</cds-button>` dispatching component creation event to sandbox.
-  - [ ] **4.3 Unit Testing**
-    - [ ] 4.3.1 Test `<pbd-slot-assigner>` preset mapping and dynamic face count changes.
-    - [ ] 4.3.2 Test `<pbd-detail-layout>` slot projections and preview switcher toggling.
+- [x] **4. Phase 4: Common Detail Layout & Slot Assigner**
+  - [x] **4.1 Reusable Slot Assigner (`<pbd-slot-assigner>`, `site/src/components/slot-assigner.ts`)**
+    - [x] 4.1.1 Render slot rows for `slot="face 0"` through `slot="face N-1"`.
+    - [x] 4.1.2 Provide visual preset picker dropdown/modal for selecting from the 20 built-in presets.
+    - [x] 4.1.3 Render 64×64 px thumbnail preview for each selected slot.
+    - [x] 4.1.4 Extract `<pbd-slot-row>` component (`site/src/components/slot-row.ts`); dynamic slot controls deferred to DN piece page.
+  - [x] **4.2 Detail Layout Component (`<pbd-detail-layout>`, `site/src/components/detail-layout.ts`)**
+    - [x] 4.2.1 Accept `title` and `tag` attributes; provide slots for `description`, `attributes`, `actions`, `controls`, and `slot-assigner`.
+    - [x] 4.2.2 Implement preview section with `<cds-content-switcher>` toggling between Live Component View and HTML Code View.
+    - [x] 4.2.3 Integrate `<cds-code-snippet type="multi">` displaying reactive HTML markup with one-click copy button (plain HTML view; syntax highlighting deferred to Phase 11).
+    - [x] 4.2.4 Implement `<cds-button kind="primary">Add to Sandbox</cds-button>` dispatching component creation event to sandbox.
+  - [x] **4.3 Unit Testing**
+    - [x] 4.3.1 Test `<pbd-slot-row>` and `<pbd-slot-assigner>` preset mapping and assignment changes.
+    - [x] 4.3.2 Test `<pbd-detail-layout>` slot projections and preview switcher toggling.
 
 ---
 
-### Phase 5: Tabletop Sandbox Canvas (`<pbd-sandbox-pane>`)
+### Phase 5: Test Infrastructure Simplification & Shared Test Harness
+
+**Goal**: Establish unified Playwright test harness helpers for both the Protoboard library (`src/`) and the Explorer site (`site/src/`), eliminating repetitive DOM bootstrapping, script/style injection, custom element definition waiting, and font readiness synchronization.
+**Dependencies**: Phase 4.
+
+- [ ] **5. Phase 5: Test Infrastructure Simplification & Shared Test Harness**
+  - [ ] **5.1 Shared Library Test Harness (`src/testing/test-page.ts`)**
+    - [ ] 5.1.1 Implement `setupLibraryPage(page: Page, options: { body: string, styles?: string })` injecting `dist/testing.min.js`, calling `window.Protoboard.initialize()`, and awaiting custom element registration.
+    - [ ] 5.1.2 Export `setupLibraryPage` from `src/testing/index.ts` so all library unit tests can import it consistently.
+  - [ ] **5.2 Shared Site Test Harness (`site/src/testing/test-page.ts`)**
+    - [ ] 5.2.1 Implement `setupSitePage(page: Page, options: { body: string, whenDefined?: string | readonly string[], waitForFonts?: boolean })` injecting `site/dist/styles.css`, `dist/protoboard.min.js`, and `site/dist/site.min.js`.
+    - [ ] 5.2.2 Automatically await custom elements and `document.fonts.ready` before returning the configured page.
+  - [ ] **5.3 Test Suite Migration & Verification**
+    - [ ] 5.3.1 Migrate existing site component tests (`detail-layout.test.ts`, `slot-assigner.test.ts`, `slot-row.test.ts`) to use `setupSitePage`.
+    - [ ] 5.3.2 Migrate library piece and region tests to use `setupLibraryPage`.
+    - [ ] 5.3.3 Verify all unit and E2E tests pass without visual golden regressions.
+
+---
+
+### Phase 6: Tabletop Sandbox Canvas (`<pbd-sandbox-pane>`)
 
 **Goal**: Implement the live right-pane sandbox equipped with `<pb-hand-overlay>`, `<pb-action-popup>`, default `#sandbox-main-slot`, and dynamic sibling region container.
-**Dependencies**: Phase 3.
+**Dependencies**: Phase 3, Phase 5.
 
-- [ ] **5. Phase 5: Tabletop Sandbox Canvas (`<pbd-sandbox-pane>`)**
-  - [ ] **5.1 Sandbox Component (`site/src/components/sandbox-pane.ts`)**
-    - [ ] 5.1.1 Mount root `<pb-hand-overlay>` and `<pb-action-popup>`.
-    - [ ] 5.1.2 Render empty default `<pb-slot id="sandbox-main-slot">` taking up primary canvas area.
-    - [ ] 5.1.3 Render flex container for dynamic sibling regions alongside `#sandbox-main-slot`.
-  - [ ] **5.2 Dynamic Component Insertion API**
-    - [ ] 5.2.1 Implement piece insertion appending newly created piece DOM elements into `#sandbox-main-slot`.
-    - [ ] 5.2.2 Implement region insertion appending newly created region DOM elements as siblings to `#sandbox-main-slot`.
-  - [ ] **5.3 Unit & Interaction Testing**
-    - [ ] 5.3.1 Test adding pieces to `#sandbox-main-slot` and regions to sibling container.
+- [ ] **6. Phase 6: Tabletop Sandbox Canvas (`<pbd-sandbox-pane>`)**
+  - [ ] **6.1 Sandbox Component (`site/src/components/sandbox-pane.ts`)**
+    - [ ] 6.1.1 Mount root `<pb-hand-overlay>` and `<pb-action-popup>`.
+    - [ ] 6.1.2 Render empty default `<pb-slot id="sandbox-main-slot">` taking up primary canvas area.
+    - [ ] 6.1.3 Render flex container for dynamic sibling regions alongside `#sandbox-main-slot`.
+  - [ ] **6.2 Dynamic Component Insertion API**
+    - [ ] 6.2.1 Implement piece insertion appending newly created piece DOM elements into `#sandbox-main-slot`.
+    - [ ] 6.2.2 Implement region insertion appending newly created region DOM elements as siblings to `#sandbox-main-slot`.
+  - [ ] **6.3 Unit & Interaction Testing**
+    - [ ] 6.3.1 Test adding pieces to `#sandbox-main-slot` and regions to sibling container.
 
 ---
 
-### Phase 6: Getting Started / Overview Page (`<pbd-page-overview>`)
+### Phase 7: Getting Started / Overview Page (`<pbd-page-overview>`)
 
 **Goal**: Implement the documentation overview page providing the quick start guide, library initialization instructions, and keyboard shortcuts cheat-sheet.
-**Dependencies**: Phase 4.
+**Dependencies**: Phase 5.
 
-- [ ] **6. Phase 6: Getting Started / Overview Page (`<pbd-page-overview>`)**
-  - [ ] **6.1 Overview Page Component (`site/src/pages/overview-page.ts`)**
-    - [ ] 6.1.1 Document library purpose, declarative HTML philosophy, and installation/script inclusion.
-    - [ ] 6.1.2 Document core concepts: hover/focus targeting, LIFO hand stack (`c`/`Space`), and action discovery (`?`).
-    - [ ] 6.1.3 Render interactive keyboard shortcuts cheat-sheet `<cds-table>`.
-    - [ ] 6.1.4 Provide quick links to Piece, Region, and System documentation pages.
-  - [ ] **6.2 Unit Testing**
-    - [ ] 6.2.1 Test `<pbd-page-overview>` rendering and shortcut table structure.
+- [ ] **7. Phase 7: Getting Started / Overview Page (`<pbd-page-overview>`)**
+  - [ ] **7.1 Overview Page Component (`site/src/pages/overview-page.ts`)**
+    - [ ] 7.1.1 Document library purpose, declarative HTML philosophy, and installation/script inclusion.
+    - [ ] 7.1.2 Document core concepts: hover/focus targeting, LIFO hand stack (`c`/`Space`), and action discovery (`?`).
+    - [ ] 7.1.3 Render interactive keyboard shortcuts cheat-sheet `<cds-table>`.
+    - [ ] 7.1.4 Provide quick links to Piece, Region, and System documentation pages.
+  - [ ] **7.2 Unit Testing**
+    - [ ] 7.2.1 Test `<pbd-page-overview>` rendering and shortcut table structure.
 
 ---
 
-### Phase 7: Piece Detail Pages (`<pbd-page-d1>` through `<pbd-page-dn>`)
+### Phase 8: Piece Detail Pages (`<pbd-page-d1>` through `<pbd-page-dn>`)
 
 **Goal**: Implement dedicated documentation and interactive creator pages for all piece components.
-**Dependencies**: Phase 4.
+**Dependencies**: Phase 5.
 
-- [ ] **7. Phase 7: Piece Detail Pages (`<pbd-page-d1>` through `<pbd-page-dn>`)**
-  - [ ] **7.1 Single-Faced Piece Page (`site/src/pages/piece-pages.ts`)**
-    - [ ] 7.1.1 Implement `<pbd-page-d1>` (`D1`, `pb-d1`) with description, attributes table, actions table (`pick`, `rotate`), controls (`name`, `rotations`, action overrides), and `meeple` preset.
-  - [ ] **7.2 Flippable & Polyhedral Piece Pages**
-    - [ ] 7.2.1 Implement `<pbd-page-d2>` (`D2`, `pb-d2`, coin/token, `flip`).
-    - [ ] 7.2.2 Implement `<pbd-page-d4>` (`D4`, `pb-d4`, 4 faces, `flip`).
-    - [ ] 7.2.3 Implement `<pbd-page-d6>` (`D6`, `pb-d6`, 6 pip faces, `roll`, `flip`).
-    - [ ] 7.2.4 Implement `<pbd-page-d8>` (`D8`, `pb-d8`, 8 faces, `roll`, `flip`).
-    - [ ] 7.2.5 Implement `<pbd-page-d12>` (`D12`, `pb-d12`, 12 faces, `roll`, `flip`).
-    - [ ] 7.2.6 Implement `<pbd-page-d20>` (`D20`, `pb-d20`, 20 faces, `roll`, `flip`).
-  - [ ] **7.3 Custom N-Sided Piece Page**
-    - [ ] 7.3.1 Implement `<pbd-page-dn>` (`DN`, `pb-dn`, dynamic face slots, `roll`, face cycling).
-  - [ ] **7.4 Unit & Component Testing**
-    - [ ] 7.4.1 Unit tests verifying attributes, actions, and preset assignment for all piece pages.
+- [ ] **8. Phase 8: Piece Detail Pages (`<pbd-page-d1>` through `<pbd-page-dn>`)**
+  - [ ] **8.1 Single-Faced Piece Page (`site/src/pages/piece-pages.ts`)**
+    - [ ] 8.1.1 Implement `<pbd-page-d1>` (`D1`, `pb-d1`) with description, attributes table, actions table (`pick`, `rotate`), controls (`name`, `rotations`, action overrides), and `meeple` preset.
+  - [ ] **8.2 Flippable & Polyhedral Piece Pages**
+    - [ ] 8.2.1 Implement `<pbd-page-d2>` (`D2`, `pb-d2`, coin/token, `flip`).
+    - [ ] 8.2.2 Implement `<pbd-page-d4>` (`D4`, `pb-d4`, 4 faces, `flip`).
+    - [ ] 8.2.3 Implement `<pbd-page-d6>` (`D6`, `pb-d6`, 6 pip faces, `roll`, `flip`).
+    - [ ] 8.2.4 Implement `<pbd-page-d8>` (`D8`, `pb-d8`, 8 faces, `roll`, `flip`).
+    - [ ] 8.2.5 Implement `<pbd-page-d12>` (`D12`, `pb-d12`, 12 faces, `roll`, `flip`).
+    - [ ] 8.2.6 Implement `<pbd-page-d20>` (`D20`, `pb-d20`, 20 faces, `roll`, `flip`).
+  - [ ] **8.3 Custom N-Sided Piece Page**
+    - [ ] 8.3.1 Implement `<pbd-page-dn>` (`DN`, `pb-dn`, dynamic face slots, `roll`, face cycling).
+  - [ ] **8.4 Unit & Component Testing**
+    - [ ] 8.4.1 Unit tests verifying attributes, actions, and preset assignment for all piece pages.
 
 ---
 
-### Phase 8: Region Detail Pages (`<pbd-page-slot>` through `<pbd-page-chute>`)
+### Phase 9: Region Detail Pages (`<pbd-page-slot>` through `<pbd-page-chute>`)
 
 **Goal**: Implement dedicated documentation and interactive creator pages for all region components.
-**Dependencies**: Phase 4.
+**Dependencies**: Phase 5.
 
-- [ ] **8. Phase 8: Region Detail Pages (`<pbd-page-slot>` through `<pbd-page-chute>`)**
-  - [ ] **8.1 Slot Region Page (`site/src/pages/region-pages.ts`)**
-    - [ ] 8.1.1 Implement `<pbd-page-slot>` (`Slot`, `pb-slot`, 2D drop zone, `drop`, `drop-all`).
-  - [ ] **8.2 Deck Region Page**
-    - [ ] 8.2.1 Implement `<pbd-page-deck>` (`Deck`, `pb-deck`, card stack, `shuffle`, `flip-all`, `pick-all`).
-  - [ ] **8.3 Bag Region Page**
-    - [ ] 8.3.1 Implement `<pbd-page-bag>` (`Bag`, `pb-bag`, blind draw container, `pick` random, `pick-all`).
-  - [ ] **8.4 Chute Region Page**
-    - [ ] 8.4.1 Implement `<pbd-page-chute>` (`Chute`, `pb-chute`, multi-layer filter, `flush`, layer configuration builder).
-  - [ ] **8.5 Unit & Component Testing**
-    - [ ] 8.5.1 Unit tests verifying attributes, actions, and configuration for all region pages.
+- [ ] **9. Phase 9: Region Detail Pages (`<pbd-page-slot>` through `<pbd-page-chute>`)**
+  - [ ] **9.1 Slot Region Page (`site/src/pages/region-pages.ts`)**
+    - [ ] 9.1.1 Implement `<pbd-page-slot>` (`Slot`, `pb-slot`, 2D drop zone, `drop`, `drop-all`).
+  - [ ] **9.2 Deck Region Page**
+    - [ ] 9.2.1 Implement `<pbd-page-deck>` (`Deck`, `pb-deck`, card stack, `shuffle`, `flip-all`, `pick-all`).
+  - [ ] **9.3 Bag Region Page**
+    - [ ] 9.3.1 Implement `<pbd-page-bag>` (`Bag`, `pb-bag`, blind draw container, `pick` random, `pick-all`).
+  - [ ] **9.4 Chute Region Page**
+    - [ ] 9.4.1 Implement `<pbd-page-chute>` (`Chute`, `pb-chute`, multi-layer filter, `flush`, layer configuration builder).
+  - [ ] **9.5 Unit & Component Testing**
+    - [ ] 9.5.1 Unit tests verifying attributes, actions, and configuration for all region pages.
 
 ---
 
-### Phase 9: System Detail Pages (`<pbd-page-hand-overlay>`, `<pbd-page-action-popup>`)
+### Phase 10: System Detail Pages (`<pbd-page-hand-overlay>`, `<pbd-page-action-popup>`)
 
 **Goal**: Implement dedicated documentation pages for global singleton systems.
-**Dependencies**: Phase 4.
+**Dependencies**: Phase 5.
 
-- [ ] **9. Phase 9: System Detail Pages (`<pbd-page-hand-overlay>`, `<pbd-page-action-popup>`)**
-  - [ ] **9.1 Hand Overlay Page (`site/src/pages/system-pages.ts`)**
-    - [ ] 9.1.1 Implement `<pbd-page-hand-overlay>` (`Hand Overlay`, `pb-hand-overlay`, LIFO floating cursor stack, setup code snippet).
-  - [ ] **9.2 Action Popup Page**
-    - [ ] 9.2.1 Implement `<pbd-page-action-popup>` (`Action Popup`, `pb-action-popup`, action discovery `?`, setup code snippet).
-  - [ ] **9.3 Unit & Component Testing**
-    - [ ] 9.3.1 Unit tests verifying system page rendering and documentation tables.
+- [ ] **10. Phase 10: System Detail Pages (`<pbd-page-hand-overlay>`, `<pbd-page-action-popup>`)**
+  - [ ] **10.1 Hand Overlay Page (`site/src/pages/system-pages.ts`)**
+    - [ ] 10.1.1 Implement `<pbd-page-hand-overlay>` (`Hand Overlay`, `pb-hand-overlay`, LIFO floating cursor stack, setup code snippet).
+  - [ ] **10.2 Action Popup Page**
+    - [ ] 10.2.1 Implement `<pbd-page-action-popup>` (`Action Popup`, `pb-action-popup`, action discovery `?`, setup code snippet).
+  - [ ] **10.3 Unit & Component Testing**
+    - [ ] 10.3.1 Unit tests verifying system page rendering and documentation tables.
 
 ---
 
-### Phase 10: Full Integration, End-to-End Testing & Migration Cleanup
+### Phase 11: Full Integration, End-to-End Testing & Migration Cleanup
 
 **Goal**: Integrate all application components, execute end-to-end browser test suites across all target browsers, clean up legacy prototype files, and update documentation.
-**Dependencies**: Phases 5, 6, 7, 8, 9.
+**Dependencies**: Phases 6, 7, 8, 9, 10.
 
-- [ ] **10. Phase 10: Full Integration, End-to-End Testing & Migration Cleanup**
-  - [ ] **10.1 Legacy Cleanup & Migration**
-    - [ ] 10.1.1 Delete legacy `examples/index.html`.
-    - [ ] 10.1.2 Update `examples/README.md` and root `README.md` links pointing to `site/index.html`.
-  - [ ] **10.2 End-to-End Playwright Test Suite (`e2e/site.test.ts`)**
-    - [ ] 10.2.1 Test 3-pane layout, collapsible SideNav, and initial hash redirect to `#overview`.
-    - [ ] 10.2.2 Test piece creator: configuring a D6 die, toggling live preview, rolling with `r`, toggling HTML view, copying markup, and clicking "Add to Sandbox" to insert into `#sandbox-main-slot`.
-    - [ ] 10.2.3 Test region creator: creating a `Deck` region, verifying it appears as a sibling in the sandbox, dropping cards, and shuffling with `s`.
-    - [ ] 10.2.4 Execute tests across Chromium, Firefox, and WebKit.
-  - [ ] **10.3 Directory Documentation**
-    - [ ] 10.3.1 Update `site/README.md` and `site/src/README.md` inventories.
-    - [ ] 10.3.2 Update `docs/README.md` inventory with `bohnanza.impl.md`.
+- [ ] **11. Phase 11: Full Integration, End-to-End Testing & Migration Cleanup**
+  - [ ] **11.1 Legacy Cleanup & Migration**
+    - [ ] 11.1.1 Delete legacy `examples/index.html`.
+    - [ ] 11.1.2 Update `examples/README.md` and root `README.md` links pointing to `site/index.html`.
+  - [ ] **11.2 End-to-End Playwright Test Suite (`e2e/site.test.ts`)**
+    - [ ] 11.2.1 Test 3-pane layout, collapsible SideNav, and initial hash redirect to `#overview`.
+    - [ ] 11.2.2 Test piece creator: configuring a D6 die, toggling live preview, rolling with `r`, toggling HTML view, copying markup, and clicking "Add to Sandbox" to insert into `#sandbox-main-slot`.
+    - [ ] 11.2.3 Test region creator: creating a `Deck` region, verifying it appears as a sibling in the sandbox, dropping cards, and shuffling with `s`.
+    - [ ] 11.2.4 Execute tests across Chromium, Firefox, and WebKit.
+  - [ ] **11.3 Directory Documentation**
+    - [ ] 11.3.1 Update `site/README.md` and `site/src/README.md` inventories.
+    - [ ] 11.3.2 Update `docs/README.md` inventory with `bohnanza.impl.md`.
+
+---
+
+### Phase 12: Syntax Highlighting for Code Snippets
+
+**Goal**: Implement theme-aware syntax highlighting for reactive HTML code snippets within `<pbd-detail-layout>` using Carbon's `--cds-syntax-*` tokens.
+**Dependencies**: Phase 5, Phase 11.
+
+- [ ] **12. Phase 12: Syntax Highlighting for Code Snippets**
+  - [ ] **12.1 Tokenizer Integration**
+    - [ ] 12.1.1 Select and integrate a lightweight HTML tokenizer or parser.
+    - [ ] 12.1.2 Implement HTML token-to-class generator wrapping tags, attributes, strings, and punctuation.
+  - [ ] **12.2 Carbon Syntax Tokens Mapping**
+    - [ ] 12.2.1 Map token classes to Carbon's `--cds-syntax-*` design tokens (`--cds-syntax-tag`, `--cds-syntax-attribute-name`, `--cds-syntax-string`, `--cds-syntax-punctuation`).
+    - [ ] 12.2.2 Ensure syntax styles adapt automatically across light and dark Carbon themes.
+  - [ ] **12.3 Layout Integration**
+    - [ ] 12.3.1 Slot tokenized HTML markup into `<cds-code-snippet type="multi">` in `<pbd-detail-layout>`.
+    - [ ] 12.3.2 Preserve raw code string in copy-to-clipboard action.
+  - [ ] **12.4 Unit & Visual Golden Testing**
+    - [ ] 12.4.1 Unit tests verifying HTML tokenization and element tree output.
+    - [ ] 12.4.2 Visual golden screenshot verification for highlighted code view.

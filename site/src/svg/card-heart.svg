@@ -1,0 +1,4 @@
+<svg viewBox="0 0 64 64" width="64" height="64">
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="#ffffff" stroke="#d0d0d0" stroke-width="2"/>
+  <path d="M32 48 C32 48, 16 36, 16 26 C16 20, 21 16, 26 16 C29 16, 31 18, 32 20 C33 18, 35 16, 38 16 C43 16, 48 20, 48 26 C48 36, 32 48, 32 48 Z" fill="#da1e28"/>
+</svg>

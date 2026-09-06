@@ -1,5 +1,10 @@
 @use 'sass:map';
+@use '@carbon/styles/scss/config' with (
+  $use-akamai-cdn: true
+);
+@use '@carbon/styles/scss/fonts';
 @use '@carbon/styles';
+@use '@carbon/styles/scss/type';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
 
@@ -23,6 +28,7 @@ $pcb-green-theme: map.merge(
   --cds-side-nav-rail-width: 48px;
   --cds-side-nav-width: 256px;
 
+  @include type.emit-type-custom-properties();
   @include theme.theme($pcb-green-theme);
 }
 
@@ -89,7 +95,7 @@ body:has(cds-side-nav[expanded]) #app-container {
   min-width: 360px;
   height: 100%;
   overflow-y: auto;
-  padding: var(--cds-spacing-07, 24px);
+  padding: var(--cds-spacing-07);
   background-color: var(--cds-layer-01);
   border-right: 1px solid var(--cds-border-subtle-01);
 }
@@ -100,7 +106,7 @@ body:has(cds-side-nav[expanded]) #app-container {
   min-width: 360px;
   height: 100%;
   overflow-y: auto;
-  padding: var(--cds-spacing-07, 24px);
+  padding: var(--cds-spacing-07);
   background-color: var(--cds-background);
 }
 

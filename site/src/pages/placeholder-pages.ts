@@ -10,7 +10,7 @@ export abstract class BasePlaceholderPage extends LitElement {
 
   override render(): TemplateResult {
     return html`
-      <div class="pbd-placeholder-page">
+      <div class="placeholder-page">
         <h2>${this.pageTitle} (<code>&lt;${this.tag}&gt;</code>)</h2>
         <p>
           Documentation and interactive creator for
@@ -28,7 +28,7 @@ export class PbdPageOverview extends BasePlaceholderPage {
 
   override render(): TemplateResult {
     return html`
-      <div class="pbd-placeholder-page">
+      <div class="placeholder-page">
         <h2>Protoboard Explorer Overview</h2>
         <p>
           Welcome to the interactive component documentation and tabletop
